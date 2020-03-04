@@ -3,21 +3,24 @@ package com.ethernom.helloworld
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val serviceIntent = Intent(this@MainActivity, onClearFromRecentService::class.java)
+        startService(serviceIntent)
+
         Log.e("LifeCycle", "OnCreate Called")
         var clickCount = 0
         button_update_content.setOnClickListener {
             clickCount++
-            text_result.text  = "${text_result.text} \nhello world $clickCount"
+            text_result.text = "${text_result.text} \nhello world $clickCount"
 
         }
 
@@ -26,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SecondActivity::class.java))
         }
     }
+
     override fun onStart() {
         super.onStart()
         Log.e("LifeCycle", "OnStart Called")
@@ -49,17 +53,11 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         Log.e("LifeCycle", "OnStop Called")
-        Handler().postDelayed({
-            Log.e("LifeCycle","5 seconds interval called")
-
-        }, 5000)
     }
 
     override fun onDestroy() {
 
         Log.e("LifeCycle", "OnDestroy Called")
         super.onDestroy()
-
-
     }
 }

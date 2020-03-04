@@ -1,7 +1,6 @@
 package com.ethernom.helloworld
 
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 class SecondActivity : Activity() {
