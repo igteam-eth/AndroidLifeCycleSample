@@ -1,7 +1,6 @@
 package com.ethernom.helloworld;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,9 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import androidx.annotation.RequiresApi;
-import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
@@ -21,14 +18,6 @@ public class MyAppReceiver extends BroadcastReceiver {
     @SuppressLint("NewApi")
     @Override
     public void onReceive(Context context, Intent intent) {
-        //Which App need to relaunch ?
-        //What is mechanism to relaunch the App?
-        Log.e("LifeCycle", "Need to relaunch App");
-        /*PackageManager pm = context.getPackageManager();
-        Intent launchIntent = pm.getLaunchIntentForPackage("com.ethernom.helloworld");
-        launchIntent.putExtra("some_data", "value");
-        context.startActivity(launchIntent);*/
-        //silentNotification(context, NOTIFICATION_ID);
         silentNotification(context);
     }
     private static final String CHANNEL_ID = "alarm_channel";
@@ -46,7 +35,7 @@ public class MyAppReceiver extends BroadcastReceiver {
         builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText("Click to relaunch hello world");
-        builder.setAutoCancel(true);
+        builder.setAutoCancel(false);
         Intent intent = new Intent(context, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
