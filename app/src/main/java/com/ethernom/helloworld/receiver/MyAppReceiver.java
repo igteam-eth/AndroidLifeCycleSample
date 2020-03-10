@@ -1,4 +1,4 @@
-package com.ethernom.helloworld;
+package com.ethernom.helloworld.receiver;
 
 import android.annotation.SuppressLint;
 import android.app.Notification;
@@ -11,6 +11,9 @@ import android.content.Intent;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+
+import com.ethernom.helloworld.screens.MainActivity;
+import com.ethernom.helloworld.R;
 
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 import static android.content.Context.NOTIFICATION_SERVICE;

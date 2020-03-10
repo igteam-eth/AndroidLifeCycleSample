@@ -44,4 +44,6 @@ dependencies {
     implementation 'no.nordicsemi.android.support.v18:scanner:1.4.3'
     // Nordic logger
     implementation 'no.nordicsemi.android:log:2.2.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.chaos.view:pinview:1.4.3'
 }

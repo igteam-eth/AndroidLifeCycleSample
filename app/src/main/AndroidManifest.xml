@@ -10,30 +10,47 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
+        android:name=".application.HTSScannerApplication"
         android:allowBackup="true"
-        android:name=".HTSScannerApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".SecondActivity" android:theme="@style/Theme.Transparent"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".screens.PinLengthSelectionActivity"></activity>
+        <activity android:name=".screens.SettingActivity" />
+        <activity android:name=".screens.ConfirmPinActivity">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity android:name=".screens.DiscoverDeviceActivity" />
+        <activity android:name=".screens.TrackerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".screens.SecondActivity"
+            android:theme="@style/Theme.Transparent" />
+        <activity android:name=".screens.MainActivity"></activity>
 
-        <receiver android:name=".MyAppReceiver" />
+        <receiver android:name=".receiver.MyAppReceiver" />
+
         <service
-            android:name=".onClearFromRecentService"
-            android:stopWithTask="false"/>
+            android:name=".service.onClearFromRecentService"
+            android:stopWithTask="false" />
 
         <receiver
-            android:name=".StartupReceiver"
+            android:name=".receiver.StartupReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="500">
@@ -45,7 +62,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name=".BleReceiver"
+            android:name=".receiver.BleReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -56,10 +73,9 @@
         </receiver>
 
         <service
-            android:name=".HTSService"
+            android:name=".service.HTSService"
             android:enabled="true"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>

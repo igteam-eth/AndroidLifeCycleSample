@@ -1,4 +1,4 @@
-package com.ethernom.helloworld
+package com.ethernom.helloworld.screens
 
 import android.Manifest
 import android.app.AlertDialog
@@ -12,6 +12,10 @@ import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.ethernom.helloworld.R
+import com.ethernom.helloworld.receiver.BleReceiver
+import com.ethernom.helloworld.service.HTSService
+import com.ethernom.helloworld.service.onClearFromRecentService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.system.exitProcess
 
@@ -60,11 +64,13 @@ open class MainActivity : AppCompatActivity() {
      */
     override fun onDestroy() {
         Log.d(TAG, "onDestroy()")
+        unbindService(mServiceConnection)
         super.onDestroy()
     }
 
     override fun onStart() {
         super.onStart()
+
         Log.d(TAG, "onStart()")
 
         /* Check access to BLE is granted */
@@ -171,7 +177,9 @@ open class MainActivity : AppCompatActivity() {
      */
     private fun askToTurnOnBLE() {
         val enableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-        startActivityForResult(enableIntent, REQUEST_ENABLE_BT)
+        startActivityForResult(enableIntent,
+            REQUEST_ENABLE_BT
+        )
     }
 
 

@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#d7b43e</color>
+    <color name="colorPrimaryDark">#86702A</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="secondary_text">#757575</color>
+    <color name="colorLightGray">#F7F7F7</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGray">#D3D3D3</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="progress_popup_background">#80eeeeee</color>
+    <color name="colorActive">#0EFF78</color>
+    <color name="colorInActive">#FF0059</color>
+    <color name="colorOrange">#CDDC39</color>
+    <color name="colorGreen">#009688</color>
+    <color name="colorRed">#F44336</color>
+    <color name="colorBlue">#317AF3</color>
 </resources>

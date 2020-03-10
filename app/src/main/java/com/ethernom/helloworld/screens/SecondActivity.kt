@@ -1,7 +1,8 @@
-package com.ethernom.helloworld
+package com.ethernom.helloworld.screens
 
 import android.app.Activity
 import android.os.Bundle
+import com.ethernom.helloworld.R
 
 class SecondActivity : Activity() {
 
