@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
     tools:context=".screens.ConfirmPinActivity">
 
     <include
@@ -78,6 +79,7 @@
                 android:textColor="@color/colorWhite"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:focusable="true"
                 app:cursorColor="@color/colorAccent"
                 app:cursorWidth="2dp"
                 app:hideLineWhenFilled="true"

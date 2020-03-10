@@ -1,6 +1,8 @@
 package com.ethernom.helloworld.screens
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -18,21 +20,28 @@ class ConfirmPinActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirm_pin)
-
         init()
     }
     @SuppressLint("SetTextI18n")
     private fun init(){
         tvToolbarDefaultBackPressTitle.text = resources.getString(R.string.EthernomTitle)
 
+
+        val pinToConfirm = intent.getStringExtra("pin")
+        Log.i("pin", pinToConfirm!!)
         digitCount = TrackerSharePreference.getConstant(this).pinLength
         pin_view_confirm.itemCount = digitCount
         pin_view_confirm.setAnimationEnable(true)
+        pin_view_confirm.requestFocus()
         pin_view_confirm.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
-                Log.e("TextWatcher", s.toString())
+                if (pinToConfirm == s.toString()){
+                    val returnIntent = Intent()
+                    returnIntent.putExtra("pinVerified", true)
+                    setResult(Activity.RESULT_OK, returnIntent)
+                    onBackPressed()
+                }
             }
-
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 

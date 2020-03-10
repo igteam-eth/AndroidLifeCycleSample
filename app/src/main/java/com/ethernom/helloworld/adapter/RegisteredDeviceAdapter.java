@@ -28,17 +28,16 @@ public class RegisteredDeviceAdapter extends RecyclerView.Adapter  {
     }
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        /*TextView dev_name =  holder.itemView.findViewById(R.id.tv_name);
-        TextView macAdd =  holder.itemView.findViewById(R.id.tv_macaddr);
+        TextView dev_name =  holder.itemView.findViewById(R.id.tv_name);
+        TextView uuid =  holder.itemView.findViewById(R.id.tv_uuidscan);
         BleClient ble_client = bleClient.get(position);
         dev_name.setText(ble_client.getDevName());
-        macAdd.setText(ble_client.getMacAddress());
-        */
-        holder.itemView.setOnClickListener(view -> callback.ItemClickListener(0));
+        uuid.setText(ble_client.getDeviceSN());
+        holder.itemView.setOnClickListener(view -> callback.ItemClickListener(position));
     }
     @Override
     public int getItemCount() {
-        return 1;
+        return bleClient.size();
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
         MyViewHolder(View itemView) {

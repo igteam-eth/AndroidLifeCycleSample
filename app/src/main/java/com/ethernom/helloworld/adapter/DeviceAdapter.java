@@ -20,7 +20,6 @@ public class DeviceAdapter extends RecyclerView.Adapter  {
         this.bleClient = bleClient;
         this.callback = callback;
     }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -30,10 +29,10 @@ public class DeviceAdapter extends RecyclerView.Adapter  {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         TextView dev_name =  holder.itemView.findViewById(R.id.tv_name);
-        TextView macAdd =  holder.itemView.findViewById(R.id.tv_macaddr);
+        TextView macAdd =  holder.itemView.findViewById(R.id.tv_uuidscan);
         BleClient ble_client = bleClient.get(position);
         dev_name.setText(ble_client.getDevName());
-        macAdd.setText(ble_client.getMacAddress());
+        macAdd.setText(ble_client.getDeviceSN());
         holder.itemView.setOnClickListener(view -> callback.ItemClickListener(position));
     }
     @Override

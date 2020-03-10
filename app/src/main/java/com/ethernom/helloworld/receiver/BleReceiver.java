@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
@@ -33,8 +34,11 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.ethernom.helloworld.application.HTSScannerApplication;
+import com.ethernom.helloworld.application.TrackerSharePreference;
+import com.ethernom.helloworld.model.BleClient;
 import com.ethernom.helloworld.screens.MainActivity;
 import com.ethernom.helloworld.R;
+import com.ethernom.helloworld.screens.TrackerActivity;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -81,7 +85,7 @@ public class BleReceiver extends BroadcastReceiver {
     public BleReceiver() {
         Log.v(TAG, "in Constructor");
     }
-
+    private boolean status = true;
     @Override
     public void onReceive(Context context, Intent intent) {
         mContext = context;
@@ -91,8 +95,7 @@ public class BleReceiver extends BroadcastReceiver {
         if (intent.getAction() == null) {
             Log.e(TAG, "ERROR: action is null");
             return;
-        }
-        else {
+        } else {
             Log.v(TAG, "DEBUG: action is " + intent.getAction());
         }
 
@@ -139,9 +142,21 @@ public class BleReceiver extends BroadcastReceiver {
                                 return;
                             }
 
-                            silentNotification(context);
-                            play(context);
 
+                            if (status){
+                                silentNotification(context);
+                                play(context);
+                                status = false;
+                            }else{
+                                final Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        silentNotification(context);
+                                        play(context);
+                                    }
+                                }, 10000);
+                            }
                         }
 
                     } else {
@@ -201,8 +216,7 @@ public class BleReceiver extends BroadcastReceiver {
         if (mShouldScan) {
             Log.d(TAG, "Looks like we were scanning before reboot, so we will start again");
             startScan();
-        }
-        else {
+        } else {
             Log.d(TAG, "Looks like we were not scanning before reboot.");
         }
     }
@@ -211,7 +225,7 @@ public class BleReceiver extends BroadcastReceiver {
      * Called externally only
      *
      * @param context
-     * @param //uuid       Calling code defines the 128-bit UUID
+     * @param //uuid  Calling code defines the 128-bit UUID
      */
     public static void startScanning(Context context) {
         mContext = context;
@@ -225,35 +239,58 @@ public class BleReceiver extends BroadcastReceiver {
         startScan();
     }
 
-    private static ScanFilter getScanFilter(){
+    /*
+    manData.put(18, (byte)0xB8);
+    manData.put(19, (byte)0x56);
+    manData.put(20, (byte)0x6E);
+    manData.put(21, (byte)0x77);*/
+
+    private static ScanFilter getScanFilter() {
+
+        BleClient bleClient = TrackerSharePreference.getConstant(mContext).getEthernomCard();
+        byte[] majors;
+        byte[] minors;
+        if (bleClient != null){
+            String major = bleClient.getMajor();
+            String minor = bleClient.getMinor();
+            majors = hexStringToByteArray(major);
+            minors = hexStringToByteArray(minor);
+        }else{
+            majors = hexStringToByteArray("0000");
+            minors = hexStringToByteArray("0000");
+        }
+
+
+
         ScanFilter.Builder builder = new ScanFilter.Builder();
         ByteBuffer manData = ByteBuffer.allocate(23);
-        manData.put(0, (byte)0x02);
-        manData.put(1, (byte)0x15);
-        manData.put(2, (byte)0x19);
-        manData.put(3, (byte)0x49);
-        manData.put(4, (byte)0x00);
-        manData.put(5, (byte)0x13);
-        manData.put(6, (byte)0x55);
-        manData.put(7, (byte)0x37);
-        manData.put(8, (byte)0x4f);
-        manData.put(9, (byte)0x5e);
-        manData.put(10, (byte)0x99);
-        manData.put(11, (byte)0xca);
-        manData.put(12, (byte)0x29);
-        manData.put(13, (byte)0x0f);
-        manData.put(14, (byte)0x4f);
-        manData.put(15, (byte)0xbf);
-        manData.put(16, (byte)0xf1);
-        manData.put(17, (byte)0x42);
-        manData.put(18, (byte)0xB8); //major
-        manData.put(19, (byte)0x56); //major
-        manData.put(20, (byte)0x6E); //minor
-        manData.put(21, (byte)0x77); //minor
-        manData.put(22, (byte)0xc3);
+        manData.put(0, (byte) 0x02);
+        manData.put(1, (byte) 0x15);
+        manData.put(2, (byte) 0x19);
+        manData.put(3, (byte) 0x49);
+        manData.put(4, (byte) 0x00);
+        manData.put(5, (byte) 0x13);
+        manData.put(6, (byte) 0x55);
+        manData.put(7, (byte) 0x37);
+        manData.put(8, (byte) 0x4f);
+        manData.put(9, (byte) 0x5e);
+        manData.put(10, (byte) 0x99);
+        manData.put(11, (byte) 0xca);
+        manData.put(12, (byte) 0x29);
+        manData.put(13, (byte) 0x0f);
+        manData.put(14, (byte) 0x4f);
+        manData.put(15, (byte) 0xbf);
+        manData.put(16, (byte) 0xf1);
+        manData.put(17, (byte) 0x42);
+        manData.put(18,  majors[0]); //major
+        manData.put(19, majors[1]); //major
+        manData.put(20, minors[0]); //minor
+        manData.put(21, minors[1]); //minor
+        manData.put(22, (byte) 0xc3);
         builder.setManufacturerData(0x004c, manData.array()); //Is this id correct?
         return builder.build();
     }
+
     /**
      * Used internally only
      */
@@ -289,8 +326,7 @@ public class BleReceiver extends BroadcastReceiver {
             bluetoothAdapter.getBluetoothLeScanner().startScan(filters, settings, mPendingIntent);
             mScanning = true;
             notifyScanState();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             Log.e(TAG, "ERROR in startScan() " + e.getMessage());
         }
     }
@@ -311,7 +347,7 @@ public class BleReceiver extends BroadcastReceiver {
     private static void stopScan() {
         Log.d(TAG, "Stop scanning");
 
-        if (mContext== null) {
+        if (mContext == null) {
             Log.d(TAG, "Can't stop: mContext null");
             return;
         }
@@ -333,6 +369,15 @@ public class BleReceiver extends BroadcastReceiver {
             Log.e(TAG, "ERROR in stopScan() " + e.getMessage());
         }
     }
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i+1), 16));
+        }
+        return data;
+    }
 
 
     /**
@@ -348,8 +393,9 @@ public class BleReceiver extends BroadcastReceiver {
     /**
      * Inhibits processing of spurious ACTION_SCANNER_FOUND_DEVICE messages once we have decided to connect to a HTS device.
      * Called by HTSService twice:
-     *  - when it gets a DEVICE_FOUND message from BleReceiver
-     *  - when disconnected from the HTS device.
+     * - when it gets a DEVICE_FOUND message from BleReceiver
+     * - when disconnected from the HTS device.
+     *
      * @param state
      */
     public static void setProcessingDevice(Boolean state) {
@@ -363,7 +409,8 @@ public class BleReceiver extends BroadcastReceiver {
 
     //call to play  sound
     public static void play(Context context) {
-        if (mp != null ){
+        if (mp != null) {
+            mp.setLooping(false);
             mp.stop();
         }
         mp = MediaPlayer.create(context, R.raw.ovending);
@@ -374,7 +421,7 @@ public class BleReceiver extends BroadcastReceiver {
 
     // call to stop sound
     public static void stop() {
-        if(mp != null) {
+        if (mp != null) {
             mp.stop();
         }
     }
@@ -391,11 +438,11 @@ public class BleReceiver extends BroadcastReceiver {
         manager.createNotificationChannel(channel);
         Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
         builder.setSmallIcon(R.drawable.ic_launcher_background);
-        builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
-        builder.setContentTitle(context.getString(R.string.app_name));
-        builder.setContentText("This is message");
+        builder.setColor(ContextCompat.getColor(context, R.color.colorWhite));
+        builder.setContentTitle("Ethernom Tracker");
+        builder.setContentText("You rang your phone from your device");
         builder.setAutoCancel(false);
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, TrackerActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         builder.setContentIntent(pendingIntent);

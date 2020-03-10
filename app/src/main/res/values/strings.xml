@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EthernomHelloWorld</string>
+    <string name="app_name">ETHERNOM BLE TRACKER</string>
     <string name="update">Update</string>
     <string name="hello_world_0">hello world 0</string>
     <string name="channel_name">Simple Alarms</string>
@@ -81,4 +81,8 @@
     <string name="four_digits">4 Digits</string>
     <string name="six_digits">6 Digits</string>
     <string name="delete_device">Delete device</string>
+    <string name="copyright">Copyright © 2020 Ethernom, Inc.</string>
+    <string name="all_right">All Rights Reserved</string>
+    <string name="terms_of_service">Terms Of Serivce</string>
+    <string name="privacy_policy">Privacy Policy</string>
 </resources>

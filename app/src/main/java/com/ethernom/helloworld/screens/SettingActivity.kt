@@ -1,5 +1,6 @@
 package com.ethernom.helloworld.screens
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +9,9 @@ import com.ethernom.helloworld.R
 import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 import android.app.Activity
+import com.ethernom.helloworld.BuildConfig
 import com.ethernom.helloworld.application.TrackerSharePreference
+import kotlinx.android.synthetic.main.activity_about.*
 
 
 class SettingActivity : AppCompatActivity() {
@@ -18,6 +21,7 @@ class SettingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
         init()
     }
+
 
     private fun init(){
         text_toolbar_title.text = resources.getString(R.string.settings)
@@ -33,7 +37,7 @@ class SettingActivity : AppCompatActivity() {
             Log.i("onclick", "Permission")
         }
         view_about_info.setOnClickListener {
-            Log.i("onclick", "About")
+            startActivity(Intent(this, AboutActivity::class.java))
         }
     }
 

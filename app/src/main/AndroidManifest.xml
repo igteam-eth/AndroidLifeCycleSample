@@ -18,17 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.PinLengthSelectionActivity"></activity>
+        <activity android:name=".screens.AboutActivity"/>
+        <activity android:name=".screens.PinLengthSelectionActivity" />
         <activity android:name=".screens.SettingActivity" />
         <activity android:name=".screens.ConfirmPinActivity">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
         <activity android:name=".screens.DiscoverDeviceActivity" />
         <activity android:name=".screens.TrackerActivity">
@@ -41,7 +34,13 @@
         <activity
             android:name=".screens.SecondActivity"
             android:theme="@style/Theme.Transparent" />
-        <activity android:name=".screens.MainActivity"></activity>
+        <activity android:name=".screens.MainActivity" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
 
         <receiver android:name=".receiver.MyAppReceiver" />
 
