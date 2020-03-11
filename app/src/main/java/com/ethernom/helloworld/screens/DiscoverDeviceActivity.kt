@@ -40,6 +40,7 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
         setContentView(R.layout.activity_discover_device)
 
         checkLocationPermission()
+        //loadingView.start()
         mBleScan = BLEScan(this, this)
         mBTDevicesArrayList = ArrayList()
         setUpList()

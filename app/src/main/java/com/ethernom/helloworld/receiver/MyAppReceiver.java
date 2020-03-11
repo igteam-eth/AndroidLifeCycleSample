@@ -34,7 +34,7 @@ public class MyAppReceiver extends BroadcastReceiver {
         assert manager != null;
         manager.createNotificationChannel(channel);
         Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
         builder.setContentTitle(context.getString(R.string.app_name));
         builder.setContentText("Click to relaunch hello world");

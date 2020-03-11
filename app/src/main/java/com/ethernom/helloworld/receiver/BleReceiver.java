@@ -413,7 +413,7 @@ public class BleReceiver extends BroadcastReceiver {
             mp.setLooping(false);
             mp.stop();
         }
-        mp = MediaPlayer.create(context, R.raw.ovending);
+        mp = MediaPlayer.create(context, R.raw.ringingsound);
         mp.setLooping(true);
         mp.start();
 
@@ -429,7 +429,6 @@ public class BleReceiver extends BroadcastReceiver {
     //show notification when beacon come up
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void silentNotification(Context context) {
-
         final NotificationManager manager =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         final NotificationChannel channel =
@@ -437,7 +436,7 @@ public class BleReceiver extends BroadcastReceiver {
         assert manager != null;
         manager.createNotificationChannel(channel);
         Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
-        builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setColor(ContextCompat.getColor(context, R.color.colorWhite));
         builder.setContentTitle("Ethernom Tracker");
         builder.setContentText("You rang your phone from your device");

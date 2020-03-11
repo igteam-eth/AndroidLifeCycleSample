@@ -1,8 +1,10 @@
 package com.ethernom.helloworld.screens
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,7 +21,9 @@ import androidx.annotation.RequiresApi
 import com.ethernom.helloworld.application.TrackerSharePreference
 import androidx.appcompat.app.AlertDialog
 import com.ethernom.helloworld.receiver.BleReceiver
+import com.ethernom.helloworld.screens.MainActivity.Companion.PERMISSION_REQUEST_COARSE_LOCATION
 import com.ethernom.helloworld.service.HTSService
+import kotlin.system.exitProcess
 
 
 class TrackerActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback, ItemDeleteCallback {
@@ -32,14 +36,26 @@ class TrackerActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallb
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracker)
-        init()
-    }
-
-    private fun init(){
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            BleReceiver.stop()
+            init()
+        }else{
+            AlertDialog.Builder(this)
+                .setTitle("Information")
+                .setMessage("This app is supported from version 8 or later")
+                .setPositiveButton(android.R.string.yes
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                    exitProcess(1)
+                }
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show()
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun init(){
+        BleReceiver.stop()
         serviceIntent = Intent(applicationContext, HTSService::class.java)
         trackerSharePreference = TrackerSharePreference.getConstant(this)
         registeredDeviceAdapter =  RegisteredDeviceAdapter(registeredDeviceList, this)
@@ -70,35 +86,39 @@ class TrackerActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallb
     override fun ItemClickListener(position: Int) {
         DeleteDeviceBottomDialog(this, this ).show()
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemDeleteClicked() {
         registeredDeviceList.clear()
         registeredDeviceAdapter!!.notifyDataSetChanged()
         trackerSharePreference.ethernomCard = null
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            BleReceiver.stop()
-            val service = Intent(this, HTSService::class.java)
-            Log.d(TrackerActivity::class.java.simpleName, "Binding service")
-            bindService(service, mServiceConnection, 0)
-            startHTSService("Activity created")
-            BleReceiver.startScanning(this)
-        }
+        BleReceiver.stop()
+        BleReceiver.stopScanning()
+        //startService()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-
-        if (trackerSharePreference.ethernomCard != null && registeredDeviceList.isEmpty()) {
-            val service = Intent(this, HTSService::class.java)
-            // We pass 0 as a flag so the service will not be created if not exists.
-            Log.d(TrackerActivity::class.java.simpleName, "Binding service")
-            bindService(service, mServiceConnection, 0)
-            startHTSService("Activity created")
-            BleReceiver.startScanning(this)
-            val bleClient : BleClient=  trackerSharePreference.ethernomCard
-            registeredDeviceList.add(bleClient)
-            registeredDeviceAdapter!!.notifyDataSetChanged()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (trackerSharePreference.ethernomCard != null && registeredDeviceList.isEmpty()) {
+                startService()
+                val bleClient : BleClient=  trackerSharePreference.ethernomCard
+                registeredDeviceList.add(bleClient)
+                registeredDeviceAdapter!!.notifyDataSetChanged()
+            }
         }
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun startService() {
+        val service = Intent(this, HTSService::class.java)
+        // We pass 0 as a flag so the service will not be created if not exists.
+        Log.d(TrackerActivity::class.java.simpleName, "Binding service")
+        bindService(service, mServiceConnection, 0)
+        startHTSService("Activity created")
+        BleReceiver.startScanning(this)
     }
 
     private fun startHTSService(reason: String) {
@@ -143,6 +163,66 @@ class TrackerActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallb
         Log.d(MainActivity.TAG, "onDestroy()")
         //unbindService(mServiceConnection)
         super.onDestroy()
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun requestBluetoothPermission() {
+        val TAG = "Tracker"
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android M Permission check
+            Log.d(TAG, "Checking Bluetooth permissions")
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) !== PackageManager.PERMISSION_GRANTED) {
+
+                Log.d(TAG, "  Permission is not granted")
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Permission Required for BLE Device Detection")
+                builder.setMessage("Bluetooth operation requires 'location' access.\nPlease grant this so the app can detect BLE devices")
+                //builder.setIcon(R.drawable.cross);
+                builder.setPositiveButton(android.R.string.ok, null)
+                builder.setOnDismissListener {
+                    // User replies then there is a call to onRequestPermissionsResult() below
+                    requestPermissions(
+                        arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                        PERMISSION_REQUEST_COARSE_LOCATION
+                    )
+                }
+
+                builder.show()
+            } else {
+                Log.d(TAG, "  Permission is granted")
+            }
+        }
+    }
+
+    /* This is called when the user responds to the request permission dialog */
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        val TAG = "Tracker"
+        when (requestCode) {
+            PERMISSION_REQUEST_COARSE_LOCATION -> {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "Coarse location permission granted")
+                } else {
+                    Log.d(TAG, "Coarse location permission refused.")
+                    val builder = AlertDialog.Builder(this)
+                    builder.setTitle("This App will not Work as Intended")
+                    builder.setMessage("Android requires you to grant access to device\'s location in order to scan for Bluetooth devices.")
+                    //builder.setIcon(R.drawable.cross);
+                    builder.setPositiveButton(android.R.string.ok, null)
+                    builder.setOnDismissListener { }
+                    builder.show()
+                }
+                return
+            }
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onStart() {
+        super.onStart()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requestBluetoothPermission()
+        }
+
     }
 
 

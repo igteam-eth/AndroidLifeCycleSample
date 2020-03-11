@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.WindowManager
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.application.TrackerSharePreference
 import kotlinx.android.synthetic.main.activity_confirm_pin.*
@@ -25,7 +26,7 @@ class ConfirmPinActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun init(){
         tvToolbarDefaultBackPressTitle.text = resources.getString(R.string.EthernomTitle)
-
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
 
         val pinToConfirm = intent.getStringExtra("pin")
         Log.i("pin", pinToConfirm!!)

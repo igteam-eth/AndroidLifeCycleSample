@@ -12,7 +12,7 @@
         layout="@layout/toolbar_default_backpress" />
 
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,81 +20,76 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/text_authentication"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/text_authentication"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:gravity="center"
-                android:text="@string/authentication"
-                android:textColor="@color/colorBlack"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:gravity="center"
+            android:text="@string/authentication"
+            android:textColor="@color/colorBlack"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-            <TextView
-                android:id="@+id/text_authentication_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:text="@string/message"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_authentication" />
+        <TextView
+            android:id="@+id/text_authentication_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:text="@string/message"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_authentication" />
 
-            <ImageView
-                android:id="@+id/image_hand"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="8dp"
-                android:src="@drawable/ic_card_with_hand"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pin_view_confirm"
-                app:layout_constraintVertical_bias="0.502" />
+        <ImageView
+            android:id="@+id/image_hand"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_card_with_hand"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pin_view_confirm"
+            app:layout_constraintVertical_bias="0.502" />
 
-            <com.chaos.view.PinView
-                android:id="@+id/pin_view_confirm"
-                style="@style/PinWidget.PinView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:cursorVisible="true"
-                android:inputType="numberSigned"
-                android:itemBackground="@color/colorBlack"
-                android:padding="@dimen/dimen_10dp"
-                android:textColor="@color/colorWhite"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:focusable="true"
-                app:cursorColor="@color/colorAccent"
-                app:cursorWidth="2dp"
-                app:hideLineWhenFilled="true"
-                app:itemCount="4"
-                app:itemHeight="60dp"
-                app:itemRadius="4dp"
-                app:itemSpacing="0dp"
-                app:itemWidth="60dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_authentication_message"
-                app:lineColor="@color/colorPrimary"
-                app:lineWidth="2dp"
-                app:viewType="rectangle" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+        <com.chaos.view.PinView
+            android:id="@+id/pin_view_confirm"
+            style="@style/PinWidget.PinView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:cursorVisible="true"
+            android:focusable="true"
+            android:inputType="numberSigned"
+            android:itemBackground="@color/colorBlack"
+            android:padding="@dimen/dimen_10dp"
+            android:textColor="@color/colorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cursorColor="@color/colorAccent"
+            app:cursorWidth="2dp"
+            app:hideLineWhenFilled="true"
+            app:itemCount="4"
+            app:itemHeight="60dp"
+            app:itemRadius="4dp"
+            app:itemSpacing="0dp"
+            app:itemWidth="60dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_authentication_message"
+            app:lineColor="@color/colorPrimary"
+            app:lineWidth="2dp"
+            app:viewType="rectangle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
