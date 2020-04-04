@@ -46,6 +46,10 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+
+        BleReceiver.stopScan();
+        BleReceiver.startScan(context);
+
         int index = TrackerSharePreference.getConstant(context).getCurrentIndex();
 
         if (index >= periodList.size()){
@@ -59,15 +63,15 @@ public class AlarmReceiver extends BroadcastReceiver {
                 mIntent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-
         AlarmManager alarmService = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmService.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (periodList.get(index) * 1000), pendingIntent);
 
         MyApplication.appendLog("Start Alarm In AlarmReceiver at :     "+ MyApplication.getCurrentDate()+"\n");
         MyApplication.appendLog("Current Alarm Create with Period Time:  "+ periodList.get(index)+"     " + MyApplication.getCurrentDate()+"\n");
 
-
         TrackerSharePreference.getConstant(context).setCurrentIndex(TrackerSharePreference.getConstant(context).getCurrentIndex()+1);
+
+
 
 
 

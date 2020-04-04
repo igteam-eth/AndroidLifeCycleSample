@@ -29,6 +29,8 @@ public class MyWorkManager extends Worker {
 
         MyApplication.appendLog("Start MyWorkManager    " + MyApplication.getCurrentDate()+"\n");
 
+        BleReceiver.startScan(mContext);
+
         Intent intent = new Intent(mContext, AlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 mContext, 0,
@@ -42,6 +44,8 @@ public class MyWorkManager extends Worker {
         MyApplication.appendLog("Current Alarm Create with Period Time:  "+ periodList.get(0)+"     " + MyApplication.getCurrentDate()+"\n");
 
         TrackerSharePreference.getConstant(mContext).setCurrentIndex(TrackerSharePreference.getConstant(mContext).getCurrentIndex()+1);
+
+
 
         return Result.success();
     }
