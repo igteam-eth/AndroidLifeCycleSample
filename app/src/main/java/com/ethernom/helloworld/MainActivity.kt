@@ -71,16 +71,15 @@ class MainActivity : AppCompatActivity() {
                 val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
                     .addTag("WORK_MANAGER")
                     .build()
-                WorkManager.getInstance(this).enqueueUniqueWork("WORK_MANAGER", ExistingWorkPolicy.REPLACE, oneTimeRequest)
+                WorkManager.getInstance(this).enqueue(oneTimeRequest)
             }else{
                 Log.d(TAG, "Already Scan")
             }
-
-
         }
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
+
         super.onStart()
         requestBluetoothPermission()
         BleReceiver.stopSound()

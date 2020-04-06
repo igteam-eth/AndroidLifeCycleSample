@@ -16,6 +16,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public static ArrayList<Integer> periodList = new ArrayList<Integer>() {
         {
+
             add(4*60);
             add(5*60);
             add(15*60);

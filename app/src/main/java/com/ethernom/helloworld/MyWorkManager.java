@@ -45,8 +45,6 @@ public class MyWorkManager extends Worker {
 
         TrackerSharePreference.getConstant(mContext).setCurrentIndex(TrackerSharePreference.getConstant(mContext).getCurrentIndex()+1);
 
-
-
         return Result.success();
     }
 }

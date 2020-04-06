@@ -119,10 +119,10 @@ public class BleReceiver extends BroadcastReceiver {
         manData.put(15, (byte) 0xbf);
         manData.put(16, (byte) 0xf1);
         manData.put(17, (byte) 0x42);
-        manData.put(18, (byte) 0xDF); //major
-        manData.put(19, (byte) 0x2B); //major
-        manData.put(20, (byte) 0xAA); //minor
-        manData.put(21, (byte) 0x65); //minor
+        manData.put(18, (byte) 0x16); //major
+        manData.put(19, (byte) 0x9C); //major
+        manData.put(20, (byte) 0x95); //minor
+        manData.put(21, (byte) 0x2C); //minor
         manData.put(22, (byte) 0xc3);
         builder.setManufacturerData(0x004c, manData.array());
         return builder.build();
