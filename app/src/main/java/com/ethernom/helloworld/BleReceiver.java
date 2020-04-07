@@ -119,10 +119,10 @@ public class BleReceiver extends BroadcastReceiver {
         manData.put(15, (byte) 0xbf);
         manData.put(16, (byte) 0xf1);
         manData.put(17, (byte) 0x42);
-        manData.put(18, (byte) 0x16); //major
-        manData.put(19, (byte) 0x9C); //major
-        manData.put(20, (byte) 0x95); //minor
-        manData.put(21, (byte) 0x2C); //minor
+        manData.put(18, (byte) 0x9E); //major
+        manData.put(19, (byte) 0x0C); //major
+        manData.put(20, (byte) 0x46); //minor
+        manData.put(21, (byte) 0x5D); //minor
         manData.put(22, (byte) 0xc3);
         builder.setManufacturerData(0x004c, manData.array());
         return builder.build();
@@ -153,7 +153,7 @@ public class BleReceiver extends BroadcastReceiver {
         intent.setAction(BleReceiver.ACTION_SCANNER_FOUND_DEVICE);
         int id = 0;
 
-        mPendingIntent = PendingIntent.getBroadcast(mContext, id, intent, PendingIntent.FLAG_ONE_SHOT);
+        mPendingIntent = PendingIntent.getBroadcast(mContext, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Now start the scanner
         try {
