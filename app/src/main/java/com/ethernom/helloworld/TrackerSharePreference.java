@@ -12,7 +12,8 @@ public class TrackerSharePreference {
 
     public enum SharedPreKeyType {
         INDEX,
-        IS_ALREADY_SCAN
+        IS_ALREADY_SCAN,
+        SCAN_COUNTER
     }
 
     private TrackerSharePreference(Context context) {
@@ -31,13 +32,13 @@ public class TrackerSharePreference {
         sharedPrefs.edit().clear().apply();
     }
 
-    public void setCurrentIndex(int index) {
+   /* public void setCurrentIndex(int index) {
         sharedPrefs.edit().putInt(SharedPreKeyType.INDEX.toString(), index).apply();
     }
 
     public int getCurrentIndex() {
         return sharedPrefs.getInt(SharedPreKeyType.INDEX.toString(), 0);
-    }
+    }*/
     public void setAlreadyScan(boolean isScan) {
         sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_ALREADY_SCAN.toString(), isScan).apply();
     }
@@ -46,4 +47,11 @@ public class TrackerSharePreference {
         return sharedPrefs.getBoolean(SharedPreKeyType.IS_ALREADY_SCAN.toString(), false);
     }
 
+     public void setScanCounter(int counter) {
+        sharedPrefs.edit().putInt(SharedPreKeyType.SCAN_COUNTER.toString(), counter).apply();
+    }
+
+    public int getScanCounter() {
+        return sharedPrefs.getInt(SharedPreKeyType.SCAN_COUNTER.toString(), 0);
+    }
 }

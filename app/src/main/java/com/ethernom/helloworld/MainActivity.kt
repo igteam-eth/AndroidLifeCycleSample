@@ -22,6 +22,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        //set counter to 0
+        TrackerSharePreference.getConstant(this).scanCounter = 0
+
         var clickCount = 0
         button.setOnClickListener {
             clickCount++
@@ -72,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                     .addTag("WORK_MANAGER")
                     .build()
                 WorkManager.getInstance(this).enqueue(oneTimeRequest)
+
             }else{
                 Log.d(TAG, "Already Scan")
             }

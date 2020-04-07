@@ -80,9 +80,11 @@ public class BleReceiver extends BroadcastReceiver {
                                 Log.d(TAG, "getScanRecord is null");
                                 continue;
                             }
-
                             showSilentNotification(context);
                             playSound(context);
+                            TrackerSharePreference.getConstant(context).setScanCounter(TrackerSharePreference.getConstant(context).getScanCounter() - 1);
+
+                            MyApplication.appendLog("BleReceiver onReceive Scan Counter after decrease:   " + TrackerSharePreference.getConstant(context).getScanCounter()+ "    " + MyApplication.getCurrentDate()+"\n");
 
                         }
 
@@ -153,7 +155,7 @@ public class BleReceiver extends BroadcastReceiver {
         intent.setAction(BleReceiver.ACTION_SCANNER_FOUND_DEVICE);
         int id = 0;
 
-        mPendingIntent = PendingIntent.getBroadcast(mContext, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        mPendingIntent = PendingIntent.getBroadcast(mContext, id, intent, PendingIntent.FLAG_ONE_SHOT);
 
         // Now start the scanner
         try {
@@ -207,7 +209,7 @@ public class BleReceiver extends BroadcastReceiver {
         }
 
         mp = MediaPlayer.create(context, R.raw.ringingsound_short);
-        mp.setLooping(true);
+        //mp.setLooping(true);
         mp.start();
 
     }
