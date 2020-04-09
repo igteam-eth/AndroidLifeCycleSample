@@ -12,27 +12,47 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".application.HTSScannerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".MyApplication"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".MainActivity">
+        <activity android:name=".screens.AboutActivity"/>
+        <activity android:name=".screens.PinLengthSelectionActivity" />
+        <activity android:name=".screens.SettingActivity" />
+        <activity android:name=".screens.ConfirmPinActivity">
+        </activity>
+        <activity android:name=".screens.DiscoverDeviceActivity" />
+        <activity android:name=".screens.TrackerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".screens.SecondActivity" />
+        <activity android:name=".screens.MainActivity" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <receiver android:name=".AlarmReceiver"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <receiver android:name=".receiver.MyAppReceiver" />
+
+
+        <service
+            android:name=".service.onClearFromRecentService"
+            android:stopWithTask="false" />
 
         <receiver
-            android:name=".BleReceiver"
+            android:name=".receiver.BleReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -41,6 +61,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove" />
 
     </application>
 

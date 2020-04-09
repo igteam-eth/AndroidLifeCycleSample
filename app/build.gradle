@@ -43,7 +43,12 @@ dependencies {
     implementation 'no.nordicsemi.android.support.v18:scanner:1.4.3'
     // Nordic logger
     implementation 'no.nordicsemi.android:log:2.2.0'
-    def work_version = "2.3.4"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.chaos.view:pinview:1.4.3'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.64'
+    implementation "androidx.preference:preference:1.1.0"
+    def work_version = "2.3.3"
 
     // (Java only)
     implementation "androidx.work:work-runtime:$work_version"
