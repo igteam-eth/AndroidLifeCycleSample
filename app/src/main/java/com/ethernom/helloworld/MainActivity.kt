@@ -2,15 +2,21 @@ package com.ethernom.helloworld
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.lang.Exception
+import android.content.Intent
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +32,19 @@ class MainActivity : AppCompatActivity() {
             clickCount++
             text_result.text = "${text_result.text} \nhello world $clickCount"
         }
+
+        try{
+            val isNotification = intent.getBooleanExtra("NOTIFICATION", false)
+            if (isNotification){
+                TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = false
+                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Notification onClick true\n")
+            }else{
+                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Notification onClick false \n")
+            }
+
+        }catch (e: Exception){
+            MyApplication.appendLog("${MyApplication.getCurrentDate()} : Error "+ e.message + "\n")
+        }
     }
 
     override fun onStart() {
@@ -34,19 +53,23 @@ class MainActivity : AppCompatActivity() {
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : onStart called \n")
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume called \n")
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : onResume called\n")
 
-        if (requestWriteExternalStorage()){
+        if (requestWriteExternalStorage() && requestBluetoothPermission() ){
+            if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread){
+                TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = true
+                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
+                //OneTimeWorkRequest
+                val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
+                    .addTag("WORK_MANAGER")
+                    .build()
+                WorkManager.getInstance(this).enqueue(oneTimeRequest)
+            }
 
-            MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
-            //OneTimeWorkRequest
-            val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
-                .addTag("WORK_MANAGER")
-                .build()
-            WorkManager.getInstance(this).enqueue(oneTimeRequest)
         }
     }
 
@@ -89,5 +112,50 @@ class MainActivity : AppCompatActivity() {
         } else {
             return true
         }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun requestBluetoothPermission() : Boolean {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // Android M Permission check
+            Log.d(TAG, "Checking Bluetooth permissions")
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) !== PackageManager.PERMISSION_GRANTED ) {
+                Log.d(TAG, "  Permission is not granted")
+                val builder = AlertDialog.Builder(this)
+                builder.setTitle("Permission Required for BLE Device Detection")
+                builder.setMessage("Bluetooth operation requires 'location' access.\nPlease grant this so the app can detect BLE devices")
+                //builder.setIcon(R.drawable.cross);
+                builder.setPositiveButton(android.R.string.ok, null)
+
+                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) !== PackageManager.PERMISSION_GRANTED){
+                        builder.setOnDismissListener {
+                            // User replies then there is a call to onRequestPermissionsResult() below
+                            requestPermissions(
+                                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                                PERMISSION_REQUEST_COARSE_LOCATION
+                            )
+                        }
+                    }
+                }else{
+                    builder.setOnDismissListener {
+                        // User replies then there is a call to onRequestPermissionsResult() below
+                        requestPermissions(
+                            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                            PERMISSION_REQUEST_COARSE_LOCATION
+                        )
+                    }
+                }
+
+                builder.show()
+                return false
+            } else {
+                Log.d(TAG, "  Permission is granted")
+                return true
+            }
+        }else return false
+    }
+    companion object{
+        const val PERMISSION_REQUEST_COARSE_LOCATION = 1
     }
 }
