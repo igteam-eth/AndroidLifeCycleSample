@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">EthernomHelloWorld</string>
+    <string name="update">Update</string>
+    <string name="hello_world_0">hello world 0</string>
+</resources>
