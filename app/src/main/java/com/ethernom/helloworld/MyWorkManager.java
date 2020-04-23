@@ -22,7 +22,8 @@ public class MyWorkManager extends Worker {
     @Override
     public Result doWork() {
 
-        MyApplication.appendLog(MyApplication.getCurrentDate()+ " : MyWorkManager doWork \n");
+        MyApplication.appendLog(MyApplication.getCurrentDate()+" : MyWorkManager(Worker thread) in doWork  "  +"\n\n");
+
         BleReceiver.startScan(mContext);
         return Result.success();
     }

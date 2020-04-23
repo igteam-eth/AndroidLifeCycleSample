@@ -11,8 +11,8 @@ public class TrackerSharePreference {
     private Context mContext = null;
 
     public enum SharedPreKeyType {
-        IS_ALREADY_CREATE_WORKER,
-        IS_ALREADY_CREATE_ALARM_WORKER
+        IS_ALREADY_CREATE_WORKDER,
+        ALARM_ONE_SHOT
     }
 
     private TrackerSharePreference(Context context) {
@@ -27,19 +27,19 @@ public class TrackerSharePreference {
         return mAppShareConstant;
     }
 
-    public void setAlreadyCreateWorkerThread(boolean isAlready) {
-        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_ALREADY_CREATE_WORKER.toString(), isAlready).apply();
+    public void setAlreadyCreateWorkerThread(boolean isScan) {
+        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_ALREADY_CREATE_WORKDER.toString(), isScan).apply();
     }
 
     public boolean isAlreadyCreateWorkerThread() {
-        return sharedPrefs.getBoolean(SharedPreKeyType.IS_ALREADY_CREATE_WORKER.toString(), false);
+        return sharedPrefs.getBoolean(SharedPreKeyType.IS_ALREADY_CREATE_WORKDER.toString(), false);
     }
-    public void setAlreadyCreateAlarmWorkerThread(boolean isAlready) {
-        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_ALREADY_CREATE_ALARM_WORKER.toString(), isAlready).apply();
+    public void setAlreadyCreateAlarm(boolean isCreated) {
+        sharedPrefs.edit().putBoolean(SharedPreKeyType.ALARM_ONE_SHOT.toString(), isCreated).apply();
     }
 
-    public boolean isAlreadyCreateAlarmWorkerThread() {
-        return sharedPrefs.getBoolean(SharedPreKeyType.IS_ALREADY_CREATE_ALARM_WORKER.toString(), false);
+    public boolean isAlreadyCreateAlarm() {
+        return sharedPrefs.getBoolean(SharedPreKeyType.ALARM_ONE_SHOT.toString(), false);
     }
 
 }

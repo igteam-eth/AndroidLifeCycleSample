@@ -16,8 +16,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.lang.Exception
 import android.content.Intent
 
-
-
 class MainActivity : AppCompatActivity() {
 
     private var TAG = "APP_MainActivity"
@@ -25,8 +23,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
+        Log.d(TAG, "onCreate called \n")
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onCreate called\n")
         var clickCount = 0
         button.setOnClickListener {
             clickCount++
@@ -37,56 +35,46 @@ class MainActivity : AppCompatActivity() {
             val isNotification = intent.getBooleanExtra("NOTIFICATION", false)
             if (isNotification){
                 TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = false
-                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Notification was clicked and change isAlreadyCreateWorkerThread = false for rearming scan.\n")
+                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Notification onClick true\n")
+            }else{
+                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Notification onClick false \n")
             }
 
         }catch (e: Exception){
             MyApplication.appendLog("${MyApplication.getCurrentDate()} : Error "+ e.message + "\n")
         }
-
-        Log.d(TAG, "onCreate called \n")
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onCreate stage is called\n")
     }
 
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart called \n")
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onStart stage is called \n")
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onStart called \n")
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
         Log.d(TAG, "onResume called \n")
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onResume stage is called\n")
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onResume called\n")
 
         if (requestWriteExternalStorage() && requestBluetoothPermission() ){
 
             if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread){
                 TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = true
-                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue MyWorkManager\n")
+                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
                 //OneTimeWorkRequest
-                val oneTimeRequestWork = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
+                val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
                     .addTag("WORK_MANAGER")
                     .build()
-                WorkManager.getInstance(this).enqueue(oneTimeRequestWork)
+                WorkManager.getInstance(this).enqueue(oneTimeRequest)
             }
 
+            if (!TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm){
+                TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm = true
+                val startIntent = Intent(this, AlarmReceiver::class.java)
+                sendBroadcast(startIntent)
 
-            if (!TrackerSharePreference.getConstant(this).isAlreadyCreateAlarmWorkerThread){
-
-                TrackerSharePreference.getConstant(this).isAlreadyCreateAlarmWorkerThread = true
-                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue AlarmWorkManager\n")
-                //OneTimeWorkRequest
-                val alarmOneTimeRequestWork = OneTimeWorkRequest.Builder(AlarmWorkManager::class.java)
-                    .addTag("ALARM_WORK_MANAGER")
-                    .build()
-                WorkManager.getInstance(this).enqueue(alarmOneTimeRequestWork)
             }
-
-
-
-
 
         }
     }
@@ -94,28 +82,29 @@ class MainActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         Log.d(TAG, "onPause called \n")
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onPause stage is called\n")
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onPause called\n")
     }
 
     override fun onRestart() {
         super.onRestart()
         Log.d(TAG, "onRestart called \n")
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onRestart stage is called\n")
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onRestart called\n")
     }
 
     override fun onStop() {
         super.onStop()
         Log.d(TAG, "onStop called \n")
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onStop stage is called\n")
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onStop called\n")
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "onDestroy called \n")
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onDestroy stage is called\n")
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onDestroy called\n")
     }
 
     private fun requestWriteExternalStorage(): Boolean {
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : requestWriteExternalStorage called\n")
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE

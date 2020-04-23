@@ -138,9 +138,13 @@ public class BleReceiver extends BroadcastReceiver {
         manData.put(18, (byte) 0x61); //major
         manData.put(19, (byte) 0x7F); //major
         manData.put(20, (byte) 0xA9); //minor
-        manData.put(21, (byte) 0x8D); //minor*/
+        manData.put(21, (byte) 0x8D); //minor */
 
-
+        /*Zophak
+        manData.put(18, (byte) 0x81); //major
+        manData.put(19, (byte) 0xcb); //major
+        manData.put(20, (byte) 0xd8); //minor
+        manData.put(21, (byte) 0x89); //minor */
 
     /**
      * Used internally only
