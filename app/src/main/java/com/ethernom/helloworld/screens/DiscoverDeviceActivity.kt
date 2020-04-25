@@ -163,6 +163,11 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
         hideProgressBar()
         finish()
     }
+    override fun getSecureServerFailed(message: String?) {
+        Log.e(TAG, message);
+        hideProgressBar()
+
+    }
 
     private fun reversString(data: String) =
         arrayOf(data.substring(0, getMinLength(data)), data.substring(getMinLength(data)))
@@ -203,5 +208,6 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
+        const val TAG : String = "DiscoverDeviceActivity"
     }
 }

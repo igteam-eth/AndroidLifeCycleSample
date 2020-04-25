@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
         Log.d(TAG, "onCreate called \n")
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : onCreate called\n")
 
-
         trackerSharePreference = TrackerSharePreference.getConstant(this)
         registeredDeviceAdapter =  RegisteredDeviceAdapter(registeredDeviceList, this)
         rv_registered_device.layoutManager = LinearLayoutManager(this)
@@ -229,28 +228,6 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
                 return true
             }
         }else return false
-    }
-
-
-    private fun getData() {
-        val token = "6$9a(_@|A3nr+p3y-wL$1@8*VFKW,Qt.m@O:fnqo<8#_4wG}pwJvIB*pxKb.sL3r"
-        val auth = "Bearer $token"
-
-        var mHost = HostModel("Ethernom, Inc.", "BLE Tracker", "com.ethernom.ble.tracker", "android","1.0.13" )
-
-        var mData =  DataModel("00010002000000b0", "A19100503844", mHost)
-        val call: Call<DataResponseModel> = ApiClient.getClient.getAppKey(auth, mData)
-        call.enqueue(object : Callback<DataResponseModel> {
-
-            override fun onResponse(call: Call<DataResponseModel>?, response: Response<DataResponseModel>?) {
-                Log.d(TAG, "onResponse "+response!!.body().toString())
-            }
-
-            override fun onFailure(call: Call<DataResponseModel>?, t: Throwable?) {
-                Log.d(TAG, "onFailure "+t!!.message.toString())
-            }
-
-        })
     }
     companion object{
         const val PERMISSION_REQUEST_COARSE_LOCATION = 1

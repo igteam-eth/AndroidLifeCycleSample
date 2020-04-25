@@ -10,12 +10,18 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.util.Log;
 
+import com.ethernom.helloworld.GetAppKeyCallback;
+import com.ethernom.helloworld.GetPrivateKeyPresenter;
 import com.ethernom.helloworld.application.SettingSharePreference;
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.model.CardInfo;
+import com.ethernom.helloworld.model.DataModel;
+import com.ethernom.helloworld.model.DataResponseModel;
+import com.ethernom.helloworld.model.HostModel;
 import com.ethernom.helloworld.util.Conversion;
 import com.ethernom.helloworld.util.ECDSA_P256;
 import com.ethernom.helloworld.util.EthernomConstKt;
+import com.ethernom.helloworld.webservice.ApiClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +32,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class BLEAdapter {
+import retrofit2.Call;
+
+import static org.bouncycastle.util.Arrays.reverse;
+
+public class BLEAdapter implements GetAppKeyCallback {
     private static String TAG = "EtherBTAdapter";
     private static UUID ETH_serviceUUID = UUID.fromString("19490001-5537-4F5E-99CA-290F4FBFF142");
     private static UUID ETH_characteristicUUID = UUID.fromString("19490002-5537-4F5E-99CA-290F4FBFF142");
@@ -40,6 +50,10 @@ public class BLEAdapter {
     private List<Byte> _temp_buffer = new ArrayList<Byte>();
     private String _host_name;
     private BLEAdapterCallback mBLEAdapterCallback;
+    private String _sn;
+    private String _m_id;
+    private byte[] challenge = new byte[32];
+
     public BLEAdapter(Context context, BLEAdapterCallback mBLEAdapterCallback){
         this._context = context;
         final BluetoothManager bluetoothManager =
@@ -89,7 +103,8 @@ public class BLEAdapter {
                         Log.i(TAG, "onDescriptorWrite, fire listener");
                         if (status == 0) {
                             Log.i(TAG, "Connection success");
-                            H2CAuthentication((byte) 0x01);
+                            //H2CAuthentication((byte) 0x01);
+                            H2CGetSerialNum();
                         }
                         else
                             Log.i(TAG, "Connection fail");
@@ -122,6 +137,42 @@ public class BLEAdapter {
         if(gatt != null)
             gatt.close();
     }
+
+    public void H2CGetSerialNum() {
+        byte[] payload = new byte[4];
+        payload[0] = EthernomConstKt.getCM_GET_SN();
+        payload[1] = 0;
+        payload[2] = 0;
+        payload[3] = 0;
+
+        byte[] mHeader = MakeTransportHeader((byte) 0x94, (byte) 0x14, (byte) 0x00, (byte)0x02, payload.length, (byte) 0x00);
+        byte[] data = Conversion.concatBytesArray(mHeader, payload);
+        InitWriteToCard(data, buffer -> {
+            byte[] sn = new byte[buffer.length - 12];
+            for(int i=0; i<buffer.length - 12 ; i++) sn[i] = buffer[i + 12];
+            sn = reverse(sn);
+            this._sn = Conversion.bytesToHex(sn);
+            Log.i(TAG, "SUCCESS SN1 "+ this._sn);
+            H2CGetMENU();
+        });
+    }
+    public void H2CGetMENU() {
+        byte[] payload = new byte[4];
+        payload[0] = EthernomConstKt.getCM_GET_MENU();
+        payload[1] = 0;
+        payload[2] = 0;
+        payload[3] = 0;
+        byte[] mHeader = MakeTransportHeader((byte) 0x94, (byte) 0x14, (byte) 0x00, (byte)0x02, payload.length, (byte) 0x00);
+        byte[] data = Conversion.concatBytesArray(mHeader, payload);
+        Log.d(TAG, Conversion.bytesToHex(data) );
+        InitWriteToCard(data, buffer -> {
+            byte[] Tempmenu = new byte[buffer.length - 12];
+            for(int i=0; i<buffer.length - 12 ; i++) Tempmenu[i] = buffer[i + 12];
+            this._m_id = Conversion.convertHexToAscII(Conversion.bytesToHex(Tempmenu));
+            Log.i(TAG, "SUCCESS MENU1"+ this._m_id);
+            H2CAuthentication((byte) 0x01);
+        });
+    }
     public void H2CAuthentication(byte appID){
         byte[] payload = new byte[5];
         payload[0] = EthernomConstKt.getCM_INIT_APP_PERM();
@@ -133,9 +184,8 @@ public class BLEAdapter {
         byte[] data = Conversion.concatBytesArray(mHeader, payload);
         InitWriteToCard(data, buffer -> {
             if(buffer[EthernomConstKt.getETH_BLE_HEADER_SIZE()] == EthernomConstKt.getCM_AUTHENTICATE()){
-                byte[] challenge = new byte[32];
                 for(int i=0; i<32; i++) challenge[i] = buffer[i + 12];
-                generate_auth_rsp(challenge);
+                new GetPrivateKeyPresenter(this, this._sn, this._m_id).getData();
             }else{
                 RequestAppSuspend((byte) 0x01);
             }
@@ -377,11 +427,24 @@ public class BLEAdapter {
         }
         return true;
     }
+
+    @Override
+    public void getSucceeded(String appKey) {
+        TrackerSharePreference.getConstant(_context).setPrivateKey(appKey);
+        generate_auth_rsp(challenge);
+    }
+
+    @Override
+    public void getFailed(String message) {
+        mBLEAdapterCallback.getSecureServerFailed(message);
+    }
+
     interface bufferCallback {
         void onData(byte[] buffer);
     }
     public interface BLEAdapterCallback {
         void onGetPinSucceeded(String pin);
         void onGetMajorMinorSucceeded(String data);
+        void getSecureServerFailed(String message);
     }
 }
