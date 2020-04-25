@@ -1,4 +1,4 @@
-package com.ethernom.helloworld;
+package com.ethernom.helloworld.workmanager;
 
 import android.content.Context;
 import android.os.Build;
@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
+
+import com.ethernom.helloworld.application.MyApplication;
 
 public class AlarmWorkManager extends Worker {
 

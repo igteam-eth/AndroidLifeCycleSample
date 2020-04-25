@@ -1,4 +1,4 @@
-package com.ethernom.helloworld;
+package com.ethernom.helloworld.receiver;
 
 /*
 The code here manages the scanner library. In particular, it enables or disables the scanning.
@@ -25,11 +25,16 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.ethernom.helloworld.application.MyApplication;
+import com.ethernom.helloworld.R;
+import com.ethernom.helloworld.application.TrackerSharePreference;
+import com.ethernom.helloworld.model.BleClient;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ethernom.helloworld.MyApplication.showSilentNotification;
+import static com.ethernom.helloworld.application.MyApplication.showSilentNotification;
 
 @SuppressLint("MissingPermission")
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -54,7 +59,10 @@ public class BleReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        MyApplication.appendLog(MyApplication.getCurrentDate()+ " : BleReceiver OnReceive callback\n");
+        //if user delete the card
+        if (!TrackerSharePreference.getConstant(context).isCardExisted()) return;
+
+        MyApplication.appendLog(MyApplication.getCurrentDate() + " : BleReceiver OnReceive callback\n");
         mContext = context;
 
         Log.v(TAG, "onReceive() ");
@@ -94,6 +102,15 @@ public class BleReceiver extends BroadcastReceiver {
 
     private static ScanFilter getScanFilter() {
 
+        BleClient bleClient = TrackerSharePreference.getConstant(mContext).getEthernomCard();
+        byte[] majors;
+        byte[] minors;
+        String major = bleClient.getMajor();
+        String minor = bleClient.getMinor();
+        majors = hexStringToByteArray(major);
+        minors = hexStringToByteArray(minor);
+
+
         ScanFilter.Builder builder = new ScanFilter.Builder();
         ByteBuffer manData = ByteBuffer.allocate(23);
         manData.put(0, (byte) 0x02);
@@ -114,12 +131,13 @@ public class BleReceiver extends BroadcastReceiver {
         manData.put(15, (byte) 0xbf);
         manData.put(16, (byte) 0xf1);
         manData.put(17, (byte) 0x42);
-        manData.put(18, (byte) 0x3F); //major
-        manData.put(19, (byte) 0x58); //major
-        manData.put(20, (byte) 0x91); //minor
-        manData.put(21, (byte) 0x84); //minor
+        manData.put(18, majors[0]); //major
+        manData.put(19, majors[1]); //major
+        manData.put(20, minors[0]); //minor
+        manData.put(21, minors[1]); //minor
         manData.put(22, (byte) 0xc3);
         builder.setManufacturerData(0x004c, manData.array());
+
         return builder.build();
     }
         /* Doeurn
@@ -191,7 +209,7 @@ public class BleReceiver extends BroadcastReceiver {
             BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
             BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
             bluetoothAdapter.getBluetoothLeScanner().startScan(filters, settings, mPendingIntent);
-            MyApplication.appendLog(MyApplication.getCurrentDate()+ " : Start scanning \n");
+            MyApplication.appendLog(MyApplication.getCurrentDate() + " : Start scanning \n");
 
         } catch (Exception e) {
             Log.e(TAG, "ERROR in startScan() " + e.getMessage());
@@ -204,14 +222,14 @@ public class BleReceiver extends BroadcastReceiver {
 
         if (mContext == null) {
             Log.d(TAG, "Can't stop: mContext null");
-            MyApplication.appendLog(MyApplication.getCurrentDate()+ " : Can't stop: mContext null\n");
+            MyApplication.appendLog(MyApplication.getCurrentDate() + " : Can't stop: mContext null\n");
 
             return;
         }
 
         if (mPendingIntent == null) {
             Log.d(TAG, "Can't stop: mPendingIntent null");
-            MyApplication.appendLog(MyApplication.getCurrentDate()+ " : Can't stop: mPendingIntent null\n");
+            MyApplication.appendLog(MyApplication.getCurrentDate() + " : Can't stop: mPendingIntent null\n");
 
             return;
         }
@@ -221,11 +239,11 @@ public class BleReceiver extends BroadcastReceiver {
             BluetoothManager bluetoothManager = (BluetoothManager) mContext.getSystemService(Context.BLUETOOTH_SERVICE);
             BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
             bluetoothAdapter.getBluetoothLeScanner().stopScan(mPendingIntent);
-            MyApplication.appendLog(MyApplication.getCurrentDate()+ " : Stop scanning \n");
+            MyApplication.appendLog(MyApplication.getCurrentDate() + " : Stop scanning \n");
 
         } catch (Exception e) {
             Log.e(TAG, "ERROR in stopScan() " + e.getMessage());
-            MyApplication.appendLog(MyApplication.getCurrentDate()+ " : ERROR in stopScan() \n");
+            MyApplication.appendLog(MyApplication.getCurrentDate() + " : ERROR in stopScan() \n");
 
         }
     }
@@ -247,6 +265,16 @@ public class BleReceiver extends BroadcastReceiver {
         if (mp != null) {
             mp.stop();
         }
+    }
+
+    public static byte[] hexStringToByteArray(String s) {
+        int len = s.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+                    + Character.digit(s.charAt(i + 1), 16));
+        }
+        return data;
     }
 
 

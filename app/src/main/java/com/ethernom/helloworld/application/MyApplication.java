@@ -1,4 +1,4 @@
-package com.ethernom.helloworld;
+package com.ethernom.helloworld.application;
 
 import android.app.Application;
 import android.app.Notification;
@@ -13,6 +13,9 @@ import android.os.Environment;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+
+import com.ethernom.helloworld.R;
+import com.ethernom.helloworld.screens.MainActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;

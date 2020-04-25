@@ -8,7 +8,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.ethernom.alarmhelloworld.v4"
+        applicationId "com.ethernom.alarmhelloworld.v6"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -20,6 +20,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 
@@ -36,5 +40,17 @@ dependencies {
 
     // (Java only)
     implementation "androidx.work:work-runtime:$work_version"
+
+    // Retrofit
+    implementation 'com.google.code.gson:gson:2.8.4'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.8.0'
+
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.chaos.view:pinview:1.4.3'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'org.bouncycastle:bcprov-jdk15on:1.64'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
 }
