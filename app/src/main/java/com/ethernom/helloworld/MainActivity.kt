@@ -69,12 +69,18 @@ class MainActivity : AppCompatActivity() {
                 WorkManager.getInstance(this).enqueue(oneTimeRequest)
             }
 
-            if (!TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm){
-                TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm = true
-                val startIntent = Intent(this, AlarmReceiver::class.java)
-                sendBroadcast(startIntent)
+            MyApplication.appendLog("${MyApplication.getCurrentDate()} : Host brand " + Build.BRAND +"\n" )
 
+            if (Build.BRAND.equals("samsung", ignoreCase = true)) {
+                MyApplication.appendLog("${MyApplication.getCurrentDate()} : Alarm Enabled \n" )
+
+                if (!TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm){
+                    TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm = true
+                    val startIntent = Intent(this, AlarmReceiver::class.java)
+                    sendBroadcast(startIntent)
+                }
             }
+
 
         }
     }
