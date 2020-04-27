@@ -13,6 +13,8 @@ import android.os.Environment;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.ethernom.helloworld.R;
 import com.ethernom.helloworld.screens.MainActivity;
@@ -27,10 +29,11 @@ import java.util.Calendar;
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 
 
-public class MyApplication extends Application {
+public class MyApplication extends Application  {
 
 
     static public void appendLog(String logs) {
+
 
         try {
             File path = Environment.getExternalStoragePublicDirectory(

@@ -8,17 +8,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.ethernom.helloworld.application.TrackerSharePreference;
+import com.ethernom.helloworld.screens.DeleteDeviceBottomDialog;
+import com.ethernom.helloworld.screens.ItemDeleteCallback;
 import com.ethernom.helloworld.workmanager.AlarmWorkManager;
 import com.ethernom.helloworld.application.MyApplication;
 
 
-public class AlarmReceiver extends BroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver  {
 
     private static final String TAG = "AlarmReceiver";
     private static final long interval = 30;
@@ -30,17 +33,17 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         try {
 
+
             if (TrackerSharePreference.getConstant(context).isCardExisted()){
 
                 MyApplication.appendLog(MyApplication.getCurrentDate() + " : AlarmReceiver onReceive " + "\n");
                 //OneTimeWorkRequest
-                /*OneTimeWorkRequest oneTimeRequest = new OneTimeWorkRequest.Builder(AlarmWorkManager.class)
+                OneTimeWorkRequest oneTimeRequest = new OneTimeWorkRequest.Builder(AlarmWorkManager.class)
                         .addTag("WORK_MANAGER")
                         .build();
                 WorkManager.getInstance(context).enqueue(oneTimeRequest);
 
                 MyApplication.appendLog(MyApplication.getCurrentDate() + " : AlarmReceiver onReceive launch worker thread(AlarmWorkManager)  " + "\n");
-*/
                 Intent mIntent = new Intent(context, AlarmReceiver.class);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(
                         context, 0,

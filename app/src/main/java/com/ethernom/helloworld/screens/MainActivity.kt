@@ -1,6 +1,7 @@
 package com.ethernom.helloworld.screens
 
 import android.Manifest
+import android.bluetooth.BluetoothAdapter
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -22,17 +23,10 @@ import com.ethernom.helloworld.R
 import com.ethernom.helloworld.adapter.RegisteredDeviceAdapter
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.model.BleClient
-import com.ethernom.helloworld.model.DataModel
-import com.ethernom.helloworld.model.DataResponseModel
-import com.ethernom.helloworld.model.HostModel
 import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BleReceiver
-import com.ethernom.helloworld.webservice.ApiClient
 import kotlinx.android.synthetic.main.activity_tracker.*
 import kotlinx.android.synthetic.main.toolbar_default.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback, ItemDeleteCallback  {
 
@@ -95,7 +89,7 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
         Log.d(TAG, "onResume called \n")
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : onResume called\n")
 
-        if (requestWriteExternalStorage() && requestBluetoothPermission() ){
+        if (checkBlueToothAdapter() && requestWriteExternalStorage() && requestBluetoothPermission() ){
 
             if (trackerSharePreference.isCardExisted) {
 
@@ -228,6 +222,21 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
                 return true
             }
         }else return false
+    }
+
+    private fun checkBlueToothAdapter(): Boolean{
+
+        val bAdapter = BluetoothAdapter.getDefaultAdapter()
+        if(bAdapter != null) {
+            return if(!bAdapter.isEnabled) {
+                val mIntent =  Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(mIntent, 2)
+                false
+
+            }else true
+
+        }
+        return false
     }
     companion object{
         const val PERMISSION_REQUEST_COARSE_LOCATION = 1

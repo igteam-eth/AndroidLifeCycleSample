@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -163,11 +164,7 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
         hideProgressBar()
         finish()
     }
-    override fun getSecureServerFailed(message: String?) {
-        Log.e(TAG, message);
-        hideProgressBar()
 
-    }
 
     private fun reversString(data: String) =
         arrayOf(data.substring(0, getMinLength(data)), data.substring(getMinLength(data)))
@@ -189,6 +186,11 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
         }
     }
 
+    override fun showMessageError(message: String?) {
+        hideProgressBar()
+        showDialog(message)
+    }
+
     private fun showProgressBar(){
         view_progressBar.visibility = View.VISIBLE
     }
@@ -198,6 +200,21 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
     override fun onResume() {
         super.onResume()
         mBleScan!!.startScanning()
+    }
+
+
+    private fun showDialog(message: String?){
+        runOnUiThread {
+            AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
+        }
+
     }
 
     override fun onPause() {
