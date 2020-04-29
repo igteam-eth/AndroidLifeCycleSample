@@ -254,8 +254,8 @@ public class BleReceiver extends BroadcastReceiver {
             mp.stop();
         }
 
-        mp = MediaPlayer.create(context, R.raw.ringingsound_short);
-        //mp.setLooping(true);
+        mp = MediaPlayer.create(context, R.raw.ringingsound);
+        mp.setLooping(true);
         mp.start();
 
     }

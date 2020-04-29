@@ -55,7 +55,6 @@ public class BLEScan {
                         deviceSN += String.format("%02x", manufacturerData[k]);
                     }
 
-
                 }
 //                deviceSN = Conversion.conversion_sn(deviceSN);
                 mDeviceDiscoverCallback.DeviceDiscover(result.getDevice().getName(), result.getScanRecord().getServiceUuids().get(0).toString(), result.getDevice().getAddress(), Integer.toString(result.getRssi()), deviceSN);

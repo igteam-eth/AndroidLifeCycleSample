@@ -1,4 +1,4 @@
-package com.ethernom.helloworld;
+package com.ethernom.helloworld.presenter;
 
 public interface  GetAppKeyCallback {
     void getSucceeded(String appKey);

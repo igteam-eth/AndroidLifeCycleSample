@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
     private var registeredDeviceAdapter: RegisteredDeviceAdapter? = null
     private lateinit var trackerSharePreference: TrackerSharePreference
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -70,6 +71,7 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
             val isNotification = intent.getBooleanExtra("NOTIFICATION", false)
             if (isNotification){
                 TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = false
+                BleReceiver.stopSound()
                 MyApplication.appendLog("${MyApplication.getCurrentDate()} : User was click notification to open the app: isAlreadyCreateWorkerThread = false\n")
             }
         }catch (e: Exception){

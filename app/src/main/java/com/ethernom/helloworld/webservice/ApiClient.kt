@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
 
-     var BASE_URL:String="https://test.ethernom.net:8080"
+     var BASE_URL:String="https://updates.ethernom.net:8080"
      val getClient: ApiInterface
         get() {
 

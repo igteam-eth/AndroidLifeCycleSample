@@ -2,14 +2,15 @@ package com.ethernom.helloworld.screens
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -45,6 +46,7 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
 
         checkLocationPermission()
         mBleScan = BLEScan(this, this)
+
         mBTDevicesArrayList = ArrayList()
         setUpList()
         buttonBack.setOnClickListener {
@@ -53,19 +55,41 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
     }
 
     override fun ItemClickListener(position: Int) {
-        showProgressBar()
-        Log.d("onItemClick", ""+position)
-        selectedPos = position
+        if (haveNetworkConnection()){
+            showProgressBar()
+            Log.d("onItemClick", "" + position)
+            selectedPos = position
 
-        mBLEAdapter = BLEAdapter(this, this)
-        mBleScan!!.stopScanning()
-        val ci = CardInfo(
-            mBTDevicesArrayList!![position].devName,
-            mBTDevicesArrayList!![position].macAddress,
-            ""
-        )
-        mBLEAdapter!!.ConnectCard(ci)
+            mBLEAdapter = BLEAdapter(this, this)
+            mBleScan!!.stopScanning()
+            val ci = CardInfo(
+                mBTDevicesArrayList!![position].devName,
+                mBTDevicesArrayList!![position].macAddress,
+                ""
+            )
+            mBLEAdapter!!.ConnectCard(ci)
+        }else{
+            showDialog("Please enable internet connection!")
+        }
     }
+
+    private fun haveNetworkConnection(): Boolean {
+        var haveConnectedWifi = false
+        var haveConnectedMobile = false
+
+        val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.allNetworkInfo
+        for (ni in netInfo) {
+            if (ni.typeName.equals("WIFI", ignoreCase = true))
+                if (ni.isConnected)
+                    haveConnectedWifi = true
+            if (ni.typeName.equals("MOBILE", ignoreCase = true))
+                if (ni.isConnected)
+                    haveConnectedMobile = true
+        }
+        return haveConnectedWifi || haveConnectedMobile
+    }
+
 
     override fun DeviceDiscover(
         deviceName: String,
@@ -184,6 +208,11 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
                 mBLEAdapter!!.RequestAppSuspend(0x01.toByte())
             }
         }
+    }
+
+    override fun getSecureServerFailed(message: String?) {
+        hideProgressBar()
+        showDialog(message)
     }
 
     override fun showMessageError(message: String?) {
