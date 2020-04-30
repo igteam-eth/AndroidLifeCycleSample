@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -30,7 +31,7 @@ import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback,
-    BLEScan.DeviceDiscoveredCallBack, BLEAdapter.BLEAdapterCallback{
+    BLEScan.DeviceDiscoveredCallBack, BLEAdapter.BLEAdapterCallback, UpdateCardDialog.Callback {
 
     private var mBTDevicesArrayList: ArrayList<BleClient>? = null
     private var recyclerView: RecyclerView? = null
@@ -39,6 +40,7 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
     private var selectedPos: Int? = null
     private var mBLEAdapter: BLEAdapter? = null
 
+    private var cardInfo : CardInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,29 +48,30 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
 
         checkLocationPermission()
         mBleScan = BLEScan(this, this)
+        mBLEAdapter = BLEAdapter(this, this)
 
         mBTDevicesArrayList = ArrayList()
         setUpList()
         buttonBack.setOnClickListener {
             onBackPressed()
         }
+
     }
 
     override fun ItemClickListener(position: Int) {
-        if (haveNetworkConnection()){
+        if (haveNetworkConnection()) {
             showProgressBar()
             Log.d("onItemClick", "" + position)
             selectedPos = position
 
-            mBLEAdapter = BLEAdapter(this, this)
             mBleScan!!.stopScanning()
-            val ci = CardInfo(
+            cardInfo = CardInfo(
                 mBTDevicesArrayList!![position].devName,
                 mBTDevicesArrayList!![position].macAddress,
                 ""
             )
-            mBLEAdapter!!.ConnectCard(ci)
-        }else{
+            mBLEAdapter!!.ConnectCard(cardInfo)
+        } else {
             showDialog("Please enable internet connection!")
         }
     }
@@ -96,7 +99,8 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
         uuid: String,
         macadd: String,
         rssi: String,
-        SNDevice: String) {
+        SNDevice: String
+    ) {
         Log.d("SerialNumber", SNDevice)
         var stat = false
         for (ble in mBTDevicesArrayList!!) {
@@ -163,7 +167,13 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
     override fun onGetPinSucceeded(pin: String) {
         Log.e("pinCallback", pin)
         val intent = Intent(this, ConfirmPinActivity::class.java)
-        intent.putExtra("pin", pin.substring(pin.length - SettingSharePreference.getConstant(this).pinLength, pin.length ))
+        intent.putExtra(
+            "pin",
+            pin.substring(
+                pin.length - SettingSharePreference.getConstant(this).pinLength,
+                pin.length
+            )
+        )
         startActivityForResult(intent, 101)
     }
 
@@ -179,7 +189,7 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
 
         Log.e("after reverse", major + minor)
 
-        val bleClient =  BleClient()
+        val bleClient = BleClient()
         bleClient.devName = mBTDevicesArrayList!![selectedPos!!].devName
         bleClient.deviceSN = mBTDevicesArrayList!![selectedPos!!].deviceSN
         bleClient.major = major
@@ -197,13 +207,13 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 101){
-            if (resultCode == Activity.RESULT_OK){
+        if (requestCode == 101) {
+            if (resultCode == Activity.RESULT_OK) {
                 val result = data!!.getBooleanExtra("pinVerified", false)
-                if (result){
+                if (result) {
                     mBLEAdapter!!.H2CRequestBLETrackerInit()
                 }
-            }else{
+            } else {
                 hideProgressBar()
                 mBLEAdapter!!.RequestAppSuspend(0x01.toByte())
             }
@@ -220,30 +230,65 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
         showDialog(message)
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         view_progressBar.visibility = View.VISIBLE
     }
-    private fun hideProgressBar(){
+
+    private fun hideProgressBar() {
         view_progressBar.visibility = View.GONE
     }
+
     override fun onResume() {
         super.onResume()
         mBleScan!!.startScanning()
     }
 
+    private fun showDialog(message: String?) {
+        AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage(message)
+            .setPositiveButton(
+                android.R.string.yes
+            ) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
 
-    private fun showDialog(message: String?){
-        runOnUiThread {
-            AlertDialog.Builder(this)
-                .setTitle("Error")
-                .setMessage(message)
-                .setPositiveButton(android.R.string.yes
-                ) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .show()
+    }
+
+    override fun appRequiredToUpdate() {
+        hideProgressBar()
+        UpdateCardDialog(this, this).show()
+    }
+
+    override fun onUpdateButtonClicked() {
+        mBLEAdapter!!.DisconnectCard()
+        goToDeviceManager()
+    }
+
+    override fun onDisconnectButtonClicked() {
+        mBLEAdapter!!.DisconnectCard()
+    }
+    override fun onDoNotUpdateButtonClicked() {
+        showProgressBar()
+        mBLEAdapter!!.DisconnectCard()
+        if (cardInfo != null){
+            mBLEAdapter!!.setUserRefuseUpdate(true)
+            mBleScan!!.stopScanning()
+            mBLEAdapter!!.ConnectCard(cardInfo)
         }
+    }
 
+    private fun goToDeviceManager() {
+        val packageName = "com.ethernom.dm.mobile"
+        var intent = packageManager.getLaunchIntentForPackage(packageName)
+        if (intent == null) {
+            // Bring user to the market or let them choose an app?
+            intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse("market://details?id=$packageName")
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
     }
 
     override fun onPause() {
@@ -254,6 +299,6 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
-        const val TAG : String = "DiscoverDeviceActivity"
+        const val TAG: String = "DiscoverDeviceActivity"
     }
 }

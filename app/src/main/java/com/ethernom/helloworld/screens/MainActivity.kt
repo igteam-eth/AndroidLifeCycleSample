@@ -15,6 +15,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import java.lang.Exception
 import android.content.Intent
+import android.os.Handler
 import android.view.animation.AlphaAnimation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ethernom.helloworld.application.MyApplication
@@ -28,7 +29,8 @@ import com.ethernom.helloworld.receiver.BleReceiver
 import kotlinx.android.synthetic.main.activity_tracker.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 
-class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback, ItemDeleteCallback  {
+class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback,
+    ItemDeleteCallback{
 
     private var registeredDeviceList: ArrayList<BleClient> = ArrayList()
     private var registeredDeviceAdapter: RegisteredDeviceAdapter? = null
@@ -42,24 +44,24 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : onCreate called\n")
 
         trackerSharePreference = TrackerSharePreference.getConstant(this)
-        registeredDeviceAdapter =  RegisteredDeviceAdapter(registeredDeviceList, this)
+        registeredDeviceAdapter = RegisteredDeviceAdapter(registeredDeviceList, this)
         rv_registered_device.layoutManager = LinearLayoutManager(this)
-        rv_registered_device.adapter =registeredDeviceAdapter
+        rv_registered_device.adapter = registeredDeviceAdapter
 
         button_add.setOnClickListener {
             val animation = AlphaAnimation(1f, 0.8f)
             it.startAnimation(animation)
             if (registeredDeviceList.isEmpty()) {
                 startActivity(Intent(this, DiscoverDeviceActivity::class.java))
-            }else{
+            } else {
                 AlertDialog.Builder(this)
                     .setTitle("Error")
                     .setMessage("Please delete your current device before registering a new one.")
-                    .setPositiveButton(android.R.string.yes
+                    .setPositiveButton(
+                        android.R.string.yes
                     ) { dialog, _ ->
                         dialog.dismiss()
                     }
-                    .setIcon(android.R.drawable.ic_dialog_alert)
                     .show()
             }
         }
@@ -67,14 +69,14 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
             startActivity(Intent(this, SettingActivity::class.java))
         }
 
-        try{
+        try {
             val isNotification = intent.getBooleanExtra("NOTIFICATION", false)
-            if (isNotification){
+            if (isNotification) {
                 TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = false
                 BleReceiver.stopSound()
                 MyApplication.appendLog("${MyApplication.getCurrentDate()} : User was click notification to open the app: isAlreadyCreateWorkerThread = false\n")
             }
-        }catch (e: Exception){
+        } catch (e: Exception) {
             MyApplication.appendLog("${MyApplication.getCurrentDate()} : Error " + e.message + "\n")
         }
     }
@@ -91,13 +93,13 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
         Log.d(TAG, "onResume called \n")
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : onResume called\n")
 
-        if (checkBlueToothAdapter() && requestWriteExternalStorage() && requestBluetoothPermission() ){
+        if (checkBlueToothAdapter() && requestWriteExternalStorage() && requestBluetoothPermission()) {
 
             if (trackerSharePreference.isCardExisted) {
 
                 displayEthernomCard()
 
-                if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread){
+                if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
                     TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = true
                     MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
                     //OneTimeWorkRequest
@@ -112,7 +114,7 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
                 if (Build.BRAND.equals("samsung", ignoreCase = true)) {
                     MyApplication.appendLog("${MyApplication.getCurrentDate()} : Alarm Enabled \n")
 
-                    if (!TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm){
+                    if (!TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm) {
                         TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm = true
                         val startIntent = Intent(this, AlarmReceiver::class.java)
                         sendBroadcast(startIntent)
@@ -132,7 +134,7 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
     }
 
     override fun ItemClickListener(position: Int) {
-        DeleteDeviceBottomDialog(this, this ).show()
+        DeleteDeviceBottomDialog(this, this).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -183,13 +185,14 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
             return true
         }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    fun requestBluetoothPermission() : Boolean {
+    fun requestBluetoothPermission(): Boolean {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check
             Log.d(TAG, "Checking Bluetooth permissions")
-            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) !== PackageManager.PERMISSION_GRANTED ) {
+            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) !== PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "  Permission is not granted")
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("Permission Required for BLE Device Detection")
@@ -198,20 +201,31 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
                 builder.setPositiveButton(android.R.string.ok, null)
 
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) !== PackageManager.PERMISSION_GRANTED){
+                    if (ActivityCompat.checkSelfPermission(
+                            this,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        ) !== PackageManager.PERMISSION_GRANTED
+                    ) {
                         builder.setOnDismissListener {
                             // User replies then there is a call to onRequestPermissionsResult() below
                             requestPermissions(
-                                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_BACKGROUND_LOCATION),
+                                arrayOf(
+                                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                                    Manifest.permission.ACCESS_FINE_LOCATION,
+                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                                ),
                                 PERMISSION_REQUEST_COARSE_LOCATION
                             )
                         }
                     }
-                }else{
+                } else {
                     builder.setOnDismissListener {
                         // User replies then there is a call to onRequestPermissionsResult() below
                         requestPermissions(
-                            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                            arrayOf(
+                                Manifest.permission.ACCESS_COARSE_LOCATION,
+                                Manifest.permission.ACCESS_FINE_LOCATION
+                            ),
                             PERMISSION_REQUEST_COARSE_LOCATION
                         )
                     }
@@ -223,24 +237,26 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
                 Log.d(TAG, "  Permission is granted")
                 return true
             }
-        }else return false
+        } else return false
     }
 
-    private fun checkBlueToothAdapter(): Boolean{
+    private fun checkBlueToothAdapter(): Boolean {
 
         val bAdapter = BluetoothAdapter.getDefaultAdapter()
-        if(bAdapter != null) {
-            return if(!bAdapter.isEnabled) {
-                val mIntent =  Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+        if (bAdapter != null) {
+            return if (!bAdapter.isEnabled) {
+                val mIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
                 startActivityForResult(mIntent, 2)
                 false
 
-            }else true
+            } else true
 
         }
         return false
     }
-    companion object{
+
+
+    companion object {
         const val PERMISSION_REQUEST_COARSE_LOCATION = 1
         const val TAG = "APP_MainActivity"
     }

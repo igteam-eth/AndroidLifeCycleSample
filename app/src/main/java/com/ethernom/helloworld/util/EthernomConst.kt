@@ -23,3 +23,11 @@ val CM_SESSION_RSP: Byte = 0x0B
 val CM_ERR_SUCCESS: Byte = 0x00.toByte()
 val CM_ERR_APP_BUSY: Byte = 0x09.toByte()
 
+// check version
+val CMD_VERSION_CHECK: Byte = 0x81.toByte()
+val CMD_VERSION_RSP: Byte = 0x01.toByte()
+val CMD_BLE_VERSION_CHECK: Byte = 0x88.toByte()
+val CMD_BLE_VERSION_RSP: Byte = 0x08.toByte()
+val CMD_BOOT2_VERSION_CHECK: Byte = 0x91.toByte()
+val CMD_BOOT2_VERSION_RSP: Byte = 0x11.toByte()
+

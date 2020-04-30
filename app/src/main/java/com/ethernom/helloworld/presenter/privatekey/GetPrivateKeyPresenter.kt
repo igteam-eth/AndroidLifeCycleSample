@@ -1,10 +1,10 @@
-package com.ethernom.helloworld
+package com.ethernom.helloworld.presenter.privatekey
 
 import android.util.Log
-import com.ethernom.helloworld.model.DataModel
+import com.ethernom.helloworld.model.GetPrivateKeyReqBody
 import com.ethernom.helloworld.model.DataResponseModel
-import com.ethernom.helloworld.model.HostModel
-import com.ethernom.helloworld.presenter.GetAppKeyCallback
+import com.ethernom.helloworld.model.HostApp
+import com.ethernom.helloworld.presenter.privatekey.GetAppKeyCallback
 import com.ethernom.helloworld.webservice.ApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,9 +18,14 @@ class GetPrivateKeyPresenter(val getAppKeyCallback: GetAppKeyCallback?, private 
 
         Log.d("GetPrivateKeyPresenter", "$menuFac : $sn")
 
-        var mHost = HostModel("Ethernom, Inc.", "BLE Tracker", "com.ethernom.ble.tracker", "android","1.0.15" )
+        val mHost = HostApp()
+        mHost.company = "Ethernom, Inc."
+        mHost.name = "BLE Tracker"
+        mHost.app_id =  "com.ethernom.ble.tracker"
+        mHost.os = "android"
+        mHost.version =  "1.0.15"
 
-        var mData =  DataModel(sn, menuFac, mHost)
+        val mData =  GetPrivateKeyReqBody(sn, menuFac, mHost)
         val call: Call<DataResponseModel> = ApiClient.getClient.getAppKey(auth, mData)
         call.enqueue(object : Callback<DataResponseModel> {
 

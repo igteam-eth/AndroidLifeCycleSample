@@ -11,10 +11,10 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.ethernom.helloworld.application.MyApplication"
+        android:name=".application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -23,21 +23,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.ethernom.helloworld.screens.MainActivity">
+        <activity android:name=".screens.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screens.AboutActivity"/>
+        <activity android:name=".screens.AboutActivity" />
         <activity android:name=".screens.PinLengthSelectionActivity" />
         <activity android:name=".screens.SettingActivity" />
-        <activity android:name=".screens.ConfirmPinActivity"/>
+        <activity android:name=".screens.ConfirmPinActivity" />
         <activity android:name=".screens.DiscoverDeviceActivity" />
 
         <receiver
-            android:name="com.ethernom.helloworld.receiver.BleReceiver"
+            android:name=".receiver.BleReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -47,9 +47,9 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.ethernom.helloworld.receiver.AlarmReceiver"
+            android:name=".receiver.AlarmReceiver"
             android:enabled="true"
-            android:exported="true"/>
+            android:exported="true" />
 
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"

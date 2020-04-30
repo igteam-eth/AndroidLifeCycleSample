@@ -85,4 +85,8 @@
     <string name="all_right">All Rights Reserved</string>
     <string name="terms_of_service">Terms Of Serivce</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="update_available">Updates available</string>
+    <string name="update_available_message">To update your device, please use Ethernom Device Manager.</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="dont_update">Don\'t update</string>
 </resources>

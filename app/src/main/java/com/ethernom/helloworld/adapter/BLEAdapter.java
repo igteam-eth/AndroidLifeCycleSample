@@ -10,16 +10,20 @@ import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.util.Log;
 
-import com.ethernom.helloworld.GetPrivateKeyPresenter;
+import com.ethernom.helloworld.model.FwInfo;
+import com.ethernom.helloworld.presenter.checkupdate.CheckUpdatePresenter;
+import com.ethernom.helloworld.presenter.privatekey.GetPrivateKeyPresenter;
 import com.ethernom.helloworld.application.SettingSharePreference;
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.model.CardInfo;
-import com.ethernom.helloworld.presenter.GetAppKeyCallback;
+import com.ethernom.helloworld.presenter.checkupdate.CheckUpdateCallback;
+import com.ethernom.helloworld.presenter.privatekey.GetAppKeyCallback;
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity;
 import com.ethernom.helloworld.util.Conversion;
 import com.ethernom.helloworld.util.ECDSA_P256;
 import com.ethernom.helloworld.util.EthernomConstKt;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +35,7 @@ import java.util.UUID;
 
 import static org.bouncycastle.util.Arrays.reverse;
 
-public class BLEAdapter implements GetAppKeyCallback {
+public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
     private static String TAG = "EtherBTAdapter";
     private static UUID ETH_serviceUUID = UUID.fromString("19490001-5537-4F5E-99CA-290F4FBFF142");
     private static UUID ETH_characteristicUUID = UUID.fromString("19490002-5537-4F5E-99CA-290F4FBFF142");
@@ -48,6 +52,12 @@ public class BLEAdapter implements GetAppKeyCallback {
     private String _sn;
     private String _m_id;
     private byte[] challenge = new byte[32];
+    private boolean isUserRefuseUpdate;
+
+    private String _card_name;
+    private String _card_firmware_version;
+    private String _card_ble_version;
+    private String _card_boot_version;
 
     public BLEAdapter(Context context, BLEAdapterCallback mBLEAdapterCallback){
         this._context = context;
@@ -101,7 +111,8 @@ public class BLEAdapter implements GetAppKeyCallback {
                         if (status == 0) {
                             Log.i(TAG, "Connection success");
                             //H2CAuthentication((byte) 0x01);
-                            H2CGetSerialNum();
+                            //H2CGetSerialNum();
+                            H2CGetFirmwareVn();
                         }
                         else
                             Log.i(TAG, "Connection fail");
@@ -134,6 +145,129 @@ public class BLEAdapter implements GetAppKeyCallback {
     public void DisconnectCard(){
         if(gatt != null)
             gatt.close();
+    }
+    public void H2CGetFirmwareVn() {
+        byte[] payload = new byte[4];
+        payload[0] = EthernomConstKt.getCMD_VERSION_CHECK();
+        payload[1] = 0;
+        payload[2] = 0;
+        payload[3] = 0;
+
+        byte[] mHeader = MakeTransportHeader((byte) 0x94, (byte) 0x14, (byte) 0x00, (byte)0x02, payload.length, (byte) 0x00);
+        byte[] data = Conversion.concatBytesArray(mHeader, payload);
+        InitWriteToCard(data, buffer -> {
+
+            String hexa = Conversion.bytesToHex(buffer);
+            if(buffer[EthernomConstKt.getETH_BLE_HEADER_SIZE()] == EthernomConstKt.getCMD_VERSION_RSP()) {
+                Log.i(TAG, "SUCCESS Firmware "+ hexa);
+
+                /*
+                    MAX LENGTH OF HEADER 8 CHARS
+                    MAX LENGTH OF APDU HEADER 4 CHARS
+                    MAX LENGTH OF CARD NAME 16 CHARS
+                    MAX LENGTH OF CARD VERSION 12 CHARS
+                    => HEADER(8) + APDU HEADER(4) + CARD NAME(16) + CARD BLE VERSION(12);
+                    IF WANT TO GET CARD NAME NEED TO START FROM INDEX 12 TO INDEX(12+16)
+                   */
+                byte[] CName = new byte[16];
+                for(int i=0; i< 16 ; i++) CName[i] = buffer[i + 12];
+                this._card_name = Conversion.convertHexToAscII(Conversion.bytesToHex(CName)).trim();
+                Log.d(TAG, "CardName: "+  Conversion.bytesToHex(CName));
+                Log.d(TAG, "CardName: "+  this._card_name);
+
+                /*
+                    MAX LENGTH OF HEADER 8 CHARS
+                    MAX LENGTH OF APDU HEADER 4 CHARS
+                    MAX LENGTH OF CARD NAME 16 CHARS
+                    MAX LENGTH OF CARD VERSION 12 CHARS
+                      => HEADER(8) + APDU HEADER(4) + CARD NAME(16) + CARD BLE VERSION(12);
+                    IF WANT TO GET CARD VERSION NEED TO START FROM INDEX (12+16) TO INDEX (12+16+12)
+                   */
+
+                byte[] CVersion = new byte[12];
+                for(int i=0; i< 12 ; i++) CVersion[i] = buffer[i + 28];
+                this._card_firmware_version = Conversion.convertHexToAscII(Conversion.bytesToHex(CVersion)).trim();
+                Log.d(TAG, "CardVersion: "+  Conversion.bytesToHex(CVersion));
+                Log.d(TAG, "CardVersion: "+  this._card_firmware_version);
+
+                H2CGetBLEVn();
+            } else {
+                Log.i(TAG, "FAILED Firmware "+ hexa);
+            }
+
+
+        });
+    }
+
+    public void H2CGetBLEVn() {
+        byte[] payload = new byte[4];
+        payload[0] = EthernomConstKt.getCMD_BLE_VERSION_CHECK();
+        payload[1] = 0;
+        payload[2] = 0;
+        payload[3] = 0;
+
+        byte[] mHeader = MakeTransportHeader((byte) 0x94, (byte) 0x14, (byte) 0x00, (byte)0x02, payload.length, (byte) 0x00);
+        byte[] data = Conversion.concatBytesArray(mHeader, payload);
+        InitWriteToCard(data, buffer -> {
+            String hexa = Conversion.bytesToHex(buffer);
+
+            if(buffer[EthernomConstKt.getETH_BLE_HEADER_SIZE()] == EthernomConstKt.getCMD_BLE_VERSION_RSP()) {
+                Log.i(TAG, "SUCCESS BLE "+ hexa);
+
+                /*
+                    MAX LENGTH OF HEADER 8 CHARS
+                    MAX LENGTH OF APDU HEADER 4 CHARS
+                    MAX LENGTH OF CARD BLE VERSION 12 CHARS
+                    => HEADER(8) + APDU HEADER(4) + CARD BLE VERSION(12);
+                    IF WANT TO GET CARD BLE VERSION NEED TO START FROM INDEX 12 TO INDEX(12+12)
+                   */
+
+                byte[] BLEVersion = new byte[12];
+                for(int i=0; i< 12 ; i++) BLEVersion[i] = buffer[i + 12];
+                this._card_ble_version = Conversion.convertHexToAscII(Conversion.bytesToHex(BLEVersion)).trim();
+                Log.d(TAG, "BLEVersion: "+  Conversion.bytesToHex(BLEVersion));
+                Log.d(TAG, "BLEVersion: "+  this._card_ble_version);
+
+                H2CGetBOOTVn();
+            } else {
+                Log.i(TAG, "FAILED BLE "+ hexa);
+            }
+
+        });
+    }
+
+    public void H2CGetBOOTVn() {
+        byte[] payload = new byte[4];
+        payload[0] = EthernomConstKt.getCMD_BOOT2_VERSION_CHECK();
+        payload[1] = 0;
+        payload[2] = 0;
+        payload[3] = 0;
+
+        byte[] mHeader = MakeTransportHeader((byte) 0x94, (byte) 0x14, (byte) 0x00, (byte)0x02, payload.length, (byte) 0x00);
+        byte[] data = Conversion.concatBytesArray(mHeader, payload);
+        InitWriteToCard(data, buffer -> {
+            String hexa = Conversion.bytesToHex(buffer);
+
+            if(buffer[EthernomConstKt.getETH_BLE_HEADER_SIZE()] == EthernomConstKt.getCMD_BOOT2_VERSION_RSP()) {
+                Log.i(TAG, "SUCCESS BOOT "+ hexa);
+                /*
+                    MAX LENGTH OF HEADER 8 CHARS
+                    MAX LENGTH OF APDU HEADER 4 CHARS
+                    MAX LENGTH OF CARD BOOT VERSION 12 CHARS
+                    => HEADER(8) + APDU HEADER(4) + CARD BOOT VERSION(12);
+                    IF WANT TO GET CARD BOOT VERSION NEED TO START FROM INDEX 12 TO INDEX(12+12)
+                   */
+                byte[] BOOTVersion = new byte[12];
+                for(int i=0; i< 12 ; i++) BOOTVersion[i] = buffer[i + 12];
+                this._card_boot_version = Conversion.convertHexToAscII(Conversion.bytesToHex(BOOTVersion)).trim();
+                Log.d(TAG, "BOOTVersion: "+  Conversion.bytesToHex(BOOTVersion));
+                Log.d(TAG, "BOOTVersion: "+  this._card_boot_version);
+
+                H2CGetSerialNum();
+            } else {
+                Log.i(TAG, "FAILED BOOT "+ hexa);
+            }
+        });
     }
 
     public void H2CGetSerialNum() {
@@ -168,7 +302,18 @@ public class BLEAdapter implements GetAppKeyCallback {
             for(int i=0; i<buffer.length - 12 ; i++) Tempmenu[i] = buffer[i + 12];
             this._m_id = Conversion.convertHexToAscII(Conversion.bytesToHex(Tempmenu));
             Log.i(TAG, "SUCCESS MENU1"+ this._m_id);
-            H2CAuthentication((byte) 0x01);
+
+            if (isUserRefuseUpdate){
+                H2CAuthentication((byte) 0x01);
+            }else{
+                ArrayList<FwInfo> fwInfoList = new ArrayList<>();
+                fwInfoList.add(new FwInfo(_card_firmware_version, "1"));
+                fwInfoList.add(new FwInfo(_card_ble_version, "2"));
+                fwInfoList.add(new FwInfo(_card_boot_version, "3"));
+
+                //call to service to check the card is up-to-date
+                new CheckUpdatePresenter().checkUpdate(this, fwInfoList, _sn, _m_id);
+            }
         });
     }
     public void H2CAuthentication(byte appID){
@@ -248,6 +393,7 @@ public class BLEAdapter implements GetAppKeyCallback {
             }
         });
     }
+
     public void H2CRequestSessionPIN() {
         Log.i(TAG,"requestSessionPIN");
         List<Byte> payload = new ArrayList<Byte>();
@@ -441,6 +587,24 @@ public class BLEAdapter implements GetAppKeyCallback {
         mBLEAdapterCallback.getSecureServerFailed(message);
     }
 
+    public void setUserRefuseUpdate(boolean userRefuseUpdate) {
+        this.isUserRefuseUpdate = userRefuseUpdate;
+    }
+
+    @Override
+    public void checkUpdatedFailed(@NotNull String message) {
+        mBLEAdapterCallback.showMessageError(message);
+    }
+
+    @Override
+    public void checkUpdateSuccess(boolean require) {
+        if (require){
+            mBLEAdapterCallback.appRequiredToUpdate();
+        }else{
+            H2CAuthentication((byte) 0x01);
+        }
+    }
+
     interface bufferCallback {
         void onData(byte[] buffer);
     }
@@ -449,5 +613,6 @@ public class BLEAdapter implements GetAppKeyCallback {
         void onGetMajorMinorSucceeded(String data);
         void getSecureServerFailed(String message);
         void showMessageError(String message);
+        void appRequiredToUpdate();
     }
 }
