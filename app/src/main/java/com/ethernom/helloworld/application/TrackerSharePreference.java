@@ -19,6 +19,8 @@ public class TrackerSharePreference {
         PRI_KEY,
         PUB_KEY,
         ETHERNOM_CARD,
+        IS_RANGING,
+        IS_IN_FOREGROUND
     }
 
     private TrackerSharePreference(Context context) {
@@ -85,6 +87,23 @@ public class TrackerSharePreference {
 
     public boolean isCardExisted() {
         return getEthernomCard() != null;
+    }
+
+    public void setRanging(boolean ranging) {
+        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_RANGING.toString(), ranging).apply();
+    }
+
+    public boolean isRanging() {
+        return sharedPrefs.getBoolean(SharedPreKeyType.IS_RANGING.toString(), false);
+
+    }
+
+    public void setAppInForeground(boolean isForeground) {
+        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_IN_FOREGROUND.toString(), isForeground).apply();
+    }
+
+    public boolean isAppInForeground() {
+        return sharedPrefs.getBoolean(SharedPreKeyType.IS_IN_FOREGROUND.toString(), false);
     }
 
 

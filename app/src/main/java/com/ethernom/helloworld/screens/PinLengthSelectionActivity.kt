@@ -11,7 +11,7 @@ import android.content.Intent
 import com.ethernom.helloworld.application.SettingSharePreference
 
 
-class PinLengthSelectionActivity : AppCompatActivity() {
+class PinLengthSelectionActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

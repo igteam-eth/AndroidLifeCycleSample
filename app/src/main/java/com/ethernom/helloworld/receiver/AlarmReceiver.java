@@ -8,15 +8,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.ethernom.helloworld.application.TrackerSharePreference;
-import com.ethernom.helloworld.screens.DeleteDeviceBottomDialog;
-import com.ethernom.helloworld.screens.ItemDeleteCallback;
 import com.ethernom.helloworld.workmanager.AlarmWorkManager;
 import com.ethernom.helloworld.application.MyApplication;
 

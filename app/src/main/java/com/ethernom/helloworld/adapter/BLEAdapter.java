@@ -19,6 +19,7 @@ import com.ethernom.helloworld.model.CardInfo;
 import com.ethernom.helloworld.presenter.checkupdate.CheckUpdateCallback;
 import com.ethernom.helloworld.presenter.privatekey.GetAppKeyCallback;
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity;
+import com.ethernom.helloworld.dialog.LoadingDialog;
 import com.ethernom.helloworld.util.Conversion;
 import com.ethernom.helloworld.util.ECDSA_P256;
 import com.ethernom.helloworld.util.EthernomConstKt;
@@ -53,19 +54,21 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
     private String _m_id;
     private byte[] challenge = new byte[32];
     private boolean isUserRefuseUpdate;
+    private LoadingDialog loadingDialog;
 
     private String _card_name;
     private String _card_firmware_version;
     private String _card_ble_version;
     private String _card_boot_version;
 
-    public BLEAdapter(Context context, BLEAdapterCallback mBLEAdapterCallback){
+    public BLEAdapter(Context context, BLEAdapterCallback mBLEAdapterCallback, LoadingDialog loadingDialog){
         this._context = context;
         final BluetoothManager bluetoothManager =
                 (BluetoothManager) (context.getSystemService(Context.BLUETOOTH_SERVICE));
         assert bluetoothManager != null;
         mBluetoothAdapter = bluetoothManager.getAdapter();
         this.mBLEAdapterCallback = mBLEAdapterCallback;
+        this.loadingDialog = loadingDialog;
     }
     /* connect to card */
     public void ConnectCard(CardInfo cardInfo){
@@ -110,8 +113,8 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                         Log.i(TAG, "onDescriptorWrite, fire listener");
                         if (status == 0) {
                             Log.i(TAG, "Connection success");
-                            //H2CAuthentication((byte) 0x01);
-                            //H2CGetSerialNum();
+
+                            setDescriptionOnLoading("Loading: Verifying connection...");
                             H2CGetFirmwareVn();
                         }
                         else
@@ -311,6 +314,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 fwInfoList.add(new FwInfo(_card_ble_version, "2"));
                 fwInfoList.add(new FwInfo(_card_boot_version, "3"));
 
+                setDescriptionOnLoading("Loading: Checking compatibility...");
                 //call to service to check the card is up-to-date
                 new CheckUpdatePresenter().checkUpdate(this, fwInfoList, _sn, _m_id);
             }
@@ -349,11 +353,12 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 if(buffer[12] == EthernomConstKt.getCM_ERR_SUCCESS()){
                     Log.i(TAG, "Auth success");
                     H2CAppLaunch(android.os.Build.MODEL, (byte) 0x01);
+                    setDescriptionOnLoading("Loading: Launching...");
                 }else{
                     Log.i(TAG, "Auth fails");
                     RequestAppSuspend((byte) 0x01);
                     ((DiscoverDeviceActivity)_context).runOnUiThread(() ->
-                            mBLEAdapterCallback.showMessageError("Authentication with card was failed")
+                            mBLEAdapterCallback.appMustBeUpdate()
                     );
                 }
             }else{
@@ -378,6 +383,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 if (buffer[12] == EthernomConstKt.getCM_ERR_SUCCESS()) {
                     Log.i(TAG, "App launched success");
                     H2CRequestSessionPIN();
+
 
                 }else if(buffer[12] == EthernomConstKt.getCM_ERR_APP_BUSY()){
                     Log.i(TAG, "App launched busy");
@@ -445,8 +451,9 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
             String mBuffer = Conversion.bytesToHex(buffer);
             String result = mBuffer.substring(mBuffer.length() -8);
             Log.i(TAG, result);
-            RequestAppSuspend((byte) 0x01);
             mBLEAdapterCallback.onGetMajorMinorSucceeded(result);
+            DisconnectCard();
+            //RequestAppSuspend((byte) 0x01);
         });
     }
     public void RequestAppSuspend(byte appID){
@@ -563,8 +570,13 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 Log.i(TAG, Objects.requireNonNull(e.getMessage()));
             }
         }else{
-            ethCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
-            doWrite(data);//callback.invoke("Write failed");
+            try{
+                ethCharacteristic.setWriteType(BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT);
+                doWrite(data);//callback.invoke("Write failed");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
         }
     }
     private boolean doWrite(byte[] data){
@@ -605,6 +617,12 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
         }
     }
 
+    private void setDescriptionOnLoading(String message){
+        ((DiscoverDeviceActivity)_context).runOnUiThread(() ->
+                loadingDialog.setLoadingDescription(message)
+        );
+    }
+
     interface bufferCallback {
         void onData(byte[] buffer);
     }
@@ -614,5 +632,6 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
         void getSecureServerFailed(String message);
         void showMessageError(String message);
         void appRequiredToUpdate();
+        void appMustBeUpdate();
     }
 }

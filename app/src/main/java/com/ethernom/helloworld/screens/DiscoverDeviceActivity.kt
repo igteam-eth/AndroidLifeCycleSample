@@ -2,16 +2,15 @@ package com.ethernom.helloworld.screens
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,8 +19,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.adapter.BLEAdapter
 import com.ethernom.helloworld.adapter.DeviceAdapter
+import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
+import com.ethernom.helloworld.dialog.LoadingDialog
+import com.ethernom.helloworld.dialog.UpdateCardDialog
 import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.model.CardInfo
 import com.ethernom.helloworld.util.BLEScan
@@ -30,8 +32,9 @@ import kotlinx.android.synthetic.main.toolbar_default_backpress.*
 import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback,
+class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     BLEScan.DeviceDiscoveredCallBack, BLEAdapter.BLEAdapterCallback, UpdateCardDialog.Callback {
+
 
     private var mBTDevicesArrayList: ArrayList<BleClient>? = null
     private var recyclerView: RecyclerView? = null
@@ -39,8 +42,10 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
     private var mBleScan: BLEScan? = null
     private var selectedPos: Int? = null
     private var mBLEAdapter: BLEAdapter? = null
+    private lateinit var loadingDialog: LoadingDialog
 
-    private var cardInfo : CardInfo? = null
+    private var cardInfo: CardInfo? = null
+    private var isVerifyPinType = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +53,22 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
 
         checkLocationPermission()
         mBleScan = BLEScan(this, this)
-        mBLEAdapter = BLEAdapter(this, this)
+        loadingDialog = LoadingDialog(this)
+        mBLEAdapter = BLEAdapter(this, this, loadingDialog)
+
 
         mBTDevicesArrayList = ArrayList()
         setUpList()
         buttonBack.setOnClickListener {
             onBackPressed()
+        }
+
+        button_question_mark.setOnClickListener {
+            MyApplication.showAlertDialog(
+                this,
+                "Unable to see your device?",
+                "Make sure your device is powered on and authenticated."
+            )
         }
 
     }
@@ -71,6 +86,7 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
                 ""
             )
             mBLEAdapter!!.ConnectCard(cardInfo)
+            loadingDialog.setLoadingDescription("Loading: Connecting " + mBTDevicesArrayList!![position].devName + "...")
         } else {
             showDialog("Please enable internet connection!")
         }
@@ -92,7 +108,6 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
         }
         return haveConnectedWifi || haveConnectedMobile
     }
-
 
     override fun DeviceDiscover(
         deviceName: String,
@@ -166,6 +181,8 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
 
     override fun onGetPinSucceeded(pin: String) {
         Log.e("pinCallback", pin)
+
+        isVerifyPinType = true
         val intent = Intent(this, ConfirmPinActivity::class.java)
         intent.putExtra(
             "pin",
@@ -212,11 +229,33 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
                 val result = data!!.getBooleanExtra("pinVerified", false)
                 if (result) {
                     mBLEAdapter!!.H2CRequestBLETrackerInit()
+                    loadingDialog.setLoadingDescription("Loading: Starting tracker...")
+                    loadingDialog.show()
                 }
             } else {
-                hideProgressBar()
                 mBLEAdapter!!.RequestAppSuspend(0x01.toByte())
+                loadingDialog.setLoadingDescription("Loading: Canceling PIN authentication...")
+                hideProgressBar()
             }
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (checkBlueToothAdapter()) {
+            if (!isVerifyPinType && mBLEAdapter != null ) {
+                mBLEAdapter!!.RequestAppSuspend(0x01.toByte())
+                mBLEAdapter!!.DisconnectCard()
+                mBleScan!!.stopScanning()
+            }
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (!isVerifyPinType) {
+            mBleScan!!.startScanning()
         }
     }
 
@@ -231,11 +270,11 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
     }
 
     private fun showProgressBar() {
-        view_progressBar.visibility = View.VISIBLE
+        loadingDialog.show()
     }
 
     private fun hideProgressBar() {
-        view_progressBar.visibility = View.GONE
+        loadingDialog.dismiss()
     }
 
     override fun onResume() {
@@ -269,10 +308,26 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
     override fun onDisconnectButtonClicked() {
         mBLEAdapter!!.DisconnectCard()
     }
+
+    override fun appMustBeUpdate() {
+
+        hideProgressBar()
+
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Updates required!")
+            .setMessage("To update your device, please use Ethernom Device Manager.")
+            .setCancelable(false)
+            .setPositiveButton("Update") { dialog, _ ->
+                goToDeviceManager()
+                dialog.dismiss() }
+            .show()
+    }
+
+
     override fun onDoNotUpdateButtonClicked() {
         showProgressBar()
         mBLEAdapter!!.DisconnectCard()
-        if (cardInfo != null){
+        if (cardInfo != null) {
             mBLEAdapter!!.setUserRefuseUpdate(true)
             mBleScan!!.stopScanning()
             mBLEAdapter!!.ConnectCard(cardInfo)
@@ -295,6 +350,21 @@ class DiscoverDeviceActivity : AppCompatActivity(), DeviceAdapter.OnItemCallback
         super.onPause()
         mBleScan!!.stopScanning()
         hideProgressBar()
+    }
+
+    private fun checkBlueToothAdapter(): Boolean {
+
+        val bAdapter = BluetoothAdapter.getDefaultAdapter()
+        if (bAdapter != null) {
+            return if (!bAdapter.isEnabled) {
+                val mIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+                startActivityForResult(mIntent, 2)
+                false
+
+            } else true
+
+        }
+        return false
     }
 
     companion object {

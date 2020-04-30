@@ -4,7 +4,6 @@ import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -15,7 +14,6 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import java.lang.Exception
 import android.content.Intent
-import android.os.Handler
 import android.view.animation.AlphaAnimation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ethernom.helloworld.application.MyApplication
@@ -23,14 +21,20 @@ import com.ethernom.helloworld.workmanager.MyWorkManager
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.adapter.RegisteredDeviceAdapter
 import com.ethernom.helloworld.application.TrackerSharePreference
+import com.ethernom.helloworld.dialog.DeleteDeviceBottomDialog
+import com.ethernom.helloworld.dialog.ItemDeleteCallback
 import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BleReceiver
-import kotlinx.android.synthetic.main.activity_tracker.*
+import com.ethernom.helloworld.service.KillTrackerService
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_tracker.button_add
+import kotlinx.android.synthetic.main.activity_tracker.rv_registered_device
 import kotlinx.android.synthetic.main.toolbar_default.*
+import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback,
-    ItemDeleteCallback{
+class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
+    ItemDeleteCallback {
 
     private var registeredDeviceList: ArrayList<BleClient> = ArrayList()
     private var registeredDeviceAdapter: RegisteredDeviceAdapter? = null
@@ -49,10 +53,12 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
         rv_registered_device.adapter = registeredDeviceAdapter
 
         button_add.setOnClickListener {
+
             val animation = AlphaAnimation(1f, 0.8f)
             it.startAnimation(animation)
             if (registeredDeviceList.isEmpty()) {
-                startActivity(Intent(this, DiscoverDeviceActivity::class.java))
+                if (checkBlueToothAdapter())
+                    startActivity(Intent(this, DiscoverDeviceActivity::class.java))
             } else {
                 AlertDialog.Builder(this)
                     .setTitle("Error")
@@ -69,16 +75,30 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
             startActivity(Intent(this, SettingActivity::class.java))
         }
 
+        button_question_mark.setOnClickListener {
+            MyApplication.showAlertDialog(
+                this,
+                "Unable to see your device?",
+                "Please make sure to add your device by using \"Add device\" button"
+            )
+        }
+
         try {
             val isNotification = intent.getBooleanExtra("NOTIFICATION", false)
             if (isNotification) {
                 TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = false
-                BleReceiver.stopSound()
                 MyApplication.appendLog("${MyApplication.getCurrentDate()} : User was click notification to open the app: isAlreadyCreateWorkerThread = false\n")
+            }
+            //user dismiss notification so we need to stop ring
+            if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread){
+                TrackerSharePreference.getConstant(this).isRanging = false
+                BleReceiver.stopSound()
             }
         } catch (e: Exception) {
             MyApplication.appendLog("${MyApplication.getCurrentDate()} : Error " + e.message + "\n")
         }
+
+        startService(Intent(this, KillTrackerService::class.java))
     }
 
     override fun onStart() {
@@ -100,6 +120,7 @@ class MainActivity : AppCompatActivity(), RegisteredDeviceAdapter.OnItemCallback
                 displayEthernomCard()
 
                 if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
+
                     TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = true
                     MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
                     //OneTimeWorkRequest

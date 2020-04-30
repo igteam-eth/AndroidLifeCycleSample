@@ -11,7 +11,7 @@ import android.app.Activity
 import com.ethernom.helloworld.application.SettingSharePreference
 
 
-class SettingActivity : AppCompatActivity() {
+class SettingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +31,12 @@ class SettingActivity : AppCompatActivity() {
             overridePendingTransition(R.anim.activity_slide_up, R.anim.activity_hold)
         }
         view_permission.setOnClickListener {
-            Log.i("onclick", "Permission")
+            startActivity(Intent(this, LocationPermissionActivity::class.java))
         }
         view_about_info.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

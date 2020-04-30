@@ -23,6 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".screens.LocationPermissionActivity"></activity>
         <activity android:name=".screens.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,6 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".screens.ForegroundNotifyRangActivity"
+            android:theme="@style/Theme.Transparent" />
         <activity android:name=".screens.AboutActivity" />
         <activity android:name=".screens.PinLengthSelectionActivity" />
         <activity android:name=".screens.SettingActivity" />
@@ -51,9 +55,17 @@
             android:enabled="true"
             android:exported="true" />
 
+        <service
+            android:name=".service.KillTrackerService"
+            android:enabled="true" />
+
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init" />
+
+        <receiver
+            android:name=".receiver.NotificationDismissedReceiver"
+            android:exported="false"></receiver>
     </application>
 
 </manifest>

@@ -29,6 +29,7 @@ import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.R;
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.model.BleClient;
+import com.ethernom.helloworld.screens.ForegroundNotifyRangActivity;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -85,8 +86,18 @@ public class BleReceiver extends BroadcastReceiver {
                                 Log.d(TAG, "getScanRecord is null");
                                 continue;
                             }
-                            showSilentNotification(context);
+
                             playSound(context);
+                            TrackerSharePreference.getConstant(context).setRanging(true);
+
+                            if (TrackerSharePreference.getConstant(context).isAppInForeground()){
+                                Intent i = new Intent(context, ForegroundNotifyRangActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(i);
+                            }else{
+                                showSilentNotification(context);
+                            }
+
                         }
 
                     } else {

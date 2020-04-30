@@ -89,4 +89,9 @@
     <string name="update_available_message">To update your device, please use Ethernom Device Manager.</string>
     <string name="disconnect">Disconnect</string>
     <string name="dont_update">Don\'t update</string>
+    <string name="foreground_rang">You rang your phone from</string>
+    <string name="acknowledge">Acknowledge</string>
+    <string name="set_up_permission_location">Let\' set up location permission</string>
+    <string name="set_location_to_always">Set location to \'always\'</string>
+
 </resources>
