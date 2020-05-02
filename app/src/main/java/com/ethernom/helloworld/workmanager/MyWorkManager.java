@@ -28,6 +28,7 @@ public class MyWorkManager extends Worker {
         MyApplication.appendLog(MyApplication.getCurrentDate()+" : MyWorkManager(Worker thread) in doWork  "  +"\n\n");
 
         BleReceiver.startScan(mContext);
+
         return Result.success();
     }
 }

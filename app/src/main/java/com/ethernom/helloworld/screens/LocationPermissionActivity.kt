@@ -25,7 +25,7 @@ class LocationPermissionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location_permission)
 
-        tvToolbarDefaultBackPressTitle.text = resources.getString(R.string.about)
+        tvToolbarDefaultBackPressTitle.text = resources.getString(R.string.location_permission)
 
         buttonBack.setOnClickListener {
             onBackPressed()

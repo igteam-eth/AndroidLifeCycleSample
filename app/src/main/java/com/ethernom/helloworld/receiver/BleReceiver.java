@@ -90,6 +90,8 @@ public class BleReceiver extends BroadcastReceiver {
                             playSound(context);
                             TrackerSharePreference.getConstant(context).setRanging(true);
 
+                            TrackerSharePreference.getConstant(context).setBeaconTimestamp(MyApplication.getCurrentDate());
+
                             if (TrackerSharePreference.getConstant(context).isAppInForeground()){
                                 Intent i = new Intent(context, ForegroundNotifyRangActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

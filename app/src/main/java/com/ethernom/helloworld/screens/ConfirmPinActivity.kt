@@ -7,7 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.Html
+import android.text.InputType
 import android.text.TextWatcher
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.WindowManager
 import com.ethernom.helloworld.R
@@ -15,6 +18,9 @@ import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import kotlinx.android.synthetic.main.activity_confirm_pin.*
 import kotlinx.android.synthetic.main.toolbar_default_backpress.*
+
+
+
 
 class ConfirmPinActivity : BaseActivity() {
 
@@ -28,6 +34,7 @@ class ConfirmPinActivity : BaseActivity() {
         setContentView(R.layout.activity_confirm_pin)
         tvToolbarDefaultBackPressTitle.text = resources.getString(R.string.EthernomTitle)
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+
         val returnIntent = Intent()
         val pinToConfirm = intent.getStringExtra("pin")
         Log.i("pin", pinToConfirm!!)
@@ -71,3 +78,4 @@ class ConfirmPinActivity : BaseActivity() {
         }
     }
 }
+

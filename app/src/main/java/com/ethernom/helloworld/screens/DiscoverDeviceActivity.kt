@@ -35,7 +35,6 @@ import java.util.*
 class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     BLEScan.DeviceDiscoveredCallBack, BLEAdapter.BLEAdapterCallback, UpdateCardDialog.Callback {
 
-
     private var mBTDevicesArrayList: ArrayList<BleClient>? = null
     private var recyclerView: RecyclerView? = null
     private var adapter: DeviceAdapter? = null
@@ -79,7 +78,10 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
             Log.d("onItemClick", "" + position)
             selectedPos = position
 
-            mBleScan!!.stopScanning()
+           if(checkBlueToothAdapter()) {
+               mBleScan!!.stopScanning()
+           }
+
             cardInfo = CardInfo(
                 mBTDevicesArrayList!![position].devName,
                 mBTDevicesArrayList!![position].macAddress,
@@ -246,7 +248,10 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
             if (!isVerifyPinType && mBLEAdapter != null ) {
                 mBLEAdapter!!.RequestAppSuspend(0x01.toByte())
                 mBLEAdapter!!.DisconnectCard()
-                mBleScan!!.stopScanning()
+                if(checkBlueToothAdapter()) {
+                    mBleScan!!.stopScanning()
+                }
+
             }
         }
 
@@ -255,7 +260,10 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     override fun onStart() {
         super.onStart()
         if (!isVerifyPinType) {
-            mBleScan!!.startScanning()
+            if(checkBlueToothAdapter()) {
+                mBleScan!!.startScanning()
+
+            }
         }
     }
 
@@ -279,7 +287,10 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
 
     override fun onResume() {
         super.onResume()
-        mBleScan!!.startScanning()
+        if(checkBlueToothAdapter()) {
+            mBleScan!!.startScanning()
+        }
+
     }
 
     private fun showDialog(message: String?) {
@@ -329,7 +340,9 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         mBLEAdapter!!.DisconnectCard()
         if (cardInfo != null) {
             mBLEAdapter!!.setUserRefuseUpdate(true)
-            mBleScan!!.stopScanning()
+            if(checkBlueToothAdapter()) {
+                mBleScan!!.stopScanning()
+            }
             mBLEAdapter!!.ConnectCard(cardInfo)
         }
     }
@@ -348,7 +361,10 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
 
     override fun onPause() {
         super.onPause()
-        mBleScan!!.stopScanning()
+        if(checkBlueToothAdapter()) {
+            mBleScan!!.stopScanning()
+        }
+
         hideProgressBar()
     }
 
@@ -357,8 +373,8 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         val bAdapter = BluetoothAdapter.getDefaultAdapter()
         if (bAdapter != null) {
             return if (!bAdapter.isEnabled) {
-                val mIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
-                startActivityForResult(mIntent, 2)
+//                val mIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+//                startActivityForResult(mIntent, 2)
                 false
 
             } else true

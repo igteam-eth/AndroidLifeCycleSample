@@ -8,13 +8,15 @@ import android.view.Gravity.BOTTOM
 import android.view.LayoutInflater
 import android.view.Window
 import android.view.WindowManager
+import android.widget.TextView
 import com.ethernom.helloworld.R
 import kotlinx.android.synthetic.main.dialog_device_delete.view.*
 
-class DeleteDeviceBottomDialog(context: Context?, var itemDeleteCallback: ItemDeleteCallback) : Dialog(context!!) {
+class DeleteDeviceBottomDialog(devName: String, context: Context?, var itemDeleteCallback: ItemDeleteCallback) : Dialog(context!!) {
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_device_delete, null)
+        view.findViewById<TextView>(R.id.text_name).text = devName
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(view)
         setCancelable(true)

@@ -1,6 +1,7 @@
 package com.ethernom.helloworld.screens
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.content.pm.PackageManager
 import android.os.Build
@@ -14,8 +15,10 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import java.lang.Exception
 import android.content.Intent
+import android.os.Handler
 import android.view.animation.AlphaAnimation
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.workmanager.MyWorkManager
 import com.ethernom.helloworld.R
@@ -31,8 +34,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_tracker.button_add
 import kotlinx.android.synthetic.main.activity_tracker.rv_registered_device
 import kotlinx.android.synthetic.main.toolbar_default.*
+import java.text.SimpleDateFormat
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
     ItemDeleteCallback {
 
@@ -49,7 +55,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
 
         trackerSharePreference = TrackerSharePreference.getConstant(this)
         registeredDeviceAdapter = RegisteredDeviceAdapter(registeredDeviceList, this)
-        rv_registered_device.layoutManager = LinearLayoutManager(this)
+        rv_registered_device.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
         rv_registered_device.adapter = registeredDeviceAdapter
 
         button_add.setOnClickListener {
@@ -107,6 +113,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : onStart called \n")
     }
 
+    @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
@@ -119,16 +126,40 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
 
                 displayEthernomCard()
 
-                if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
 
-                    TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = true
-                    MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
-                    //OneTimeWorkRequest
-                    val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
-                        .addTag("WORK_MANAGER")
-                        .build()
-                    WorkManager.getInstance(this).enqueue(oneTimeRequest)
-                }
+                    if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
+
+                        var numDelay = 0
+                        TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = true
+                        MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
+
+                        if(TrackerSharePreference.getConstant(this).isBeaconTimeStamp != "") {
+                            val diffInMs  = SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(MyApplication.getCurrentDate()).time - SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(TrackerSharePreference.getConstant(this).isBeaconTimeStamp).time
+                            val diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMs);
+
+                            Log.d(TAG, "Seconds: " + diffInSec)
+
+
+                            if(diffInSec >= 8) {
+                                numDelay = 0;
+                            } else {
+                                numDelay = (8 - diffInSec).toInt()
+                            }
+                        }
+
+                        Log.d(TAG, "Delay Seconds: " + numDelay)
+
+
+
+                        //OneTimeWorkRequest
+                        val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
+                            .addTag("WORK_MANAGER")
+                            .setInitialDelay(numDelay.toLong(), TimeUnit.SECONDS)
+                            .build()
+                        WorkManager.getInstance(this).enqueue(oneTimeRequest)
+                    }
+
+
 
                 MyApplication.appendLog("${MyApplication.getCurrentDate()} : Host brand " + Build.BRAND + "\n")
 
@@ -155,7 +186,8 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
     }
 
     override fun ItemClickListener(position: Int) {
-        DeleteDeviceBottomDialog(this, this).show()
+        Log.d(TAG, "Name: "+ registeredDeviceList[position].devName)
+        DeleteDeviceBottomDialog(registeredDeviceList[position].devName ,this, this).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
