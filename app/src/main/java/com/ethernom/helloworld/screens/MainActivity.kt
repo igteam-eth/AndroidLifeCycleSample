@@ -3,6 +3,7 @@ package com.ethernom.helloworld.screens
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
+import android.content.ActivityNotFoundException
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -16,6 +17,7 @@ import androidx.work.WorkManager
 import java.lang.Exception
 import android.content.Intent
 import android.os.Handler
+import android.security.KeyChain
 import android.view.animation.AlphaAnimation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +37,7 @@ import kotlinx.android.synthetic.main.activity_tracker.button_add
 import kotlinx.android.synthetic.main.activity_tracker.rv_registered_device
 import kotlinx.android.synthetic.main.toolbar_default.*
 import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
@@ -313,4 +316,5 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
         const val PERMISSION_REQUEST_COARSE_LOCATION = 1
         const val TAG = "APP_MainActivity"
     }
+
 }

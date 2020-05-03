@@ -7,7 +7,9 @@ import com.ethernom.helloworld.R
 import kotlinx.android.synthetic.main.toolbar_default_backpress.*
 import android.content.Intent
 import android.net.Uri
+import android.security.KeyChain
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import com.ethernom.helloworld.BuildConfig
 import kotlinx.android.synthetic.main.activity_about.*
 
@@ -21,6 +23,8 @@ class AboutActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun init(){
+
+
 
         text_version.text = "Version: ${BuildConfig.VERSION_NAME}"
         tvToolbarDefaultBackPressTitle.text = resources.getString(R.string.about)
