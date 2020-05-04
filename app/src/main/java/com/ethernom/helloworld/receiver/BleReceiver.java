@@ -18,6 +18,7 @@ import android.bluetooth.le.ScanSettings;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.Context.AUDIO_SERVICE;
 import static com.ethernom.helloworld.application.MyApplication.showSilentNotification;
 
 @SuppressLint("MissingPermission")
@@ -49,6 +51,9 @@ public class BleReceiver extends BroadcastReceiver {
     public static PendingIntent mPendingIntent;
 
     private static Context mContext;
+
+    private static int originalVolume = 0;
+    private static AudioManager mAudioManager;
 
     /**
      * Constructor
@@ -92,13 +97,22 @@ public class BleReceiver extends BroadcastReceiver {
 
                             TrackerSharePreference.getConstant(context).setBeaconTimestamp(MyApplication.getCurrentDate());
 
-                            if (TrackerSharePreference.getConstant(context).isAppInForeground()){
-                                Intent i = new Intent(context, ForegroundNotifyRangActivity.class);
-                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                context.startActivity(i);
-                            }else{
-                                showSilentNotification(context);
+
+                            try{
+                                if (MyApplication.isAppInForeground(context)){
+                                    Log.d("BleReceiver", "AppInForeground");
+                                    Intent i = new Intent(context, ForegroundNotifyRangActivity.class);
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    context.startActivity(i);
+                                }else{
+                                    showSilentNotification(context);
+                                    Log.d("BleReceiver", "showNotification");
+                                }
+                            }catch (Exception e){
+                                e.printStackTrace();
                             }
+
+
 
                         }
 
@@ -261,25 +275,6 @@ public class BleReceiver extends BroadcastReceiver {
         }
     }
 
-    //call to play  sound
-    public static void playSound(Context context) {
-        if (mp != null) {
-            mp.stop();
-        }
-
-        mp = MediaPlayer.create(context, R.raw.ringingsound);
-        mp.setLooping(true);
-        mp.start();
-
-    }
-
-    // call to stop sound
-    public static void stopSound() {
-        if (mp != null) {
-            mp.stop();
-        }
-    }
-
     public static byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
@@ -288,6 +283,36 @@ public class BleReceiver extends BroadcastReceiver {
                     + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
+    }
+
+    //call to play  sound
+    public static void playSound(Context context) {
+        mAudioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
+        assert mAudioManager != null;
+        originalVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        Log.d(TAG, "originalVolume: "+ originalVolume);
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+        mAudioManager.setMode(AudioManager.STREAM_MUSIC);
+        mAudioManager.setSpeakerphoneOn(true);
+
+        if (mp != null) {
+            mp.stop();
+        }
+
+        mp = MediaPlayer.create(context, R.raw.ringingsound);
+        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
+        mp.setLooping(true);
+        mp.start();
+
+    }
+
+    // call to stop sound
+    public static void stopSound() {
+        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, originalVolume, 0);
+
+        if (mp != null) {
+            mp.stop();
+        }
     }
 
 

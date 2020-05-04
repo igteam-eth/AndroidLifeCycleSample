@@ -23,7 +23,6 @@ import kotlinx.android.synthetic.main.toolbar_default_backpress.*
 class ConfirmPinActivity : BaseActivity() {
 
     private var digitCount = 2
-    private val messageError = "<font color=#F44336>Error! Wrong PIN.</font><font> Please enter the $digitCount digit PIN code that appears on your device screen.</font>"
     private var enterFailedCount = 0
 
     @SuppressLint("SetTextI18n", "WrongViewCast")
@@ -41,7 +40,7 @@ class ConfirmPinActivity : BaseActivity() {
         pin_view_confirm.itemCount = digitCount
         pin_view_confirm.setAnimationEnable(true)
         pin_view_confirm.clearFocus()
-        pin_view_confirm.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        pin_view_confirm.setRawInputType(InputType.TYPE_CLASS_TEXT)
         pin_view_confirm.setTextIsSelectable(true)
         val ic = pin_view_confirm.onCreateInputConnection(EditorInfo())
         mKeyboardView.setInputConnection(ic)
@@ -59,7 +58,7 @@ class ConfirmPinActivity : BaseActivity() {
                                 setResult(Activity.RESULT_CANCELED)
                                 onBackPressed()
                             }
-                            text_authentication_message.text =  Html.fromHtml(messageError)
+                            text_authentication_message.text =  Html.fromHtml("<font color=#F44336>Error! Wrong PIN.</font><font> Please enter the $digitCount digit PIN code that appears on your device screen.</font>")
                             s.clear()
                             enterFailedCount++
                         }
@@ -79,6 +78,7 @@ class ConfirmPinActivity : BaseActivity() {
         text_authentication_message.text = "Please enter the $digitCount digit PIN code that appears on your device screen."
 
         buttonBack.setOnClickListener {
+            setResult(Activity.RESULT_CANCELED)
             onBackPressed()
         }
     }

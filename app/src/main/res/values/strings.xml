@@ -70,7 +70,7 @@
     <string name="message">Message</string>
     <string name="configuration">Configuration:</string>
     <string name="settings">Settings</string>
-    <string name="pin_lenght">PIN Lenth:</string>
+    <string name="pin_lenght">PIN Length:</string>
     <string name="digit_number">2 Digits</string>
     <string name="config_description">Cofigure PIN lenght from these options.</string>
     <string name="others">Others</string>

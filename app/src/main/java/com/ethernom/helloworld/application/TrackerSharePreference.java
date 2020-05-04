@@ -79,9 +79,6 @@ public class TrackerSharePreference {
 
     public BleClient getEthernomCard() {
         Gson gson = new Gson();
-        //default object
-        BleClient bleClient = new BleClient();
-        String defaultObject = gson.toJson(bleClient);
         String json = sharedPrefs.getString(SharedPreKeyType.ETHERNOM_CARD.toString(), null);
         return gson.fromJson(json, BleClient.class);
     }
@@ -99,13 +96,13 @@ public class TrackerSharePreference {
 
     }
 
-    public void setAppInForeground(boolean isForeground) {
+    /*public void setAppInForeground(boolean isForeground) {
         sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_IN_FOREGROUND.toString(), isForeground).apply();
     }
 
     public boolean isAppInForeground() {
         return sharedPrefs.getBoolean(SharedPreKeyType.IS_IN_FOREGROUND.toString(), false);
-    }
+    }*/
 
     public void setBeaconTimestamp(String beaconTimestamp ) {
         sharedPrefs.edit().putString(SharedPreKeyType.BeaconFoundTimestamp.toString(), beaconTimestamp).apply();

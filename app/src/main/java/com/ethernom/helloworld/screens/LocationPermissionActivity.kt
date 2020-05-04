@@ -9,8 +9,7 @@ import kotlinx.android.synthetic.main.activity_location_permission.*
 import kotlinx.android.synthetic.main.toolbar_default_backpress.*
 import android.content.Intent
 import android.net.Uri
-
-
+import com.ethernom.helloworld.util.Utils
 
 
 class LocationPermissionActivity : AppCompatActivity() {
@@ -40,14 +39,12 @@ class LocationPermissionActivity : AppCompatActivity() {
         }
 
         button_set_location_always.setOnClickListener {
+            Utils.preventDoubleClick(it)
             showInstalledAppDetails()
         }
     }
 
-
     private fun showInstalledAppDetails() {
-
-
         //redirect user to app Settings
         val i = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         i.addCategory(Intent.CATEGORY_DEFAULT)

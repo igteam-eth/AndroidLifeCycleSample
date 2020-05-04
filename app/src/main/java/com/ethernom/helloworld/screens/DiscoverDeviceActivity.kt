@@ -236,6 +236,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
                 }
             } else {
                 mBLEAdapter!!.RequestAppSuspend(0x01.toByte())
+                mBLEAdapter!!.DisconnectCard()
                 loadingDialog.setLoadingDescription("Loading: Canceling PIN authentication...")
                 hideProgressBar()
             }

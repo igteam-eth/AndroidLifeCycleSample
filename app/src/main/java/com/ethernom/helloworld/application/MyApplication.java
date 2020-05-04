@@ -5,9 +5,10 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
@@ -22,8 +23,10 @@ import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.ethernom.helloworld.R;
+import com.ethernom.helloworld.receiver.BluetoothStateChangeReceiver;
 import com.ethernom.helloworld.receiver.NotificationDismissedReceiver;
 import com.ethernom.helloworld.screens.MainActivity;
+import com.ethernom.helloworld.util.ForegroundCheckTask;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,6 +34,7 @@ import java.io.OutputStreamWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 
@@ -42,20 +46,14 @@ public class MyApplication extends Application implements LifecycleObserver {
     public void onCreate() {
         super.onCreate();
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
+
+
+        // Register Bluetooth State change
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(new BluetoothStateChangeReceiver(), intentFilter);
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    void onAppBackgrounded(){
-        Log.d("MyApplication", "In Background");
-        TrackerSharePreference.getConstant(this).setAppInForeground(false);
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    void onAppForegrounded() {
-        Log.d("MyApplication", "In Foreground");
-        TrackerSharePreference.getConstant(this).setAppInForeground(true);
-
-    }
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void onAppDestroyed() {
         Log.d("MyApplication", "Destroy");
@@ -68,7 +66,6 @@ public class MyApplication extends Application implements LifecycleObserver {
 
 
     static public void appendLog(String logs) {
-
 
         try {
             File path = Environment.getExternalStoragePublicDirectory(
@@ -96,9 +93,16 @@ public class MyApplication extends Application implements LifecycleObserver {
         return formatter.format(calendar.getTime());
     }
 
+    public static boolean isAppInForeground(Context context) throws ExecutionException, InterruptedException {
+        return new ForegroundCheckTask().execute(context).get();
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void showSilentNotification(Context context) {
+
+
+        Log.d("MyApplication", "showSilentNotification");
         final String CHANNEL_ID = "ring_channel";
         final NotificationManager manager =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
@@ -137,5 +141,6 @@ public class MyApplication extends Application implements LifecycleObserver {
         return PendingIntent.getBroadcast(context.getApplicationContext(),
                 0, intent, 0);
     }
+
 
 }

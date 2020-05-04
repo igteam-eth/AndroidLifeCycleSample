@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_setting.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 import android.app.Activity
 import com.ethernom.helloworld.application.SettingSharePreference
+import com.ethernom.helloworld.util.Utils
 
 
 class SettingActivity : BaseActivity() {
@@ -27,13 +28,16 @@ class SettingActivity : BaseActivity() {
         }
         disPlayLengthDigit(SettingSharePreference.getConstant(this).pinLength)
         view_pin_length.setOnClickListener {
+            Utils.preventDoubleClick(it)
             startActivityForResult(Intent(this, PinLengthSelectionActivity::class.java), 101)
             overridePendingTransition(R.anim.activity_slide_up, R.anim.activity_hold)
         }
         view_permission.setOnClickListener {
+            Utils.preventDoubleClick(it)
             startActivity(Intent(this, LocationPermissionActivity::class.java))
         }
         view_about_info.setOnClickListener {
+            Utils.preventDoubleClick(it)
             startActivity(Intent(this, AboutActivity::class.java))
         }
 

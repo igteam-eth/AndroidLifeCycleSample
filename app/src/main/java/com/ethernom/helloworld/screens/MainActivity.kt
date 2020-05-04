@@ -32,6 +32,7 @@ import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BleReceiver
 import com.ethernom.helloworld.service.KillTrackerService
+import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_tracker.button_add
 import kotlinx.android.synthetic.main.activity_tracker.rv_registered_device
@@ -49,6 +50,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
     private var registeredDeviceAdapter: RegisteredDeviceAdapter? = null
     private lateinit var trackerSharePreference: TrackerSharePreference
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,10 +60,13 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
 
         trackerSharePreference = TrackerSharePreference.getConstant(this)
         registeredDeviceAdapter = RegisteredDeviceAdapter(registeredDeviceList, this)
-        rv_registered_device.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+        rv_registered_device.layoutManager =
+            LinearLayoutManager(this)
         rv_registered_device.adapter = registeredDeviceAdapter
 
         button_add.setOnClickListener {
+
+            Utils.preventDoubleClick(it)
 
             val animation = AlphaAnimation(1f, 0.8f)
             it.startAnimation(animation)
@@ -82,9 +87,11 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
         }
         button_setting.setOnClickListener {
             startActivity(Intent(this, SettingActivity::class.java))
+            Utils.preventDoubleClick(it)
         }
 
         button_question_mark.setOnClickListener {
+            Utils.preventDoubleClick(it)
             MyApplication.showAlertDialog(
                 this,
                 "Unable to see your device?",
@@ -99,7 +106,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
                 MyApplication.appendLog("${MyApplication.getCurrentDate()} : User was click notification to open the app: isAlreadyCreateWorkerThread = false\n")
             }
             //user dismiss notification so we need to stop ring
-            if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread){
+            if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
                 TrackerSharePreference.getConstant(this).isRanging = false
                 BleReceiver.stopSound()
             }
@@ -129,40 +136,38 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
 
                 displayEthernomCard()
 
+                if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
 
-                    if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
+                    var numDelay = 0
+                    TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = true
+                    MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
 
-                        var numDelay = 0
-                        TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = true
-                        MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n")
+                    if (TrackerSharePreference.getConstant(this).isBeaconTimeStamp != "") {
+                        val diffInMs =
+                            SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(MyApplication.getCurrentDate()).time - SimpleDateFormat(
+                                "dd/MM/yyyy HH:mm:ss.SSS"
+                            ).parse(TrackerSharePreference.getConstant(this).isBeaconTimeStamp).time
+                        val diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMs)
 
-                        if(TrackerSharePreference.getConstant(this).isBeaconTimeStamp != "") {
-                            val diffInMs  = SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(MyApplication.getCurrentDate()).time - SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(TrackerSharePreference.getConstant(this).isBeaconTimeStamp).time
-                            val diffInSec = TimeUnit.MILLISECONDS.toSeconds(diffInMs);
-
-                            Log.d(TAG, "Seconds: " + diffInSec)
+                        Log.d(TAG, "Seconds: $diffInSec")
 
 
-                            if(diffInSec >= 8) {
-                                numDelay = 0;
-                            } else {
-                                numDelay = (8 - diffInSec).toInt()
-                            }
+                        if (diffInSec >= DELAY_PERIOD) {
+                            numDelay = 0
+                        } else {
+                            numDelay = (DELAY_PERIOD - diffInSec).toInt()
                         }
-
-                        Log.d(TAG, "Delay Seconds: " + numDelay)
-
-
-
-                        //OneTimeWorkRequest
-                        val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
-                            .addTag("WORK_MANAGER")
-                            .setInitialDelay(numDelay.toLong(), TimeUnit.SECONDS)
-                            .build()
-                        WorkManager.getInstance(this).enqueue(oneTimeRequest)
                     }
 
+                    Log.d(TAG, "Delay Seconds: $numDelay")
 
+                    //OneTimeWorkRequest
+                    val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
+                        .addTag("WORK_MANAGER")
+                        .setInitialDelay(numDelay.toLong(), TimeUnit.SECONDS)
+                        .build()
+                    WorkManager.getInstance(this).enqueue(oneTimeRequest)
+                }
 
                 MyApplication.appendLog("${MyApplication.getCurrentDate()} : Host brand " + Build.BRAND + "\n")
 
@@ -189,13 +194,12 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
     }
 
     override fun ItemClickListener(position: Int) {
-        Log.d(TAG, "Name: "+ registeredDeviceList[position].devName)
-        DeleteDeviceBottomDialog(registeredDeviceList[position].devName ,this, this).show()
+        Log.d(TAG, "Name: " + registeredDeviceList[position].devName)
+        DeleteDeviceBottomDialog(registeredDeviceList[position].devName, this, this).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemDeleteClicked() {
-        BleReceiver.stopSound()
         registeredDeviceList.clear()
         registeredDeviceAdapter!!.notifyDataSetChanged()
         trackerSharePreference.clearAll()
@@ -248,46 +252,33 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check
             Log.d(TAG, "Checking Bluetooth permissions")
-            if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) !== PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "  Permission is not granted")
-                val builder = AlertDialog.Builder(this)
-                builder.setTitle("Permission Required for BLE Device Detection")
-                builder.setMessage("Bluetooth operation requires 'location' access.\nPlease grant this so the app can detect BLE devices")
-                //builder.setIcon(R.drawable.cross);
-                builder.setPositiveButton(android.R.string.ok, null)
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
 
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-                    if (ActivityCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                        ) !== PackageManager.PERMISSION_GRANTED
-                    ) {
-                        builder.setOnDismissListener {
-                            // User replies then there is a call to onRequestPermissionsResult() below
-                            requestPermissions(
-                                arrayOf(
-                                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                                    Manifest.permission.ACCESS_FINE_LOCATION,
-                                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                                ),
-                                PERMISSION_REQUEST_COARSE_LOCATION
-                            )
-                        }
-                    }
-                } else {
-                    builder.setOnDismissListener {
-                        // User replies then there is a call to onRequestPermissionsResult() below
-                        requestPermissions(
-                            arrayOf(
-                                Manifest.permission.ACCESS_COARSE_LOCATION,
-                                Manifest.permission.ACCESS_FINE_LOCATION
-                            ),
-                            PERMISSION_REQUEST_COARSE_LOCATION
-                        )
-                    }
-                }
 
-                builder.show()
+                    requestPermissions(
+                        arrayOf(
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                        ),
+                        PERMISSION_REQUEST_COARSE_LOCATION
+                    )
+
+                } else {
+
+                    requestPermissions(
+                        arrayOf(
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_FINE_LOCATION
+                        ),
+                        PERMISSION_REQUEST_COARSE_LOCATION
+                    )
+                }
                 return false
             } else {
                 Log.d(TAG, "  Permission is granted")
@@ -315,6 +306,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
     companion object {
         const val PERMISSION_REQUEST_COARSE_LOCATION = 1
         const val TAG = "APP_MainActivity"
+        const val DELAY_PERIOD = 12
     }
 
 }

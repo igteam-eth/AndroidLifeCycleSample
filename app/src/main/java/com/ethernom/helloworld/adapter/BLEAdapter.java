@@ -60,6 +60,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
     private String _card_firmware_version;
     private String _card_ble_version;
     private String _card_boot_version;
+    private boolean alreadyCallDisconnect;
 
     public BLEAdapter(Context context, BLEAdapterCallback mBLEAdapterCallback, LoadingDialog loadingDialog){
         this._context = context;
@@ -88,6 +89,10 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                     if(newState == BluetoothGatt.STATE_DISCONNECTED){
                         Log.i(TAG,"gat disconnected");
                             gatt.close();
+                            if (alreadyCallDisconnect){
+                                tryAgainDialog();
+                                setAlreadyCallDisconnect(false);
+                            }
                     }
                 }
 
@@ -117,8 +122,10 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                             setDescriptionOnLoading("Loading: Verifying connection...");
                             H2CGetFirmwareVn();
                         }
-                        else
+                        else {
                             Log.i(TAG, "Connection fail");
+
+                        }
                 }
 
                 @Override
@@ -146,8 +153,10 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
             };
     /* FOor disconnect card */
     public void DisconnectCard(){
-        if(gatt != null)
+        if(gatt != null) {
             gatt.close();
+            setAlreadyCallDisconnect(true);
+        }
     }
     public void H2CGetFirmwareVn() {
         byte[] payload = new byte[4];
@@ -196,6 +205,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 H2CGetBLEVn();
             } else {
                 Log.i(TAG, "FAILED Firmware "+ hexa);
+                tryAgainDialog();
             }
 
 
@@ -234,6 +244,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 H2CGetBOOTVn();
             } else {
                 Log.i(TAG, "FAILED BLE "+ hexa);
+                tryAgainDialog();
             }
 
         });
@@ -269,6 +280,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 H2CGetSerialNum();
             } else {
                 Log.i(TAG, "FAILED BOOT "+ hexa);
+                tryAgainDialog();
             }
         });
     }
@@ -334,6 +346,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 for(int i=0; i<32; i++) challenge[i] = buffer[i + 12];
                 new GetPrivateKeyPresenter(this,  this._sn, this._m_id).getData();
             }else{
+                tryAgainDialog();
                 RequestAppSuspend((byte) 0x01);
             }
         });
@@ -364,6 +377,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
             }else{
                 Log.i(TAG, "Invalid command");
                 RequestAppSuspend((byte) 0x01);
+                tryAgainDialog();
             }
         });
     }
@@ -387,14 +401,16 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
 
                 }else if(buffer[12] == EthernomConstKt.getCM_ERR_APP_BUSY()){
                     Log.i(TAG, "App launched busy");
-
+                    tryAgainDialog();
                     RequestAppSuspend(appID);
                 }else {
                     Log.i(TAG, "App launched fails");
+                    tryAgainDialog();
                     RequestAppSuspend((byte) 0x01);
                 }
             }else{
                 Log.i(TAG, "Invalid command: Launch app state");
+                tryAgainDialog();
                 RequestAppSuspend((byte) 0x01);
             }
         });
@@ -426,7 +442,6 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
                 byte[] slice = Arrays.copyOfRange(buffer, 12, buffer.length);
                 String new_PIN = Conversion.convertToString(slice);
                 Log.i(TAG, "Success" + new_PIN);
-                //H2CRequestBLETrackerInit();
                 mBLEAdapterCallback.onGetPinSucceeded(new_PIN);
 
             }else if(buffer[EthernomConstKt.getETH_BLE_HEADER_SIZE()] == EthernomConstKt.getCM_RSP()) {
@@ -453,7 +468,6 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
             Log.i(TAG, result);
             mBLEAdapterCallback.onGetMajorMinorSucceeded(result);
             DisconnectCard();
-            //RequestAppSuspend((byte) 0x01);
         });
     }
     public void RequestAppSuspend(byte appID){
@@ -583,6 +597,7 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
         ethCharacteristic.setValue(data);
         if (!gatt.writeCharacteristic(ethCharacteristic)) {
             Log.i(TAG, "Error on doWrite");
+            tryAgainDialog();
             return false;
         }
         return true;
@@ -621,6 +636,17 @@ public class BLEAdapter implements GetAppKeyCallback, CheckUpdateCallback {
         ((DiscoverDeviceActivity)_context).runOnUiThread(() ->
                 loadingDialog.setLoadingDescription(message)
         );
+    }
+    private void tryAgainDialog(){
+        DisconnectCard();
+        ((DiscoverDeviceActivity)_context).runOnUiThread(() ->
+                mBLEAdapterCallback.showMessageError("Make sure your device is powered on and authenticated. Please try again.")
+
+        );
+    }
+
+    public void setAlreadyCallDisconnect(boolean alreadyCallDisconnect) {
+        this.alreadyCallDisconnect = alreadyCallDisconnect;
     }
 
     interface bufferCallback {
