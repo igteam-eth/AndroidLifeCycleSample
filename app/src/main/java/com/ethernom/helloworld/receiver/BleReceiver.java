@@ -308,10 +308,10 @@ public class BleReceiver extends BroadcastReceiver {
 
     // call to stop sound
     public static void stopSound() {
-        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, originalVolume, 0);
 
-        if (mp != null) {
+        if (mp != null && mAudioManager != null ) {
             mp.stop();
+            mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, originalVolume, 0);
         }
     }
 

@@ -20,8 +20,8 @@ public class TrackerSharePreference {
         PUB_KEY,
         ETHERNOM_CARD,
         IS_RANGING,
-        IS_IN_FOREGROUND,
-        BeaconFoundTimestamp
+        BeaconFoundTimestamp,
+        IS_ALREADY_SCAN
     }
 
     private TrackerSharePreference(Context context) {
@@ -96,14 +96,6 @@ public class TrackerSharePreference {
 
     }
 
-    /*public void setAppInForeground(boolean isForeground) {
-        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_IN_FOREGROUND.toString(), isForeground).apply();
-    }
-
-    public boolean isAppInForeground() {
-        return sharedPrefs.getBoolean(SharedPreKeyType.IS_IN_FOREGROUND.toString(), false);
-    }*/
-
     public void setBeaconTimestamp(String beaconTimestamp ) {
         sharedPrefs.edit().putString(SharedPreKeyType.BeaconFoundTimestamp.toString(), beaconTimestamp).apply();
     }
@@ -111,6 +103,14 @@ public class TrackerSharePreference {
     public String isBeaconTimeStamp() {
         return sharedPrefs.getString(SharedPreKeyType.BeaconFoundTimestamp.toString(), "");
     }
+ public void setIsAlreadyScan(boolean isAlreadyScan ) {
+        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_ALREADY_SCAN.toString(), isAlreadyScan).apply();
+    }
+
+    public boolean isAlreadyScan() {
+        return sharedPrefs.getBoolean(SharedPreKeyType.IS_ALREADY_SCAN.toString(), false);
+    }
+
 
 
 

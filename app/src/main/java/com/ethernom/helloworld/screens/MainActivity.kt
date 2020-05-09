@@ -3,7 +3,6 @@ package com.ethernom.helloworld.screens
 import android.Manifest
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
-import android.content.ActivityNotFoundException
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -16,11 +15,8 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import java.lang.Exception
 import android.content.Intent
-import android.os.Handler
-import android.security.KeyChain
 import android.view.animation.AlphaAnimation
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.workmanager.MyWorkManager
 import com.ethernom.helloworld.R
@@ -38,7 +34,6 @@ import kotlinx.android.synthetic.main.activity_tracker.button_add
 import kotlinx.android.synthetic.main.activity_tracker.rv_registered_device
 import kotlinx.android.synthetic.main.toolbar_default.*
 import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
@@ -57,6 +52,8 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
         setContentView(R.layout.activity_main)
         Log.d(TAG, "onCreate called \n")
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : onCreate called\n")
+
+        TrackerSharePreference.getConstant(this).isRanging = false
 
         trackerSharePreference = TrackerSharePreference.getConstant(this)
         registeredDeviceAdapter = RegisteredDeviceAdapter(registeredDeviceList, this)
@@ -105,22 +102,21 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
                 TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = false
                 MyApplication.appendLog("${MyApplication.getCurrentDate()} : User was click notification to open the app: isAlreadyCreateWorkerThread = false\n")
             }
-            //user dismiss notification so we need to stop ring
-            if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
-                TrackerSharePreference.getConstant(this).isRanging = false
-                BleReceiver.stopSound()
-            }
+            BleReceiver.stopSound()
+
         } catch (e: Exception) {
             MyApplication.appendLog("${MyApplication.getCurrentDate()} : Error " + e.message + "\n")
         }
 
-        startService(Intent(this, KillTrackerService::class.java))
     }
 
     override fun onStart() {
         super.onStart()
         Log.d(TAG, "onStart called \n")
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : onStart called \n")
+
+        startService(Intent(this, KillTrackerService::class.java))
+
+        MyApplication.appendLog("${MyApplication.getCurrentDate()} : startService KillTrackerService in onStart\n")
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -160,13 +156,14 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback,
                     }
 
                     Log.d(TAG, "Delay Seconds: $numDelay")
-
+                    TrackerSharePreference.getConstant(this).setIsAlreadyScan(false)
                     //OneTimeWorkRequest
                     val oneTimeRequest = OneTimeWorkRequest.Builder(MyWorkManager::class.java)
                         .addTag("WORK_MANAGER")
                         .setInitialDelay(numDelay.toLong(), TimeUnit.SECONDS)
                         .build()
                     WorkManager.getInstance(this).enqueue(oneTimeRequest)
+                    Log.d(TAG, "Enqueue WORK_MANAGER")
                 }
 
                 MyApplication.appendLog("${MyApplication.getCurrentDate()} : Host brand " + Build.BRAND + "\n")

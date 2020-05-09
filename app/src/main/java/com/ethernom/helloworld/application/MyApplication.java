@@ -23,7 +23,6 @@ import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.ethernom.helloworld.R;
-import com.ethernom.helloworld.receiver.BluetoothStateChangeReceiver;
 import com.ethernom.helloworld.receiver.NotificationDismissedReceiver;
 import com.ethernom.helloworld.screens.MainActivity;
 import com.ethernom.helloworld.util.ForegroundCheckTask;
@@ -39,31 +38,14 @@ import java.util.concurrent.ExecutionException;
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 
 
-public class MyApplication extends Application implements LifecycleObserver {
+public class MyApplication extends Application {
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
 
-
-        // Register Bluetooth State change
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        registerReceiver(new BluetoothStateChangeReceiver(), intentFilter);
     }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    void onAppDestroyed() {
-        Log.d("MyApplication", "Destroy");
-        //if the app is ranging but user don't click the notification or acknowledge so we need to rearm scan
-        if (TrackerSharePreference.getConstant(this).isRanging()) {
-            TrackerSharePreference.getConstant(this).setRanging(false);
-            TrackerSharePreference.getConstant(this).setAlreadyCreateWorkerThread(false);
-        }
-    }
-
 
     static public void appendLog(String logs) {
 

@@ -24,6 +24,7 @@ class ForegroundNotifyRangActivity : Activity(), NotifyRangCallback {
     override fun onButtonClicked() {
         BleReceiver.stopSound()
 
+        TrackerSharePreference.getConstant(this).isRanging = false
         TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = false
         MyApplication.appendLog("${MyApplication.getCurrentDate()} : User was click notification to open the app: isAlreadyCreateWorkerThread = false\n")
 
