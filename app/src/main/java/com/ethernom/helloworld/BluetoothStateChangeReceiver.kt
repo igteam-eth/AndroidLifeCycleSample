@@ -23,6 +23,7 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
                 BluetoothAdapter.STATE_OFF -> {
                   Log.e("EthernomHelloworld", "BT STATE_OFF")
                     TrackerSharePreference.getConstant(context).isBLEStatus = false
+                    MyApplication.appendLog(MyApplication.getCurrentDate() + " : BT STATE_OFF \n")
                 }
 
                 BluetoothAdapter.STATE_TURNING_OFF -> {
@@ -32,6 +33,7 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
                 BluetoothAdapter.STATE_ON -> {
                     Log.e("EthernomHelloworld", "BT STATE_ON")
                     TrackerSharePreference.getConstant(context).isBLEStatus = true
+                    MyApplication.appendLog(MyApplication.getCurrentDate() + " : BT STATE_ON \n")
                 }
 
                 BluetoothAdapter.STATE_TURNING_ON -> {
