@@ -1,4 +1,4 @@
-package com.ethernom.helloworld;
+package com.ethernom.helloworld.receiver;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
@@ -9,6 +9,12 @@ import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+
+import com.ethernom.helloworld.application.MyApplication;
+import com.ethernom.helloworld.application.TrackerSharePreference;
+import com.ethernom.helloworld.receiver.BluetoothStateChangeReceiver;
+import com.ethernom.helloworld.util.StateMachine;
+
 
 public class StartupReceiver extends BroadcastReceiver {
 
@@ -34,14 +40,14 @@ public class StartupReceiver extends BroadcastReceiver {
 
 
                 //set current state to initialization
-                TrackerSharePreference.getConstant(sContext).setCurrentState(MainActivity.StateMachine.INITIAL.getValue());
+                TrackerSharePreference.getConstant(sContext).setCurrentState(StateMachine.INITIAL.getValue());
                 MyApplication.appendLog(MyApplication.getCurrentDate() + " : Current State : " + TrackerSharePreference.getConstant(sContext).getCurrentState() + " \n");
                 if(TrackerSharePreference.getConstant(sContext).isCardRegistered()) {
                     // Go to Beacon receive (2000) state
-                    TrackerSharePreference.getConstant(sContext).setCurrentState(MainActivity.StateMachine.BEACON_RECEIVE.getValue());
+                    TrackerSharePreference.getConstant(sContext).setCurrentState(StateMachine.WAITING_FOR_BEACON.getValue());
                 } else {
-                    // Go to Card discover (1000) state
-                    TrackerSharePreference.getConstant(sContext).setCurrentState(MainActivity.StateMachine.CARD_DIS_REG.getValue());
+                    // Go to Card discover (1001) state
+                    TrackerSharePreference.getConstant(sContext).setCurrentState(StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.getValue());
                 }
                 Log.e("EthernomHelloworld","Current State:"+ TrackerSharePreference.getConstant(sContext).getCurrentState());
 

@@ -113,5 +113,6 @@
     <string name="dismiss">Dismiss</string>
     <string name="no_device_register">No Device Registered</string>
     <string name="please_select_to_register">Please select to register</string>
+    <string name="app_version">version: 1.0.1</string>
 
 </resources>

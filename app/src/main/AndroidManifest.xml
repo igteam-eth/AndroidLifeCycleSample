@@ -12,10 +12,12 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
-        android:name=".MyApplication"
-        android:allowBackup="true"
+        android:name=".application.MyApplication"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
@@ -23,17 +25,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".DiscoverDeviceActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".screens.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity
+            android:name=".screens.ForegroundNotifyRangActivity"
+            android:theme="@style/Theme.Transparent" />
+        <activity android:name=".screens.DiscoverDeviceActivity" />
+        <activity android:name=".screens.ConfirmPinActivity" />
+        <activity android:name=".screens.MainActivity"/>
         <receiver
-            android:name=".StartupReceiver"
+            android:name=".receiver.StartupReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -45,6 +51,27 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".receiver.BeaconReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.ethernom.helloworld.ACTION_SCANNER_FOUND_DEVICE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
+        <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init" />
+
     </application>
 
 </manifest>
