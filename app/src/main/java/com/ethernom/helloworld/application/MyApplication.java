@@ -128,6 +128,60 @@ public class MyApplication extends Application {
         manager.notify(0, builder.build());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void showSilentNotificationLocation(Context context) {
+
+
+        Log.d("MyApplication", "showSilentNotification");
+        final String CHANNEL_ID = "ring_channel";
+        final NotificationManager manager =
+                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        final NotificationChannel channel =
+                new NotificationChannel(CHANNEL_ID, "Ethernom", IMPORTANCE_HIGH);
+        assert manager != null;
+        manager.createNotificationChannel(channel);
+        Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
+        builder.setContentTitle("Ethernom Tracker");
+        builder.setContentText("Please enable location for registration the card.");
+        builder.setAutoCancel(true);
+        builder.setDeleteIntent(createOnDismissedIntent(context));
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("NOTIFICATION", true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        builder.setContentIntent(pendingIntent);
+        manager.notify(0, builder.build());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void showSilentNotificationBLE(Context context) {
+
+
+        Log.d("MyApplication", "showSilentNotification");
+        final String CHANNEL_ID = "ring_channel";
+        final NotificationManager manager =
+                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        final NotificationChannel channel =
+                new NotificationChannel(CHANNEL_ID, "Ethernom", IMPORTANCE_HIGH);
+        assert manager != null;
+        manager.createNotificationChannel(channel);
+        Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
+        builder.setContentTitle("Ethernom Tracker");
+        builder.setContentText("Please enable bluetooth for registration the card.");
+        builder.setAutoCancel(true);
+        builder.setDeleteIntent(createOnDismissedIntent(context));
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.putExtra("NOTIFICATION", true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        builder.setContentIntent(pendingIntent);
+        manager.notify(0, builder.build());
+    }
+
 
     private static PendingIntent createOnDismissedIntent(Context context) {
         Intent intent = new Intent(context, NotificationDismissedReceiver.class);

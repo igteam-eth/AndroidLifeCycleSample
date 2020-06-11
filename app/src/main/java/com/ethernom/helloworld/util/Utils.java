@@ -97,7 +97,7 @@ public class Utils {
         boolean isLocation = TrackerSharePreference.getConstant(context).isLocationStatus();
         boolean isBLEStatus = TrackerSharePreference.getConstant(context).isBLEStatus();
 
-        if (TrackerSharePreference.getConstant(context).isCardRegistered()){
+        if (!TrackerSharePreference.getConstant(context).isCardRegistered()){
             //when start up if our location or ble is off when go to 1000 state "CARD_DISCOVERY_BLE_LOCATION_OFF"
             if (!isLocation | !isBLEStatus){
                 TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.getValue());

@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".screens.LocationBLENotifyUserActivity"></activity>
         <activity android:name=".screens.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,7 +38,8 @@
             android:theme="@style/Theme.Transparent" />
         <activity android:name=".screens.DiscoverDeviceActivity" />
         <activity android:name=".screens.ConfirmPinActivity" />
-        <activity android:name=".screens.MainActivity"/>
+        <activity android:name=".screens.MainActivity" />
+
         <receiver
             android:name=".receiver.StartupReceiver"
             android:enabled="true"
@@ -51,7 +53,6 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".receiver.BeaconReceiver"
             android:enabled="true"
@@ -62,7 +63,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".receiver.AlarmReceiver"
             android:enabled="true"
@@ -71,7 +71,6 @@
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init" />
-
     </application>
 
 </manifest>

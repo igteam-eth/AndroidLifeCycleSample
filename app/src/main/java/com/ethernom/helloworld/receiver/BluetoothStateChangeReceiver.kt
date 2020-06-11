@@ -11,8 +11,10 @@ import android.util.Log
 
 import androidx.annotation.RequiresApi
 import com.ethernom.helloworld.application.MyApplication
+import com.ethernom.helloworld.application.MyApplication.showSilentNotificationLocation
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
+import com.ethernom.helloworld.screens.LocationBLENotifyUserActivity
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 
@@ -94,6 +96,17 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
                         StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value ->{
                             if (!TrackerSharePreference.getConstant(context).isLocationStatus){
                                 //TODO : Notify User to turn on Location
+                                if (MyApplication.isAppInForeground(context)){
+                                    Log.d("BleReceiver", "AppInForeground");
+                                    val i =  Intent(context, LocationBLENotifyUserActivity::class.java);
+                                    i.putExtra("BLELocation", "location")
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    context.startActivity(i);
+                                }else{
+                                    showSilentNotificationLocation(context);
+                                    Log.d("BleReceiver", "showNotification");
+                                }
+
                                 TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
                             }
                         }
