@@ -19,11 +19,7 @@ public class TrackerSharePreference {
         CARD_REGISTERED,
         BLE_STATUS,
         ETHERNOM_CARD,
-        LOCATION_STATUS,
-        IS_ALREADY_CREATE_WORKER_THREAD,
-        BEACON_FOUND_TIMESTAMP,
-        ALARM_ONE_SHOT,
-        IS_RANGING
+        LOCATION_STATUS
     }
 
     private TrackerSharePreference(Context context) {
@@ -83,41 +79,5 @@ public class TrackerSharePreference {
         String json = sharedPrefs.getString(SharedPreKeyType.ETHERNOM_CARD.toString(), null);
         return gson.fromJson(json, BleClient.class);
     }
-
-    public void setIsAlreadyCreateWorkerThread(Boolean isAlready) {
-        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_ALREADY_CREATE_WORKER_THREAD.toString(), isAlready).apply();
-    }
-
-    public Boolean isAlreadyCreateWorkerThread() {
-        return sharedPrefs.getBoolean(SharedPreKeyType.IS_ALREADY_CREATE_WORKER_THREAD.toString(), false);
-    }
-
-    public void setBeaconTimestamp(String beaconTimestamp ) {
-        sharedPrefs.edit().putString(SharedPreKeyType.BEACON_FOUND_TIMESTAMP.toString(), beaconTimestamp).apply();
-    }
-
-    public String isBeaconTimeStamp() {
-        return sharedPrefs.getString(SharedPreKeyType.BEACON_FOUND_TIMESTAMP.toString(), "");
-    }
-
-    public void setAlreadyCreateAlarm(boolean isCreated) {
-        sharedPrefs.edit().putBoolean(SharedPreKeyType.ALARM_ONE_SHOT.toString(), isCreated).apply();
-    }
-
-    public boolean isAlreadyCreateAlarm() {
-        return sharedPrefs.getBoolean(SharedPreKeyType.ALARM_ONE_SHOT.toString(), false);
-    }
-
-    public void setRanging(boolean ranging) {
-        sharedPrefs.edit().putBoolean(SharedPreKeyType.IS_RANGING.toString(), ranging).apply();
-    }
-
-    public boolean isRanging() {
-        return sharedPrefs.getBoolean(SharedPreKeyType.IS_RANGING.toString(), false);
-
-    }
-
-
-
 
 }

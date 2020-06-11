@@ -55,12 +55,13 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
                             goToInitState(context)
                         }
                         StateMachine.WAITING_FOR_BEACON.value ->{
-                            //TODO stop scan
+                            //TODO : Stop scan
+                            TrackerSharePreference.getConstant(context).currentState = StateMachine.INITIAL.value
                         }
-                        StateMachine.WAITING_FOR_BEACON_LOCATION_OF_STATE.value ->{
-                            //go to start 2003 WAITING_FOR_BEACON_BLE_AND_LOCATION_OF_STATE
+                        StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value ->{
+                            //go to start 2003 WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE
                             TrackerSharePreference.getConstant(context).currentState =
-                                StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OF_STATE.value
+                                StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value
                         }
                     }
                 }
@@ -70,37 +71,34 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
                     MyApplication.appendLog(MyApplication.getCurrentDate() + " : BT STATE_ON \n")
                     TrackerSharePreference.getConstant(context).isBLEStatus = true
 
-
                     when(currentState){
                         StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value ->{
+
+                            TrackerSharePreference.getConstant(context).currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
                             if (TrackerSharePreference.getConstant(context).isLocationStatus && MyApplication.isAppInForeground(context)){
                                 //StartScan General Advertising
                                 //Display List(Empty)
                                 val mIntent =  Intent(context, DiscoverDeviceActivity::class.java)
                                 mIntent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 context.startActivity(mIntent)
-                                TrackerSharePreference.getConstant(context).currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
                             }
-
-
                         }
-                        StateMachine.WAITING_FOR_BEACON_BLE_OF_STATE.value ->{
+
+                        StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value ->{
                             if (TrackerSharePreference.getConstant(context).isLocationStatus){
-                                //TODO Launch BLE Scan Intent
+                                //TODO : Launch BLE Scan Intent
                                 TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON.value
                             }
                         }
-                        StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OF_STATE.value ->{
-                            if (TrackerSharePreference.getConstant(context).isLocationStatus){
-                                //TODO Notify User to turn on Location
-                                TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OF_STATE.value
+
+                        StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value ->{
+                            if (!TrackerSharePreference.getConstant(context).isLocationStatus){
+                                //TODO : Notify User to turn on Location
+                                TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
                             }
                         }
-
                     }
-
                 }
-
             }
         }
     }

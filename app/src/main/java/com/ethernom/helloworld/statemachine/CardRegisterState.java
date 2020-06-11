@@ -34,7 +34,6 @@ public class CardRegisterState {
     private String major_minor;
     private String new_PIN;
 
-
     public enum InputEvent{
         GET_CHALLENGE,
         AUTHENTICATION_WITH_CARD,
@@ -43,9 +42,7 @@ public class CardRegisterState {
         APP_LAUNCH
     }
 
-
     private String TAG = CardConnection.class.getSimpleName();
-
 
     public CardRegisterState(Context context) {
         this.context = context;
