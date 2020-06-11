@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
+
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
@@ -35,7 +36,7 @@ public class WaitingForBeaconState {
     public void launchBLEScan() throws ParseException {
         if (!TrackerSharePreference.getConstant(context).isAlreadyCreateWorkerThread()) {
             byte numDelay = 0;
-            TrackerSharePreference.getConstant(context).setIsAlreadyCreateWorkerThread(true);
+            TrackerSharePreference.getConstant(context).setAlreadyCreateWorkerThread(true);
             MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n");
 
             if (!TrackerSharePreference.getConstant(context).isBeaconTimeStamp().equals("")) {

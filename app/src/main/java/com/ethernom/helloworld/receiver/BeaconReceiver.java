@@ -94,7 +94,7 @@ public class BeaconReceiver extends BroadcastReceiver {
                             }
 
                             playSound(context);
-                            TrackerSharePreference.getConstant(context).setIsAlreadyCreateWorkerThread(false);
+                            TrackerSharePreference.getConstant(context).setAlreadyCreateWorkerThread(false);
                             TrackerSharePreference.getConstant(context).setRanging(true);
                             TrackerSharePreference.getConstant(context).setBeaconTimestamp(MyApplication.getCurrentDate());
 
