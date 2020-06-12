@@ -26,10 +26,9 @@ public class BLEScan {
         BluetoothManager btManager = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
         assert btManager != null;
         BluetoothAdapter btAdapter = btManager.getAdapter();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            btScanner = btAdapter.getBluetoothLeScanner();
-        }
+        btScanner = btAdapter.getBluetoothLeScanner();
     }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void startScanning() {
         List<ScanFilter> scanFilters = new ArrayList<>();

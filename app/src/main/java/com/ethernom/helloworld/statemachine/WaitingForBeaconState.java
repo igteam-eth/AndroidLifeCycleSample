@@ -37,7 +37,7 @@ public class WaitingForBeaconState {
         if (!TrackerSharePreference.getConstant(context).isAlreadyCreateWorkerThread()) {
             byte numDelay = 0;
             TrackerSharePreference.getConstant(context).setAlreadyCreateWorkerThread(true);
-            MyApplication.appendLog("${MyApplication.getCurrentDate()} : Enqueue WorkManager\n");
+            MyApplication.appendLog(MyApplication.getCurrentDate()+ " : Enqueue WorkManager\n");
 
             if (!TrackerSharePreference.getConstant(context).isBeaconTimeStamp().equals("")) {
                 long diffInMs = Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(MyApplication.getCurrentDate())).getTime() - Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(TrackerSharePreference.getConstant(context).isBeaconTimeStamp())).getTime();
@@ -63,10 +63,10 @@ public class WaitingForBeaconState {
             WorkManager.getInstance(context).enqueue(oneTimeRequest);
         }
 
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : Host brand " + Build.BRAND + "\n");
+        MyApplication.appendLog(MyApplication.getCurrentDate() +" : Host brand " + Build.BRAND + "\n");
 
         if (Build.BRAND.equalsIgnoreCase("samsung")) {
-            MyApplication.appendLog("${MyApplication.getCurrentDate()} : Alarm Enabled \n");
+            MyApplication.appendLog(MyApplication.getCurrentDate() +" : Alarm Enabled \n");
 
             if (!TrackerSharePreference.getConstant(context).isAlreadyCreateAlarm()) {
                 TrackerSharePreference.getConstant(context).setAlreadyCreateAlarm(true);

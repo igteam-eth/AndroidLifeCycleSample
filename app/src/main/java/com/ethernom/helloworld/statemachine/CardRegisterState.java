@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.SettingSharePreference;
-import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity;
 import com.ethernom.helloworld.util.*;
 
@@ -24,7 +23,6 @@ import static com.ethernom.helloworld.util.CardConnection.gatt;
 import static com.ethernom.helloworld.util.CardConnection.mBufferCallBack;
 import static com.ethernom.helloworld.util.CardConnection.ethCharacteristic;
 import static com.ethernom.helloworld.util.CardConnection.mLoadingDialog;
-
 
 public class CardRegisterState {
 

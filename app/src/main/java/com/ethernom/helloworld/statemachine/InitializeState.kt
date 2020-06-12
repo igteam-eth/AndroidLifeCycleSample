@@ -2,6 +2,7 @@ package com.ethernom.helloworld.statemachine
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.ethernom.helloworld.application.MyApplication
@@ -27,7 +28,9 @@ class InitializeState {
                 trackerSharePreference.currentState = StateMachine.INITIAL.value
                 showSilentNotificationBLE(context)
                 if (MyApplication.isAppInForeground(context)){
-                    context.startActivity(Intent(context, DiscoverDeviceActivity::class.java))
+                    val intent = Intent(context, DiscoverDeviceActivity::class.java)
+                    intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
 
                     // App in foreground
                 }else{
@@ -42,7 +45,11 @@ class InitializeState {
                 showSilentNotificationBLE(context)
 
                 if (MyApplication.isAppInForeground(context)){
-                    context.startActivity(Intent(context, DiscoverDeviceActivity::class.java))
+
+                    val intent = Intent(context, DiscoverDeviceActivity::class.java)
+                    intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
+
                     // App in foreground
                 }else{
                     // App in background
@@ -55,7 +62,10 @@ class InitializeState {
                 trackerSharePreference.currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value
                 showSilentNotificationLocation(context)
                 if (MyApplication.isAppInForeground(context)){
-                    context.startActivity(Intent(context, DiscoverDeviceActivity::class.java))
+
+                    val intent = Intent(context, DiscoverDeviceActivity::class.java)
+                    intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
                     // App in foreground
                 }else{
                     // App in background
@@ -67,7 +77,9 @@ class InitializeState {
                 trackerSharePreference.currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground
-                    context.startActivity(Intent(context, DiscoverDeviceActivity::class.java))
+                    val intent = Intent(context, DiscoverDeviceActivity::class.java)
+                    intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
                 }else{
                     // App in background
                 }
@@ -84,7 +96,9 @@ class InitializeState {
                 showSilentNotificationBLE(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground
-                    context.startActivity(Intent(context, MainActivity::class.java))
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
                 }else{
                     // App in background
                 }
@@ -98,7 +112,9 @@ class InitializeState {
                 showSilentNotificationBLE(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground
-                    context.startActivity(Intent(context, MainActivity::class.java))
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
                 }else{
                     // App in background
                 }
@@ -112,7 +128,9 @@ class InitializeState {
                 showSilentNotificationLocation(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground
-                    context.startActivity(Intent(context, MainActivity::class.java))
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
                 }else{
                     // App in background
                 }
@@ -124,7 +142,9 @@ class InitializeState {
                 trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON.value
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground
-                    context.startActivity(Intent(context, MainActivity::class.java))
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    context.startActivity(intent)
                 }else{
                     // App in background
                 }

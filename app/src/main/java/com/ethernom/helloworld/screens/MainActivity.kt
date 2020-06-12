@@ -20,6 +20,7 @@ import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 import com.ethernom.helloworld.application.TrackerSharePreference.getConstant
+import com.ethernom.helloworld.receiver.BeaconReceiver
 import com.ethernom.helloworld.statemachine.WaitingForBeaconState
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -40,23 +41,21 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         trackerSharePreference = getConstant(this)
         MyApplication.saveCurrentStateToLog(this)
 
+        if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
+            TrackerSharePreference.getConstant(this).isRanging = false
+            BeaconReceiver.stopSound()
+        }
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
 
-        if (requestWriteExternalStoragePermission() && requestLocationPermission()){
-            if (getConstant(this).isCardRegistered){
+        if (requestWriteExternalStoragePermission() && requestLocationPermission()) {
+            if (getConstant(this).isCardRegistered) {
                 displayRegisteredCard()
-                checkLocationState { isLocationEnable->
-                    if (isLocationEnable) {
-                        checkBluetoothSate { isBTOn ->
-                            if (isBTOn ) {// User Allow
-                                WaitingForBeaconState(this).launchBLEScan()
-                            }
-                        }
-                    }
-                }
+                if (Utils.isBluetoothEnable() && Utils.isLocationEnabled(this))
+                    WaitingForBeaconState(this).launchBLEScan()
             }
         }
     }
@@ -146,6 +145,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         finish()
         startActivity(Intent(this, DiscoverDeviceActivity::class.java))
     }
+
     companion object {
         const val PERMISSION_REQUEST_COARSE_LOCATION = 1
         const val TAG = "APP_MainActivity"

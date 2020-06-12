@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar_default_backpress" />
+        layout="@layout/toolbar_before_registered" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

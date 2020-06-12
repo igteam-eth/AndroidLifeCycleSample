@@ -114,5 +114,9 @@
     <string name="no_device_register">No Device Registered</string>
     <string name="please_select_to_register">Please select to register</string>
     <string name="app_version">version: 1.0.1</string>
+    <string name="turn_one_blue">Turn on bluetooth</string>
+    <string name="turn_one_blue_message">This is needed to ring your Ethernom BLE Tracker. Please check your Bluetooth settings.</string>
+    <string name="turn_on_location">Location Access Needed</string>
+    <string name="turn_on_location_message">For Ethernom BLE Tracker to accurately locate your things and connect to your device, please select Allow all the time in Location Permissions.</string>
 
 </resources>

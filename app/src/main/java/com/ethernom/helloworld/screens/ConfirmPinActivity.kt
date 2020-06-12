@@ -16,7 +16,7 @@ import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.util.StateMachine
 import kotlinx.android.synthetic.main.activity_confirm_pin.*
-import kotlinx.android.synthetic.main.toolbar_default_backpress.*
+import kotlinx.android.synthetic.main.toolbar_before_registered.*
 
 
 

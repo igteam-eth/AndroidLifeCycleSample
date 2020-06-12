@@ -10,8 +10,8 @@ import androidx.annotation.RequiresApi
 import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
-import com.ethernom.helloworld.screens.LocationBLENotifyUserActivity
 import com.ethernom.helloworld.statemachine.InitializeState
+import com.ethernom.helloworld.statemachine.WaitingForBeaconState
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 
@@ -31,7 +31,10 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
 
             when (currentState) {
                 StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value -> {
-                    if (TrackerSharePreference.getConstant(context).isBLEStatus && MyApplication.isAppInForeground(context)) {
+                    if (TrackerSharePreference.getConstant(context).isBLEStatus && MyApplication.isAppInForeground(
+                            context
+                        )
+                    ) {
                         //StartScan General Advertising
                         //Display List(Empty)
                         val mIntent = Intent(context, DiscoverDeviceActivity::class.java)
@@ -42,24 +45,20 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
                     }
                 }
                 StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value -> {
-                    if (TrackerSharePreference.getConstant(context).isBLEStatus){
-                        //TODO : Launch BLE Scan Intent
+                    if (TrackerSharePreference.getConstant(context).isBLEStatus) {
+                        //Launch BLE Scan Intent
+                        TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON.value
+                        WaitingForBeaconState(context).launchBLEScan()
                     }
                 }
-                StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value ->{
-                    if (!TrackerSharePreference.getConstant(context).isBLEStatus){
-                        //TODO : Notify User to turn on Bluetooth
-                        if (MyApplication.isAppInForeground(context)){
-                            Log.d("BleReceiver", "AppInForeground");
-                            val i =  Intent(context, LocationBLENotifyUserActivity::class.java);
-                            i.putExtra("BLELocation", "ble")
-                            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            context.startActivity(i);
-                        }else{
-                            MyApplication.showSilentNotificationBLE(context);
-                            Log.d("BleReceiver", "showNotification");
-                        }
-                        TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
+                StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value -> {
+                    if (!TrackerSharePreference.getConstant(context).isBLEStatus) {
+
+                        TrackerSharePreference.getConstant(context).currentState =
+                            StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
+                        //Notify User to turn on Bluetooth
+                        MyApplication.showSilentNotificationBLE(context)
+
                     }
                 }
             }
@@ -80,8 +79,11 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
                     goToInitState(context)
                 }
                 StateMachine.WAITING_FOR_BEACON.value -> {
-                    //TODO : Stop scan
-                    //TODO : Go init state
+                    //Stop Scan
+                    BeaconReceiver.stopScan()
+                    TrackerSharePreference.getConstant(context).isAlreadyCreateWorkerThread = false
+                    TrackerSharePreference.getConstant(context).isAlreadyCreateAlarm = false
+                    goToInitState(context)
                 }
                 StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value -> {
                     //go to start 2003 WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE

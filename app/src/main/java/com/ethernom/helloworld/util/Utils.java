@@ -105,4 +105,63 @@ public class Utils {
         }
 
     }
+
+    /*
+    * open fun checkBluetoothSate(bluetoothState: ((state: (Boolean)) -> Unit)) {
+
+        mBluetoothState = bluetoothState
+        if (TrackerSharePreference.getConstant(this).isBLEStatus) {
+            mBluetoothState(true)
+        } else {
+            val mIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            startActivityForResult(mIntent, Utils.REQUEST_BLUETOOTH_STATE)
+        }
+    }
+
+    open fun checkLocationState(locationState: ((state: (Boolean)) -> Unit)){
+        Log.d("MyApplication check", "${TrackerSharePreference.getConstant(this).isLocationStatus}")
+        mLocationState = locationState
+        if (TrackerSharePreference.getConstant(this).isLocationStatus){
+            mLocationState(true)
+        }else{
+            AlertDialog.Builder(this)
+                .setTitle("Warning")
+                .setMessage("Please enable location for registration the card.")
+                .setCancelable(false)
+                .setPositiveButton(
+                    android.R.string.yes
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                    val mIntent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    startActivity(mIntent)
+                    isRequestEnableLocation = true
+
+                }
+                .show()
+        }
+    }*/
+
+    /*
+    * override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == Utils.REQUEST_BLUETOOTH_STATE) {  // Match the request code
+            if (resultCode == RESULT_OK) {
+                Log.d(TAG, "Bluetooth turn on")
+                mBluetoothState(true)
+            } else {   // RESULT_CANCELED
+                Log.d(TAG, "Bluetooth deny turning on")
+                mBluetoothState(false)
+            }
+        }
+        if (requestCode == Utils.REQUEST_LOCATION_STATE) {  // Match the request code
+            if (resultCode == RESULT_OK) {
+                Log.d(TAG, "GPS turn on")
+                mLocationState(true)
+            } else {   // RESULT_CANCELED
+                Log.d(TAG, "GPS deny turning on")
+                mLocationState(false)
+            }
+        }
+    }*/
 }

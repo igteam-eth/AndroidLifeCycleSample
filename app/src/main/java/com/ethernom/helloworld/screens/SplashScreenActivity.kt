@@ -26,8 +26,8 @@ class SplashScreenActivity : BaseActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
+        super.onCreate(savedInstanceState)
         this.window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -46,7 +46,6 @@ class SplashScreenActivity : BaseActivity() {
         Utils.initBLE_Location(this)
 
         MyApplication.saveCurrentStateToLog(this)
-
     }
 
 
@@ -59,27 +58,7 @@ class SplashScreenActivity : BaseActivity() {
             Handler().postDelayed({
                 // go to initial state
                 InitializeState().goToInitialState(this)
-//                checkLocationState { isLocationEnable->
-//                    if (isLocationEnable) {
-//                        checkBluetoothSate { isBTOn ->
-//                            if (isBTOn ) {// User Allow
-//                                if (TrackerSharePreference.getConstant(this).isCardRegistered) {
-//                                    startActivity(Intent(this, MainActivity::class.java))
-//                                    //2000
-//                                    TrackerSharePreference.getConstant(this).currentState =
-//                                        StateMachine.WAITING_FOR_BEACON.value
-//                                } else {
-//                                    //1001
-//                                    startActivity(Intent(this, DiscoverDeviceActivity::class.java))
-//                                    TrackerSharePreference.getConstant(this).currentState =
-//                                        StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
-//                                }
-//                                finish()
-//
-//                            }
-//                        }
-//                    }
-//                }
+
             }, 2000)
 
 

@@ -72,34 +72,30 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     // User Select Card
     override fun ItemClickListener(position: Int) {
 
-        checkLocationState { isLocationEnable ->
-            if (isLocationEnable) {
-                checkBluetoothSate { isBTOn ->
-                    if (isBTOn) {
+        checkBluetoothSate { isBTOn ->
+            if (isBTOn) {
+                showProgressBar()
+                Log.d("onItemClick", "" + position)
+                selectedPos = position
 
-                        showProgressBar()
-                        Log.d("onItemClick", "" + position)
-                        selectedPos = position
+                cardInfo = CardInfo(
+                    mBTDevicesArrayList!![position].devName,
+                    mBTDevicesArrayList!![position].macAddress,
+                    ""
+                )
 
-                        cardInfo = CardInfo(
-                            mBTDevicesArrayList!![position].devName,
-                            mBTDevicesArrayList!![position].macAddress,
-                            ""
-                        )
-
-                        //loadingDialog.setLoadingDescription("Loading: Connecting " + mBTDevicesArrayList!![position].devName + "...")
-                        loadingDialog.setLoadingDescription("Loading: Get Card ID...")
+                //loadingDialog.setLoadingDescription("Loading: Connecting " + mBTDevicesArrayList!![position].devName + "...")
+                loadingDialog.setLoadingDescription("Loading: Get Card ID...")
 
 
-                        TrackerSharePreference.getConstant(this).currentState =
-                            StateMachine.GET_FIRMWARE_INFO.value
+                TrackerSharePreference.getConstant(this).currentState =
+                    StateMachine.GET_FIRMWARE_INFO.value
 
-                        firmwareInfoState!!.cardInfo = cardInfo
-                        // Establish Connection
-                        firmwareInfoState!!.establishBLEConnection()
-                    }
-                }
+                firmwareInfoState!!.cardInfo = cardInfo
+                // Establish Connection
+                firmwareInfoState!!.establishBLEConnection()
             }
+
         }
 
     }
@@ -252,6 +248,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         }
     }
 
+
     override fun hideProgressBarState() {
         hideProgressBar()
     }
@@ -269,6 +266,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     private fun hideProgressBar() {
         loadingDialog.dismiss()
     }
+
     //  StartScan General Advertising
     override fun onResume() {
         super.onResume()
@@ -281,6 +279,12 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
             }
         }
 
+    }
+
+    override fun readyToDiscoverDevice() {
+
+        mBleScan = BLEScan(this, this)
+        mBleScan!!.startScanning()
     }
 
     private fun hideDialog() {
