@@ -3,8 +3,11 @@ package com.ethernom.helloworld.statemachine;
 import android.app.AlertDialog;
 import android.bluetooth.*;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
+
+import androidx.annotation.RequiresApi;
 
 import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
@@ -58,6 +61,7 @@ public class FirmwareInfoState {
 
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void firmwareDispatcher(InputEvent event, Boolean result) {
         switch (event) {
             case ESTABLISH_CONNECTION: {
@@ -150,7 +154,8 @@ public class FirmwareInfoState {
                                         .setCancelable(false)
                                         .setPositiveButton("Yes", (dialog, which) -> {
                                             dialog.dismiss();
-                                            Utils.initState(context);
+                                            new InitializeState().goToInitialState(context);
+
                                         }).show());
                     }
 
@@ -182,6 +187,7 @@ public class FirmwareInfoState {
     /* For Bluetooth Gatt Call back method */
     private BluetoothGattCallback gattCallback =
             new BluetoothGattCallback() {
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
                     if (newState == BluetoothGatt.STATE_CONNECTED) {
@@ -217,6 +223,7 @@ public class FirmwareInfoState {
                     }
                 }
 
+                @RequiresApi(api = Build.VERSION_CODES.O)
                 @Override
                 public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
                     Log.i(TAG, "onDescriptorWrite, gatt write descriptor: " + status);
@@ -272,6 +279,7 @@ public class FirmwareInfoState {
         this.alreadyCallDisconnect = alreadyCallDisconnect;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetFirmwareVn() {
         byte[] payload = new byte[4];
         payload[0] = EthernomConstKt.getCMD_VERSION_CHECK();
@@ -326,6 +334,7 @@ public class FirmwareInfoState {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetBLEVn() {
         byte[] payload = new byte[4];
         payload[0] = EthernomConstKt.getCMD_BLE_VERSION_CHECK();
@@ -367,6 +376,7 @@ public class FirmwareInfoState {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetBOOTVn() {
         byte[] payload = new byte[4];
         payload[0] = EthernomConstKt.getCMD_BOOT2_VERSION_CHECK();
@@ -404,6 +414,7 @@ public class FirmwareInfoState {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetMENU() {
         byte[] payload = new byte[4];
         payload[0] = EthernomConstKt.getCM_GET_MENU();
@@ -433,6 +444,7 @@ public class FirmwareInfoState {
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetSerialNum() {
         byte[] payload = new byte[4];
         payload[0] = EthernomConstKt.getCM_GET_SN();

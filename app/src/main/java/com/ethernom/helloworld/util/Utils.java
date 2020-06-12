@@ -105,12 +105,4 @@ public class Utils {
         }
 
     }
-    public static void initState(Context context) {
-        //Default value state machine = initial(0000)
-        TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.INITIAL.getValue());
-        Intent intent = new Intent(context, SplashScreenActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        context.startActivity(intent);
-
-    }
 }

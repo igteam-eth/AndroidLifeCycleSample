@@ -11,6 +11,7 @@ import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
 import com.ethernom.helloworld.screens.LocationBLENotifyUserActivity
+import com.ethernom.helloworld.statemachine.InitializeState
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 
@@ -24,6 +25,7 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
         val currentState = TrackerSharePreference.getConstant(context).currentState
         if (Utils.isLocationEnabled(context)) {//true
             TrackerSharePreference.getConstant(context).isLocationStatus = true
+
             Log.e(TAG, "Location State on")
             MyApplication.appendLog(MyApplication.getCurrentDate() + " : Location State on \n")
 
@@ -65,6 +67,9 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
         } else {//false
             TrackerSharePreference.getConstant(context).isLocationStatus = false
             Log.e(TAG, "Location State off")
+            // Notify user
+            MyApplication.showSilentNotificationLocation(context)
+
             MyApplication.appendLog(MyApplication.getCurrentDate() + " : Location State off \n")
 
             when (currentState) {
@@ -89,9 +94,11 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun goToInitState(context: Context) {
         TrackerSharePreference.getConstant(context).currentState = StateMachine.INITIAL.value
-        Utils.initState(context)
+        InitializeState().goToInitialState(context)
+
     }
 
     companion object {

@@ -2,7 +2,10 @@ package com.ethernom.helloworld.statemachine;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.callback.StateMachineCallback;
@@ -40,6 +43,7 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
         new CheckUpdatePresenter().checkUpdate(this, fwInfoList, sn, menuFac);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void checkUpdateSuccess(boolean require) {
         Log.d(TAG, "check update response success");
@@ -63,7 +67,8 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
                                 .setCancelable(false)
                                 .setPositiveButton("Yes", (dialog, which) -> {
                                     dialog.dismiss();
-                                    Utils.initState(context);
+                                   new  InitializeState().goToInitialState(context);
+
                                 }).show());
             }
 

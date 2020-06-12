@@ -17,6 +17,7 @@ import com.ethernom.helloworld.R
 import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.receiver.BeaconReceiver
+import com.ethernom.helloworld.statemachine.InitializeState
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_splash_screen.*
@@ -56,27 +57,29 @@ class SplashScreenActivity : BaseActivity() {
         if (requestWriteExternalStoragePermission() && requestLocationPermission()) {
 
             Handler().postDelayed({
-                checkLocationState { isLocationEnable->
-                    if (isLocationEnable) {
-                        checkBluetoothSate { isBTOn ->
-                            if (isBTOn ) {// User Allow
-                                if (TrackerSharePreference.getConstant(this).isCardRegistered) {
-                                    startActivity(Intent(this, MainActivity::class.java))
-                                    //2000
-                                    TrackerSharePreference.getConstant(this).currentState =
-                                        StateMachine.WAITING_FOR_BEACON.value
-                                } else {
-                                    //1001
-                                    startActivity(Intent(this, DiscoverDeviceActivity::class.java))
-                                    TrackerSharePreference.getConstant(this).currentState =
-                                        StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
-                                }
-                                finish()
-
-                            }
-                        }
-                    }
-                }
+                // go to initial state
+                InitializeState().goToInitialState(this)
+//                checkLocationState { isLocationEnable->
+//                    if (isLocationEnable) {
+//                        checkBluetoothSate { isBTOn ->
+//                            if (isBTOn ) {// User Allow
+//                                if (TrackerSharePreference.getConstant(this).isCardRegistered) {
+//                                    startActivity(Intent(this, MainActivity::class.java))
+//                                    //2000
+//                                    TrackerSharePreference.getConstant(this).currentState =
+//                                        StateMachine.WAITING_FOR_BEACON.value
+//                                } else {
+//                                    //1001
+//                                    startActivity(Intent(this, DiscoverDeviceActivity::class.java))
+//                                    TrackerSharePreference.getConstant(this).currentState =
+//                                        StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
+//                                }
+//                                finish()
+//
+//                            }
+//                        }
+//                    }
+//                }
             }, 2000)
 
 

@@ -11,10 +11,12 @@ import android.util.Log
 
 import androidx.annotation.RequiresApi
 import com.ethernom.helloworld.application.MyApplication
+import com.ethernom.helloworld.application.MyApplication.showSilentNotificationBLE
 import com.ethernom.helloworld.application.MyApplication.showSilentNotificationLocation
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
 import com.ethernom.helloworld.screens.LocationBLENotifyUserActivity
+import com.ethernom.helloworld.statemachine.InitializeState
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 
@@ -34,6 +36,9 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
 
                 BluetoothAdapter.STATE_OFF -> {
                     Log.e(TAG, "BT STATE_OFF")
+                    // Notify user
+                    showSilentNotificationBLE(context)
+
                     MyApplication.appendLog(MyApplication.getCurrentDate() + " : BT STATE_OFF \n")
                     TrackerSharePreference.getConstant(context).isBLEStatus = false
 
@@ -116,9 +121,10 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun goToInitState(context: Context) {
         TrackerSharePreference.getConstant(context).currentState = StateMachine.INITIAL.value
-        Utils.initState(context)
+        InitializeState().goToInitialState(context)
     }
 
 }

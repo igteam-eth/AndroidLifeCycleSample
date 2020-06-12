@@ -57,6 +57,13 @@ public class MyApplication extends Application {
 
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        Log.d("MyApplication", "onTerminate");
+    }
+
+
     static public void appendLog(String logs) {
 
         try {
@@ -143,8 +150,8 @@ public class MyApplication extends Application {
         Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
-        builder.setContentTitle("Ethernom Tracker");
-        builder.setContentText("Please enable location for registration the card.");
+        builder.setContentTitle("Location is off");
+        builder.setContentText("Turn on Location services for the Ethernom Tracker app to keep track of your items.");
         builder.setAutoCancel(true);
         builder.setDeleteIntent(createOnDismissedIntent(context));
         Intent intent = new Intent(context, MainActivity.class);
@@ -170,8 +177,8 @@ public class MyApplication extends Application {
         Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
-        builder.setContentTitle("Ethernom Tracker");
-        builder.setContentText("Please enable bluetooth for registration the card.");
+        builder.setContentTitle("Bluetooth is off");
+        builder.setContentText("Turn on Bluetooth services for the Ethernom Tracker app to keep track of your items.");
         builder.setAutoCancel(true);
         builder.setDeleteIntent(createOnDismissedIntent(context));
         Intent intent = new Intent(context, MainActivity.class);
