@@ -53,7 +53,8 @@ class SplashScreenActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
 
-        if (requestWriteExternalStoragePermission() && requestLocationPermission()) {
+        if(TrackerSharePreference.getConstant(this).isBeforeActivate) {
+            if (requestWriteExternalStoragePermission() && requestLocationPermission()) {
 
             Handler().postDelayed({
                 // go to initial state
@@ -62,6 +63,13 @@ class SplashScreenActivity : BaseActivity() {
             }, 2000)
 
 
+            }
+        } else {
+            if(requestWriteExternalStoragePermission()) {
+                TrackerSharePreference.getConstant(this).isBeforeActivate = true
+                startActivity(Intent(this, BeforeActivateActivity::class.java))
+                finish()
+            }
         }
     }
 

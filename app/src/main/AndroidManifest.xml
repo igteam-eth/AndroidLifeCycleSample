@@ -25,7 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".screens.LocationBLENotifyUserActivity"></activity>
+        <activity android:name=".screens.BeforeActivateActivity">
+        </activity>
+        <activity android:name=".screens.LocationBLENotifyUserActivity" />
         <activity android:name=".screens.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

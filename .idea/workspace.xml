@@ -11,8 +11,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="- Add Register Card:&#10; 1. Get Firmware State&#10; 2. Check Update State&#10; 3. Get Private Key State&#10; 4. Card Register State&#10;- Add Bluetooth state change&#10;- Add Location State change">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_base.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BeforeActivateActivity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/black_background_button.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bluetooth.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/button_shape.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/checked.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/location_per.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_before_activate.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
@@ -52,30 +57,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/EthernomHelloWorld.iml" beforeDir="false" afterPath="$PROJECT_DIR$/EthernomHelloWorld.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/ConfirmPinActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/ConfirmPinActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/LocationBLENotifyUserActivity.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/TrackerSharePreference.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/TrackerSharePreference.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/FirmwareInfoState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/FirmwareInfoState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/WaitingForBeaconState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/WaitingForBeaconState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/BLEScan.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/BLEScan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/Utils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_confirm_pin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_confirm_pin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_discover_device.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_discover_device.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/toolbar_default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar_after_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/toolbar_default_backpress.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar_before_registered.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash_screen.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_splash_screen.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -93,113 +81,14 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view />
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
       </state>
     </system>
-  </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="290">
-              <caret line="418" column="22" selection-start-line="418" selection-start-column="22" selection-end-line="418" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/WaitingForBeaconState.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="78" column="41" lean-forward="true" selection-start-line="78" selection-start-column="41" selection-end-line="78" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
-              <folding>
-                <element signature="e#41#860#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="282">
-              <caret line="94" column="88" selection-start-line="94" selection-start-column="88" selection-end-line="94" selection-end-column="88" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-434">
-              <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_base.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="230">
-              <caret line="143" column="71" selection-start-line="143" selection-start-column="71" selection-end-line="143" selection-end-column="71" />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer2" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/BLEScan.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="42" selection-start-line="42" selection-end-line="42" />
-              <folding>
-                <element signature="e#1942#1943#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -251,63 +140,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/adapter/BLEAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/presenter/checkupdate/CheckUpdatePresenter.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/presenter/privatekey/GetPrivateKeyPresenter.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/StartupReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/presenter/checkupdate/RequireToUpdate.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/FirmwareInfo.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/CheckUpdateFirmware.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/CheckUpdateFirmwareState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/CardConnection.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/GetPrivateKeyState.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/callback/StateMachineCallback.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/EthernomConst.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/TransactionStateMachine.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/StateMachineDispatcher.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/CardRegisterState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/transactionstatemachine/FirmwareInfoState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_splash_screen.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/FirmwareInputEvent.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/StateMachineDispatcher.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/CardConnection.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/ConfirmPinActivity.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/GetPrivateKeyState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/BluetoothStateChangeReceiver.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/TrackerSharePreference.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CheckUpdateFirmwareState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/StateMachine.kt" />
-        <option value="$PROJECT_DIR$/local.properties" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/toolbar_after_register.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/toolbar_before_registered.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothLocationStateChange.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/FirmwareInfoState.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/FirmwareInfoState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/Utils.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/BLEScan.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_base.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/WaitingForBeaconState.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt" />
-      </list>
-    </option>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
     <option name="width" value="1680" />
@@ -315,113 +147,6 @@
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
-  </component>
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="AndroidView">
-        <subPane>
-          <expand>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="helloworld" type="cbb59c9e:AndroidPsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="helloworld" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="helloworld" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="receiver" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="helloworld" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="screens" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="helloworld" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="statemachine" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
-              <item name="helloworld" type="cbb59c9e:AndroidPsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="1abcf292:AndroidViewProjectNode" />
-              <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="EthernomHelloWorld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tracker_with_state_machine_v3" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tracker_with_state_machine_v3" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tracker_with_state_machine_v3" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tracker_with_state_machine_v3" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="EthernomHelloWorld" type="b2602c69:ProjectViewProjectNode" />
-              <item name="tracker_with_state_machine_v3" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DEBUGGABLE_DEVICE" value="huawei-stk_l22-YDVNW19B23003582" />
@@ -431,6 +156,7 @@
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="device.picker.selection" value="379fdc3a" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1591957745994" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -470,18 +196,6 @@
       <recent name="com.ethernom.helloworld.model" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
   <component name="RunManager">
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
@@ -505,8 +219,6 @@
       <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
       <option name="FORCE_STOP_RUNNING_APP" value="true" />
       <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
       <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <option name="DEBUGGER_TYPE" value="Auto" />
@@ -588,72 +300,37 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="1027" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.15689866" />
-      <window_info id="Structure" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info id="Build Variants" order="4" side_tool="true" />
-      <window_info id="Image Layers" order="5" />
-      <window_info id="Designer" order="6" />
-      <window_info id="Resources Explorer" order="7" />
-      <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Run" order="0" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="1" sideWeight="0.4993895" visible="true" weight="0.40679824" />
-      <window_info anchor="bottom" id="TODO" order="2" weight="0.32894737" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4993895" weight="0.24780701" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32894737" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50061053" side_tool="true" weight="0.36622807" />
-      <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.16008772" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" />
-      <window_info anchor="bottom" id="Find" order="9" weight="0.32894737" />
-      <window_info anchor="bottom" id="Flutter Performance" order="10" side_tool="true" />
-      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Gradle" order="2" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Preview" order="4" weight="0.32905984" />
-      <window_info anchor="right" id="Palette&#9;" order="5" />
-      <window_info anchor="right" id="StringPreview" order="6" />
-      <window_info anchor="right" id="Flutter Inspector" order="7" />
-      <window_info anchor="right" id="Flutter Outline" order="8" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.16910867" />
-      <window_info id="Structure" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info id="Build Variants" order="4" side_tool="true" />
-      <window_info id="Image Layers" order="5" />
-      <window_info id="Designer" order="6" />
-      <window_info id="Resources Explorer" order="7" />
-      <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Run" order="0" />
-      <window_info anchor="bottom" id="Logcat" order="1" visible="true" weight="0.31030703" />
-      <window_info anchor="bottom" id="TODO" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32894737" />
-      <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.32894737" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" />
-      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Gradle" order="2" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Preview" order="4" />
-      <window_info anchor="right" id="Palette&#9;" order="5" />
-    </layout-to-restore>
-  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1. Implement initial state&#10;   - Declaration all machine state constants (initial,card discover.....).&#10;   - Declaration current_state, isCardRegistered, BLEStatus &amp; Set default. value in share preference for the very first time we install App.&#10;   - Check if card is register than change current state to 2000, else change state to 1000.&#10;   - Register BLE State change event.&#10;   - Set BLE State base on bluetooth status." />
     <MESSAGE value="1. Add Discover Device Screen&#10; - List all nearby device&#10;2. Add BootComplete Broadcast Receiver&#10; - Set current to initial state &#10; - Check isCardRegistered then change state&#10;3. Design UI for Main screen" />
     <MESSAGE value="- Add Register Card:&#10; 1. Get Firmware State&#10; 2. Check Update State&#10; 3. Get Private Key State&#10; 4. Card Register State&#10;- Add Bluetooth state change&#10;- Add Location State change" />
     <option name="LAST_COMMIT_MESSAGE" value="- Add Register Card:&#10; 1. Get Firmware State&#10; 2. Check Update State&#10; 3. Get Private Key State&#10; 4. Card Register State&#10;- Add Bluetooth state change&#10;- Add Location State change" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="174" y="0" key="CommitChangelistDialog2" timestamp="1591958138986">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="174" y="0" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1591958138986" />
+    <state width="1238" height="424" key="GridCell.Tab.0.bottom" timestamp="1591958074435">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="424" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1591958074435" />
+    <state width="1238" height="424" key="GridCell.Tab.0.center" timestamp="1591958074434">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="424" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1591958074434" />
+    <state width="1238" height="424" key="GridCell.Tab.0.left" timestamp="1591958074433">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="424" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1591958074433" />
+    <state width="1238" height="424" key="GridCell.Tab.0.right" timestamp="1591958074434">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="424" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1591958074434" />
+    <state width="500" height="476" key="SwitcherDM" timestamp="1591958658173">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="500" height="476" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1591958658173" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -661,385 +338,9 @@
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java</url>
           <line>256</line>
-          <properties />
           <option name="timeStamp" value="103" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/adapter/DeviceAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="64" column="45" selection-start-line="64" selection-start-column="25" selection-end-line="64" selection-end-column="45" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/adapter/RegisteredDeviceAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="28" column="13" lean-forward="true" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/model/CardInfo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/model/CheckUpdateRequestBody.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/model/CheckUpdateResponse.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/EthernomConst.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_splash_screen.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="36" column="48" lean-forward="true" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
-          <folding>
-            <element signature="e#1273#1296#0" expanded="true" />
-            <element signature="e#1571#1592#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/FirmwareInputEvent.kt" />
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-29/android/view/InputEvent.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/StateMachineDispatcher.kt" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/adapter/BLEAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="365" column="24" selection-start-line="365" selection-start-column="24" selection-end-line="365" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2259b5747a1acb7b17bc338ae97ac759/jars/classes.jar!/com/chaos/view/BuildConfig.class" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/presenter/privatekey/GetPrivateKeyPresenter.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-          <folding>
-            <element signature="e#54#361#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/Library/Android/sdk/platforms/android-29/android.jar!/android/os/Build.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="98" column="24" selection-start-line="98" selection-start-column="24" selection-end-line="98" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/CardConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="22" column="44" selection-start-line="22" selection-start-column="44" selection-end-line="22" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/presenter/privatekey/GetAppKeyCallback.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="15" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/ConfirmPinActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="55" column="58" selection-start-line="55" selection-start-column="47" selection-end-line="55" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/ForegroundCheckTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/CoreActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="27" column="30" lean-forward="true" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Android/sdk/sources/android-29/android/content/Intent.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2476">
-          <caret line="5865" column="28" selection-start-line="5865" selection-start-column="28" selection-end-line="5865" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/callback/StateMachineCallback.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="30" lean-forward="true" selection-start-line="3" selection-start-column="30" selection-end-line="3" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/TrackerSharePreference.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/GetPrivateKeyState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="24" selection-start-line="24" selection-end-line="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="43" column="39" selection-start-line="43" selection-start-column="39" selection-end-line="43" selection-end-column="39" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CheckUpdateFirmwareState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/StateMachine.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="35" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="60" selection-start-line="30" selection-start-column="60" selection-end-line="30" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="17" selection-start-line="28" selection-start-column="17" selection-end-line="28" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/toolbar_after_register.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="28" selection-start-line="4" selection-start-column="28" selection-end-line="4" selection-end-column="28" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothLocationStateChange.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="43" selection-start-line="2" selection-start-column="43" selection-end-line="2" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="51" column="90" lean-forward="true" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="90" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/FirmwareInfoState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="165" column="17" lean-forward="true" selection-start-line="165" selection-start-column="17" selection-end-line="165" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/LocationBLENotifyUserActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="40" column="34" selection-start-line="40" selection-start-column="34" selection-end-line="40" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="537">
-          <caret line="59" column="24" selection-start-line="59" selection-start-column="24" selection-end-line="59" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="671">
-          <caret line="105" column="34" selection-start-line="105" selection-start-column="34" selection-end-line="105" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/toolbar_before_registered.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/Utils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="135" column="42" selection-start-line="134" selection-start-column="20" selection-end-line="135" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_base.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="143" column="71" selection-start-line="143" selection-start-column="71" selection-end-line="143" selection-end-column="71" />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer2" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
-          <folding>
-            <element signature="e#41#860#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="282">
-          <caret line="94" column="88" selection-start-line="94" selection-start-column="88" selection-end-line="94" selection-end-column="88" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-434">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/BLEScan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="42" selection-start-line="42" selection-end-line="42" />
-          <folding>
-            <element signature="e#1942#1943#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="290">
-          <caret line="418" column="22" selection-start-line="418" selection-start-column="22" selection-end-line="418" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/WaitingForBeaconState.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="35" column="16" selection-start-line="35" selection-start-column="16" selection-end-line="35" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="78" column="41" lean-forward="true" selection-start-line="78" selection-start-column="41" selection-end-line="78" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
   </component>
 </project>

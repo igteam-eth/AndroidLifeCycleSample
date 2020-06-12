@@ -118,5 +118,14 @@
     <string name="turn_one_blue_message">This is needed to ring your Ethernom BLE Tracker. Please check your Bluetooth settings.</string>
     <string name="turn_on_location">Location Access Needed</string>
     <string name="turn_on_location_message">For Ethernom BLE Tracker to accurately locate your things and connect to your device, please select Allow all the time in Location Permissions.</string>
+    <string name="before_activating_you_app">Before activating you App</string>
+    <string name="bluetooth">Bluetooth</string>
+    <string name="enable">ENABLE</string>
+    <string name="turn_on_bt">Turn on Bluetooth</string>
+    <string name="turn_on_bt_des">App needs Bluetooth to activate your device and find your things. Please go to Settings and turn on Bluetooth.</string>
+    <string name="location">Location</string>
+    <string name="turn_on_lc">Allow App to access to your location</string>
+    <string name="turn_on_lc_des">For App to accurately locate your things and connect to your device, please select <b>Allow all the time</b> in Location Permission.</string>
+    <string name="next">Next</string>
 
 </resources>
