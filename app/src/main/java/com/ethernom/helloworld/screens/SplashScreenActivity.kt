@@ -17,6 +17,7 @@ import com.ethernom.helloworld.R
 import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.receiver.BeaconReceiver
+import com.ethernom.helloworld.services.StateService
 import com.ethernom.helloworld.statemachine.InitializeState
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
@@ -33,6 +34,7 @@ class SplashScreenActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_splash_screen)
+        startService( Intent(this, StateService::class.java))
 
         if (TrackerSharePreference.getConstant(this).isRanging) {
             BeaconReceiver.stopSound()

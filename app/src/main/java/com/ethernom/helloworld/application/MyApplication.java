@@ -43,7 +43,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Log.d("MyApplication", "onCreate() called" );
         // Register for broadcasts on Bluetooth state change
         IntentFilter btIntentFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(new BluetoothStateChangeReceiver(), btIntentFilter);

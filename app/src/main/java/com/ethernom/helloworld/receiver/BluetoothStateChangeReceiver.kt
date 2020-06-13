@@ -35,8 +35,6 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
 
                 BluetoothAdapter.STATE_OFF -> {
                     Log.e(TAG, "BT STATE_OFF")
-                    // Notify user
-                    showSilentNotificationBLE(context)
 
                     MyApplication.appendLog(MyApplication.getCurrentDate() + " : BT STATE_OFF \n")
                     TrackerSharePreference.getConstant(context).isBLEStatus = false
