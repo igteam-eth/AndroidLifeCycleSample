@@ -1,22 +1,20 @@
 package com.ethernom.helloworld.receiver
 
-import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.location.LocationManager
 import android.os.Build
 import android.util.Log
-
 import androidx.annotation.RequiresApi
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.MyApplication.showSilentNotificationBLE
 import com.ethernom.helloworld.application.MyApplication.showSilentNotificationLocation
-
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.statemachine.WaitingForBeaconState
 import com.ethernom.helloworld.util.StateMachine
+import com.ethernom.helloworld.workmanager.IntentBLEAndLocationStatusWorkManager
 
 
 class StartupReceiver : BroadcastReceiver() {
@@ -60,18 +58,19 @@ class StartupReceiver : BroadcastReceiver() {
                         trackerSharePreference.isAlreadyCreateWorkerThread = false
                         trackerSharePreference.isAlreadyCreateAlarm = false
                         WaitingForBeaconState(context).launchBLEScan()
+
+                        // Create BLE_LOCATION_WORK_MANAGER to Intent Location & BLE status
+                        // Every initialize state we need to Launch BLE & Location Status Intent for tracker state of Bluetooth & Location state
+                        // OneTimeWorkRequest
+                        val oneTimeRequest =
+                            OneTimeWorkRequest.Builder(IntentBLEAndLocationStatusWorkManager::class.java)
+                                .addTag("BLE_LOCATION_WORK_MANAGER").build()
+                        WorkManager.getInstance(context).enqueue(oneTimeRequest)
                     }
                 }
             }
         }
 
-        // Register for broadcasts on Bluetooth state change
-        val btIntentFilter = IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED)
-        context.registerReceiver(BluetoothStateChangeReceiver(), btIntentFilter)
-
-        // Register for broadcasts on Location state change
-        val filterLocation = IntentFilter(LocationManager.MODE_CHANGED_ACTION)
-        context.registerReceiver(LocationStateChangeReceiver(), filterLocation)
     }
 
     companion object {

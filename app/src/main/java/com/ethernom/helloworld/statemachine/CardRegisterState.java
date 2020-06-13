@@ -46,6 +46,7 @@ public class CardRegisterState {
         this.context = context;
     }
 
+    // every Input event & Action function inside
     public void cardRegisterDispatcher(InputEvent event, Boolean result){
         switch (event){
             case GET_CHALLENGE:{
@@ -118,6 +119,7 @@ public class CardRegisterState {
         }
     }
 
+    // Call for authenticate card
     public void H2CAuthentication(byte appID, String privateKey) {
         this.privateKey = privateKey;
         byte[] payload = new byte[5];
@@ -143,6 +145,7 @@ public class CardRegisterState {
         mBufferCallBack = bufferCallback;
         WriteToCard(data);
     }
+    // call suspend app
     public void RequestAppSuspend(byte appID) {
         byte[] payload = new byte[5];
         payload[0] = EthernomConstKt.getCM_SUSPEND_APP();
@@ -156,6 +159,7 @@ public class CardRegisterState {
             Log.i(TAG, "SUCCESS SUSPEND" + Conversion.bytesToHex(buffer));
         });
     }
+    // call initial ble tracker to get major and minor
     public void H2CRequestBLETrackerInit() {
         _host_name = android.os.Build.MODEL;
         Log.i(TAG, "requestBLETrkInit");
@@ -172,6 +176,7 @@ public class CardRegisterState {
         });
     }
 
+    //Generate sign with challenge and private key
     private void generate_auth_rsp(byte[] challenge, String privateKey) {
         ECDSA_P256 mSign = new ECDSA_P256();
         List<Byte> responseBytes = mSign.generate_auth_rsp(challenge, privateKey);
@@ -196,6 +201,7 @@ public class CardRegisterState {
             }
         });
     }
+    // call launch ble tracker
     public void H2CAppLaunch(String host_name, byte appID) {
         _host_name = host_name;
         byte[] payload = new byte[5];
@@ -227,6 +233,7 @@ public class CardRegisterState {
         });
     }
 
+    // call request session pin
     public void H2CRequestSessionPIN() {
         Log.i(TAG, "requestSessionPIN");
         List<Byte> payload = new ArrayList<Byte>();
@@ -270,8 +277,11 @@ public class CardRegisterState {
     }
 
     private void tryAgainDialog() {
+        // call suspend when app in ble tracker screen
         RequestAppSuspend((byte) 0x01);
+        // call disconnect from host & card
         DisconnectCard();
+        // Back to discover screen and intent to initial state
         ((DiscoverDeviceActivity) context ).runOnUiThread(() ->
                 stateMachineCallback.showMessageErrorState("Make sure your device is powered on and authenticated. Please try again.")
         );

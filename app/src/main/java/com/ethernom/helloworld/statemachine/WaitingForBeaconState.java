@@ -31,9 +31,9 @@ public class WaitingForBeaconState {
     }
 
     // Waiting for beacon
-
     @SuppressLint("SimpleDateFormat")
     public void launchBLEScan() throws ParseException {
+        // Check if not yet  Already Create Worker Thread to start scan
         if (!TrackerSharePreference.getConstant(context).isAlreadyCreateWorkerThread()) {
             byte numDelay = 0;
             TrackerSharePreference.getConstant(context).setAlreadyCreateWorkerThread(true);
@@ -55,6 +55,7 @@ public class WaitingForBeaconState {
 
             Log.d(TAG, "Delay Seconds:"+ numDelay);
 
+            // Create work manager to call start scan for detect beacon inside
             // OneTimeWorkRequest
             OneTimeWorkRequest oneTimeRequest = new OneTimeWorkRequest.Builder(MyWorkManager.class)
                 .addTag("WORK_MANAGER")
@@ -65,9 +66,11 @@ public class WaitingForBeaconState {
 
         MyApplication.appendLog(MyApplication.getCurrentDate() +" : Host brand " + Build.BRAND + "\n");
 
+        // Host model is SAMSUNG  start alarm manager
         if (Build.BRAND.equalsIgnoreCase("samsung")) {
             MyApplication.appendLog(MyApplication.getCurrentDate() +" : Alarm Enabled \n");
 
+            // check if not Already Create Alarm
             if (!TrackerSharePreference.getConstant(context).isAlreadyCreateAlarm()) {
                 TrackerSharePreference.getConstant(context).setAlreadyCreateAlarm(true);
                 Intent startIntent = new Intent(context, AlarmReceiver.class);

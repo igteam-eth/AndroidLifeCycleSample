@@ -61,12 +61,12 @@ public class FirmwareInfoState {
 
 
 
+    // every Input event & Action function inside
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void firmwareDispatcher(InputEvent event, Boolean result) {
         switch (event) {
             case ESTABLISH_CONNECTION: {
                 if (result) {
-
                     saveToLog("ESTABLISH_CONNECTION", true);
                     // Establish Connection Success
                     H2CGetFirmwareVn();
@@ -135,11 +135,11 @@ public class FirmwareInfoState {
                     fwInfoList.add(new FwInfo(_card_ble_version, "2"));
                     fwInfoList.add(new FwInfo(_card_boot_version, "3"));
 
-                    //1003
+                    // change to 1003
                     TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.CHECKING_UPDATE_FIRMWARE.getValue());
 
                     if (Utils.haveNetworkConnection(context)) {
-
+                        // Call to check firmware update
                         new CheckUpdateFirmwareState(context).check(fwInfoList,
                                 serialNumber,
                                 menuFac
@@ -168,6 +168,7 @@ public class FirmwareInfoState {
             }
         }
     }
+
     private void saveToLog(String value, Boolean result){
         if (result){
             MyApplication.saveLogWithCurrentDate(value+" succeeded");
@@ -279,6 +280,7 @@ public class FirmwareInfoState {
         this.alreadyCallDisconnect = alreadyCallDisconnect;
     }
 
+    // Get Card Firmware version
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetFirmwareVn() {
         byte[] payload = new byte[4];
@@ -334,6 +336,7 @@ public class FirmwareInfoState {
         });
     }
 
+    // Get Card BLE version
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetBLEVn() {
         byte[] payload = new byte[4];
@@ -376,6 +379,7 @@ public class FirmwareInfoState {
         });
     }
 
+    // Get Card BOOT version
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetBOOTVn() {
         byte[] payload = new byte[4];
@@ -414,6 +418,7 @@ public class FirmwareInfoState {
     }
 
 
+    // Get Card MENU FAC version
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetMENU() {
         byte[] payload = new byte[4];
@@ -444,6 +449,7 @@ public class FirmwareInfoState {
         });
     }
 
+    // Get Card SN version
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void H2CGetSerialNum() {
         byte[] payload = new byte[4];
@@ -475,6 +481,7 @@ public class FirmwareInfoState {
         });
     }
 
+    // Call For Suspend app
     public void RequestAppSuspend(byte appID) {
         byte[] payload = new byte[5];
         payload[0] = EthernomConstKt.getCM_SUSPEND_APP();
@@ -583,7 +590,9 @@ public class FirmwareInfoState {
     }
 
     private void tryAgainDialog() {
+        // call disconnect from host & card
         DisconnectCard();
+        // Back to discover screen and intent to initial state
         ((DiscoverDeviceActivity) context).runOnUiThread(() ->
                 stateMachineCallback.showMessageErrorState("Make sure your device is powered on and authenticated. Please try again.")
         );

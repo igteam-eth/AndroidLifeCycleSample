@@ -30,7 +30,8 @@ public class GetPrivateKeyState implements GetAppKeyCallback {
 
     @Override
     public void getSucceeded(String appKey) {
-// 'Get Private Key Success
+        // Get Private Key Success
+        // change to 1005
         TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.CARD_REGISTER.getValue());
         CardRegisterState cardRegisterState = new CardRegisterState(context);
         cardRegisterState.H2CAuthentication((byte) 0x01, appKey);
@@ -38,7 +39,7 @@ public class GetPrivateKeyState implements GetAppKeyCallback {
 
     @Override
     public void getFailed(String message) {
-        // 'Get Private Key Failed
+        // Get Private Key Failed
         stateMachineCallback.getPrivateKeyFailed(message);
     }
 }

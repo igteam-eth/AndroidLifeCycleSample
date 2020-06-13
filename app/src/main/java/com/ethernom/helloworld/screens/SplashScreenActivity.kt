@@ -54,17 +54,22 @@ class SplashScreenActivity : BaseActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
-
+        // Check for display before Activation screen easy user to allow app permission required
         if(TrackerSharePreference.getConstant(this).isBeforeActivate) {
-            if (requestWriteExternalStoragePermission() && requestLocationPermission()) {
+            if (
+            // Request App Storage Permission for allow app to write logcat to external storage file.
+                requestWriteExternalStoragePermission()
+                &&
+                // Request App Location Permission for allow app detect device nearby with both general advertising & beacon advertising
+                requestLocationPermission()
+            ) {
+                // For User experience at SplashScreen Just alive 2 or 3 Seconds after that intent to screen follow by Initialize state of state table
+                Handler().postDelayed({
+                    // go to initial state
+                    // In Initial State class we study with input event , state variable and action function for intent to next state
+                    InitializeState().goToInitialState(this)
 
-            Handler().postDelayed({
-                // go to initial state
-                InitializeState().goToInitialState(this)
-
-            }, 2000)
-
-
+                }, 2000)
             }
         } else {
             if(requestWriteExternalStoragePermission()) {
@@ -89,7 +94,6 @@ class SplashScreenActivity : BaseActivity() {
             ) {
 
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-
                     requestPermissions(
                         arrayOf(
                             Manifest.permission.ACCESS_COARSE_LOCATION,

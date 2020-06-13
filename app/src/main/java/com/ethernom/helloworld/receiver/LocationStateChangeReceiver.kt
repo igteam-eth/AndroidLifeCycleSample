@@ -35,8 +35,8 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
                             context
                         )
                     ) {
-                        //StartScan General Advertising
-                        //Display List(Empty)
+                        // StartScan General Advertising
+                        // Display List(Empty)
                         val mIntent = Intent(context, DiscoverDeviceActivity::class.java)
                         mIntent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         context.startActivity(mIntent)
@@ -99,6 +99,8 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun goToInitState(context: Context) {
         TrackerSharePreference.getConstant(context).currentState = StateMachine.INITIAL.value
+        // go to initial state
+        // In Initial State class we study with input event , state variable and action function for intent to next state
         InitializeState().goToInitialState(context)
 
     }

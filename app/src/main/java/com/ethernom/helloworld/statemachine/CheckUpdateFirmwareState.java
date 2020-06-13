@@ -54,7 +54,7 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
 
         } else {
             // Server Response Update Not Needed
-            //go to state 1004
+            // go to state 1004
             if (Utils.haveNetworkConnection(context)) {
                 TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.GET_PRIVATE_KEY.getValue());
                 new GetPrivateKeyState(context, stateMachineCallback).get(serialNumber, menuFac);

@@ -25,6 +25,7 @@ import com.ethernom.helloworld.receiver.NotificationDismissedReceiver;
 import com.ethernom.helloworld.screens.BaseActivity;
 import com.ethernom.helloworld.screens.MainActivity;
 import com.ethernom.helloworld.util.ForegroundCheckTask;
+import com.ethernom.helloworld.util.StateMachine;
 import com.ethernom.helloworld.util.Utils;
 
 import java.io.File;
@@ -44,6 +45,11 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d("MyApplication", "onCreate() called" );
+        // Every startup app change current state to Initialize state it also handle app terminate state too
+        TrackerSharePreference.getConstant(this).setCurrentState(StateMachine.INITIAL.getValue());
+
+        // Every initialize state we need to Launch BLE & Location Status Intent for tracker state of Bluetooth & Location state
+        // start Intent
         // Register for broadcasts on Bluetooth state change
         IntentFilter btIntentFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(new BluetoothStateChangeReceiver(), btIntentFilter);
@@ -51,7 +57,7 @@ public class MyApplication extends Application {
         // Register for broadcasts on Location state change
         IntentFilter filterLocation = new IntentFilter(LocationManager.MODE_CHANGED_ACTION);
         registerReceiver(new  LocationStateChangeReceiver(), filterLocation);
-
+        // end Intent
 
         Log.d("MyApplication", Utils.isLocationEnabled(this)+"");
 
@@ -164,7 +170,6 @@ public class MyApplication extends Application {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void showSilentNotificationBLE(Context context) {
-
 
         Log.d("MyApplication", "showSilentNotification");
         final String CHANNEL_ID = "ring_channel";

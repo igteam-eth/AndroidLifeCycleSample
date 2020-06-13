@@ -115,6 +115,8 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun goToInitState(context: Context) {
         TrackerSharePreference.getConstant(context).currentState = StateMachine.INITIAL.value
+        // go to initial state
+        // In Initial State class we study with input event , state variable and action function for intent to next state
         InitializeState().goToInitialState(context)
     }
 

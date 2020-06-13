@@ -11,13 +11,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/services/StateService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/IntentBLEAndLocationStatusWorkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BeforeActivateActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BeforeActivateActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CheckUpdateFirmwareState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CheckUpdateFirmwareState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/FirmwareInfoState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/FirmwareInfoState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/GetPrivateKeyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/GetPrivateKeyState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/WaitingForBeaconState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/WaitingForBeaconState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,44 +64,6 @@
         <option value="Class" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>showDialog</find>
-      <find>StateMachine.INITIAL</find>
-      <find>checkBlueToothAdapter())</find>
-      <find>TrackerSharePreference.getConstant(this).isBLEStatus</find>
-      <find>GPS_PROVIDER</find>
-      <find>Error</find>
-      <find>initS</find>
-      <find>onStop</find>
-      <find>Update</find>
-      <find>updateCardDialog</find>
-      <find>setLoadingDescription</find>
-      <find>setDescriptionOnLoading</find>
-      <find>tr</find>
-      <find>saveC</find>
-      <find>showMessageErrorState</find>
-      <find>getMa</find>
-      <find>My</find>
-      <find>MyAppl</find>
-      <find>MyApplication</find>
-      <find>currentState</find>
-      <find>isScreenPresent</find>
-      <find>onStart</find>
-      <find>CARD_DISCOVERY_BLE_LOCATION_OFF</find>
-      <find>CARD_DISCOVERY_BLE_LOCATION</find>
-      <find>check</find>
-      <find>LocationBLENotifyUserActivity</find>
-      <find>Launch</find>
-      <find>btScanner</find>
-      <find>onResu</find>
-      <find>mBleScan</find>
-    </findStrings>
-    <replaceStrings>
-      <replace>Tracker</replace>
-      <replace>TrackerSharePreference.getConstant(this).isBLEStatus)</replace>
-    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -253,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591959042548</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="- Add service for track app kill and recall my application">
+      <created>1592012339400</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1592012339401</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TodoView">
@@ -270,48 +250,57 @@
     <MESSAGE value="1. Add Discover Device Screen&#10; - List all nearby device&#10;2. Add BootComplete Broadcast Receiver&#10; - Set current to initial state &#10; - Check isCardRegistered then change state&#10;3. Design UI for Main screen" />
     <MESSAGE value="- Add Register Card:&#10; 1. Get Firmware State&#10; 2. Check Update State&#10; 3. Get Private Key State&#10; 4. Card Register State&#10;- Add Bluetooth state change&#10;- Add Location State change" />
     <MESSAGE value="- Add Before activate activity screen for user Enable bluetooth and location permission" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Add Before activate activity screen for user Enable bluetooth and location permission" />
+    <MESSAGE value="- Add service for track app kill and recall my application" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add service for track app kill and recall my application" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="174" y="0" key="CommitChangelistDialog2" timestamp="1591959042003">
+    <state x="174" y="0" key="CommitChangelistDialog2" timestamp="1592012338958">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="174" y="0" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1591959042003" />
-    <state width="1238" height="313" key="GridCell.Tab.0.bottom" timestamp="1592012122268">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state x="174" y="0" key="CommitChangelistDialog2/0.0.1280.800@0.0.1280.800" timestamp="1592012338958" />
+    <state width="1238" height="175" key="GridCell.Tab.0.bottom" timestamp="1592022835017">
+      <screen x="0" y="23" width="1280" height="709" />
     </state>
-    <state width="1238" height="313" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1592012122268" />
-    <state width="1238" height="313" key="GridCell.Tab.0.center" timestamp="1592012122265">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1238" height="313" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1592017515327" />
+    <state width="1238" height="175" key="GridCell.Tab.0.bottom/0.23.1280.709@0.23.1280.709" timestamp="1592022835017" />
+    <state width="1238" height="175" key="GridCell.Tab.0.center" timestamp="1592022835015">
+      <screen x="0" y="23" width="1280" height="709" />
     </state>
-    <state width="1238" height="313" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1592012122265" />
-    <state width="1238" height="313" key="GridCell.Tab.0.left" timestamp="1592012122263">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1238" height="313" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1592017515325" />
+    <state width="1238" height="175" key="GridCell.Tab.0.center/0.23.1280.709@0.23.1280.709" timestamp="1592022835015" />
+    <state width="1238" height="175" key="GridCell.Tab.0.left" timestamp="1592022835013">
+      <screen x="0" y="23" width="1280" height="709" />
     </state>
-    <state width="1238" height="313" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1592012122263" />
-    <state width="1238" height="313" key="GridCell.Tab.0.right" timestamp="1592012122266">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1238" height="313" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1592017515324" />
+    <state width="1238" height="175" key="GridCell.Tab.0.left/0.23.1280.709@0.23.1280.709" timestamp="1592022835013" />
+    <state width="1238" height="175" key="GridCell.Tab.0.right" timestamp="1592022835016">
+      <screen x="0" y="23" width="1280" height="709" />
     </state>
-    <state width="1238" height="313" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1592012122266" />
+    <state width="1238" height="313" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1592017515326" />
+    <state width="1238" height="175" key="GridCell.Tab.0.right/0.23.1280.709@0.23.1280.709" timestamp="1592022835016" />
     <state width="500" height="476" key="SwitcherDM" timestamp="1591958658173">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state width="500" height="476" key="SwitcherDM/0.0.1280.800@0.0.1280.800" timestamp="1591958658173" />
-    <state x="240" y="140" key="Vcs.Push.Dialog.v2" timestamp="1591959045244">
+    <state x="240" y="140" key="Vcs.Push.Dialog.v2" timestamp="1592012342111">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="240" y="140" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1591959045244" />
-    <state x="420" y="324" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592012228897">
+    <state x="240" y="140" key="Vcs.Push.Dialog.v2/0.0.1280.800@0.0.1280.800" timestamp="1592012342111" />
+    <state x="420" y="324" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592032593398">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="420" y="324" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.800@0.0.1280.800" timestamp="1592012228897" />
+    <state x="420" y="324" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.800@0.0.1280.800" timestamp="1592032593398" />
+    <state x="305" y="185" key="run.anything.popup" timestamp="1592030864332">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="185" key="run.anything.popup/0.0.1280.800@0.0.1280.800" timestamp="1592030864332" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java</url>
-          <line>256</line>
+          <line>263</line>
           <option name="timeStamp" value="103" />
         </line-breakpoint>
       </breakpoints>

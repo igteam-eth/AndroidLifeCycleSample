@@ -31,13 +31,14 @@ class BeforeActivateActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         super.onCreate(savedInstanceState)
+        // Set Activity to full screen
         this.window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_before_activate)
 
-
+            // Enable bluetooth click event
         BtEnlabel.setOnClickListener {
             Log.d(TAG, "BtEnlabel clicked")
             turnOnBluetooth()
@@ -47,6 +48,8 @@ class BeforeActivateActivity : BaseActivity() {
             checkToChangeLayout()
         }
         toolbar_before_registered.visibility = View.GONE
+
+        // Enable location click event
 
         LcEnlabel.setOnClickListener {
             Log.d(TAG, "LcEnlabel clicked")
@@ -73,6 +76,8 @@ class BeforeActivateActivity : BaseActivity() {
         super.onResume()
         checkToChangeLayout()
     }
+
+    // check Location & Bluetooth to update ui
     fun checkToChangeLayout() {
         Log.d(TAG, "Utils.isBluetoothEnable() ${Utils.isBluetoothEnable()}")
         Log.d(TAG, "Utils.isLocationEnabled(this) ${Utils.isLocationEnabled(this)}")
@@ -115,11 +120,13 @@ class BeforeActivateActivity : BaseActivity() {
 
 
     }
+    // Force Bluetooth turn on
     fun turnOnBluetooth(): Boolean {
         val bluetoothAdapter = BluetoothAdapter
             .getDefaultAdapter()
         return bluetoothAdapter?.enable() ?: false
     }
+    // Request location permission
     fun requestLocationPermission(): Boolean {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -160,6 +167,7 @@ class BeforeActivateActivity : BaseActivity() {
         } else return false
     }
 
+    // Check App location permission
     fun checkLocationPermission(): Boolean {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

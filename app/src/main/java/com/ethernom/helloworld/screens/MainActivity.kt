@@ -38,11 +38,13 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         // Start Initialize Card Registered RecyclerView Adapter
         initialRecyclerViewList()
 
+        // Initialize share preference
         trackerSharePreference = getConstant(this)
         MyApplication.saveCurrentStateToLog(this)
 
-        if (!TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread) {
-            TrackerSharePreference.getConstant(this).isRanging = false
+        // Stop ring when app is ringing by user interact with notification
+        if (!getConstant(this).isAlreadyCreateWorkerThread) {
+            getConstant(this).isRanging = false
             BeaconReceiver.stopSound()
         }
     }
@@ -51,15 +53,35 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
     override fun onResume() {
         super.onResume()
 
-        if (requestWriteExternalStoragePermission() && requestLocationPermission()) {
+        if (
+        // check if storage permission turn on
+        requestWriteExternalStoragePermission()
+            &&
+            // check if location permission turn on
+            requestLocationPermission()) {
+            // check if card registered
             if (getConstant(this).isCardRegistered) {
+                // Call display registered device to the list
                 displayRegisteredCard()
-                if (Utils.isBluetoothEnable() && Utils.isLocationEnabled(this))
+                if (
+                    // check bluetooth is turn on
+                    Utils.isBluetoothEnable()
+                    &&
+                    // check location is turn on
+                    Utils.isLocationEnabled(this)
+                ) {
+                    /*
+                   if both location & bluetooth are turn on : Launch BLE Scan Intent for detect Beacon signal
+                   For WaitingForBeaconState we study with input event , state variable and action function for intent to next state
+                   */
                     WaitingForBeaconState(this).launchBLEScan()
+                }
+
             }
         }
     }
 
+    // Initialize RecyclerView for display list of card registered
     private fun initialRecyclerViewList() {
         registeredDeviceAdapter = RegisteredDeviceAdapter(registeredDeviceList, this)
         rv_registered_device.layoutManager =
@@ -125,6 +147,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         } else return false
     }
 
+    // Display Registered Device to Recycler View List
     private fun displayRegisteredCard() {
         registeredDeviceList.clear()
         val bleClient: BleClient = getConstant(this).ethernomCard
@@ -132,11 +155,13 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         registeredDeviceAdapter!!.notifyDataSetChanged()
     }
 
+    // Callback event when user click device item to delete
     override fun ItemClickListener(position: Int) {
         Log.d(TAG, "Name: " + registeredDeviceList[position].devName)
         DeleteDeviceBottomDialog(registeredDeviceList[position].devName, this, this).show()
     }
 
+    // Callback event when user click delete item & auto intent to discover devices screen
     override fun onItemDeleteClicked() {
         registeredDeviceList.clear()
         registeredDeviceAdapter!!.notifyDataSetChanged()
