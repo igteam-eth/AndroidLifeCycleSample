@@ -16,6 +16,7 @@ import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.ethernom.helloworld.R
+import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.statemachine.InitializeState
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_before_activate.*
@@ -68,6 +69,7 @@ class BeforeActivateActivity : ComponentActivity() {
         }
 
         btn_next.setOnClickListener {
+            SettingSharePreference.getConstant(this).isBeforeActivate = true
             InitializeState().goToInitialState(this)
         }
     }

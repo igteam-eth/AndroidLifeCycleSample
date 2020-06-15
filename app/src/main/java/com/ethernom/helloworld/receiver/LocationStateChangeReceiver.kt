@@ -8,6 +8,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.ethernom.helloworld.application.MyApplication
+import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
 import com.ethernom.helloworld.statemachine.InitializeState
@@ -28,6 +29,10 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
 
             Log.e(TAG, "Location State on")
             MyApplication.appendLog(MyApplication.getCurrentDate() + " : Location State on \n")
+           // check if before activate
+            if (!SettingSharePreference.getConstant(context).isBeforeActivate) {
+                return
+            }
 
             when (currentState) {
                 StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value -> {

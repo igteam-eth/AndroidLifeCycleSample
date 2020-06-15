@@ -76,7 +76,6 @@ class SplashScreenActivity : BaseActivity() {
             }
         } else {
             if (requestWriteExternalStoragePermission()) {
-                SettingSharePreference.getConstant(this).isBeforeActivate = true
                 startActivity(Intent(this, BeforeActivateActivity::class.java))
                 finish()
             }

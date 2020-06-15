@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.MyApplication.showSilentNotificationBLE
 import com.ethernom.helloworld.application.MyApplication.showSilentNotificationLocation
+import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
 import com.ethernom.helloworld.statemachine.WaitingForBeaconState
@@ -31,15 +32,21 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
 
             val currentState = TrackerSharePreference.getConstant(context).currentState
 
+
             when (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)) {
 
                 BluetoothAdapter.STATE_OFF -> {
+                    Log.e(TAG, "currentState : $currentState")
+
                     Log.e(TAG, "BT STATE_OFF")
 
                     MyApplication.appendLog(MyApplication.getCurrentDate() + " : BT STATE_OFF \n")
                     TrackerSharePreference.getConstant(context).isBLEStatus = false
 
                     when(currentState){
+                        StateMachine.INITIAL.value -> {
+                            goToInitState(context)
+                        }
                         StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value ->{
                             goToInitState(context)
                         }
@@ -77,7 +84,10 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
                     Log.e(TAG, "BT STATE_ON")
                     MyApplication.appendLog(MyApplication.getCurrentDate() + " : BT STATE_ON \n")
                     TrackerSharePreference.getConstant(context).isBLEStatus = true
-
+                    // check if before activate
+                    if (!SettingSharePreference.getConstant(context).isBeforeActivate) {
+                        return
+                    }
                     when(currentState){
                         StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value ->{
 
