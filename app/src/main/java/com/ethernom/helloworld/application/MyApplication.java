@@ -12,23 +12,26 @@ import android.content.IntentFilter;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.work.Configuration;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
 
 import com.ethernom.helloworld.R;
 import com.ethernom.helloworld.receiver.BluetoothStateChangeReceiver;
 import com.ethernom.helloworld.receiver.LocationStateChangeReceiver;
 import com.ethernom.helloworld.receiver.NotificationDismissedReceiver;
 import com.ethernom.helloworld.screens.BaseActivity;
-import com.ethernom.helloworld.screens.MainActivity;
 import com.ethernom.helloworld.screens.SplashScreenActivity;
 import com.ethernom.helloworld.util.ForegroundCheckTask;
 import com.ethernom.helloworld.util.StateMachine;
 import com.ethernom.helloworld.util.Utils;
+import com.ethernom.helloworld.workmanager.IntentBLEAndLocationStatusWorkManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -40,26 +43,24 @@ import java.util.concurrent.ExecutionException;
 
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 
-public class MyApplication extends Application implements  Configuration.Provider {
-
+public class MyApplication extends Application implements Configuration.Provider {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("MyApplication", "onCreate() called" );
+        Log.d("MyApplication", "onCreate() called");
+
         // Every startup app change current state to Initialize state it also handle app terminate state too
         TrackerSharePreference.getConstant(this).setCurrentState(StateMachine.INITIAL.getValue());
 
-        // Every initialize state we need to Launch BLE & Location Status Intent for tracker state of Bluetooth & Location state
-        // start Intent
+
         // Register for broadcasts on Bluetooth state change
         IntentFilter btIntentFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(new BluetoothStateChangeReceiver(), btIntentFilter);
 
         // Register for broadcasts on Location state change
         IntentFilter filterLocation = new IntentFilter(LocationManager.MODE_CHANGED_ACTION);
-        registerReceiver(new  LocationStateChangeReceiver(), filterLocation);
-        // end Intent
+        registerReceiver(new LocationStateChangeReceiver(), filterLocation);
 
         Log.d("MyApplication", Utils.isLocationEnabled(this)+"");
 
@@ -87,8 +88,9 @@ public class MyApplication extends Application implements  Configuration.Provide
             e.printStackTrace();
         }
     }
+
     static public void saveLogWithCurrentDate(String logs) {
-        appendLog(getCurrentDate()+" : " +logs +"\n");
+        appendLog(getCurrentDate() + " : " + logs + "\n");
     }
 
 
@@ -109,26 +111,25 @@ public class MyApplication extends Application implements  Configuration.Provide
     }
 
 
-    public static void saveCurrentStateToLog(Context context){
+    public static void saveCurrentStateToLog(Context context) {
         String currentState = TrackerSharePreference.getConstant(context).getCurrentState();
 
-        appendLog(getCurrentDate()+ " : Current State "+ currentState  + " "+ BaseActivity.Companion.getEnumNameByValue(currentState)+ "\n");
+        appendLog(getCurrentDate() + " : Current State " + currentState + " " + BaseActivity.Companion.getEnumNameByValue(currentState) + "\n");
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void showSilentNotification(Context context) {
+    public static void showRangNotification(Context context) {
 
 
-        Log.d("MyApplication", "showSilentNotification");
-        final String CHANNEL_ID = "ring_channel";
+        Log.d("MyApplication", "showRangNotification");
         final NotificationManager manager =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         final NotificationChannel channel =
-                new NotificationChannel(CHANNEL_ID, "Ethernom", IMPORTANCE_HIGH);
+                new NotificationChannel(Utils.CHANNEL_RANG, "Ethernom", IMPORTANCE_HIGH);
         assert manager != null;
         manager.createNotificationChannel(channel);
-        Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
+        Notification.Builder builder = new Notification.Builder(context, Utils.CHANNEL_RANG);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
         builder.setContentTitle("Ethernom Tracker");
@@ -144,52 +145,50 @@ public class MyApplication extends Application implements  Configuration.Provide
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void showSilentNotificationLocation(Context context) {
+    public static void showLocationNotification(Context context) {
 
+        Log.d("MyApplication", "showLocationNotification");
 
-        Log.d("MyApplication", "showSilentNotification");
-        final String CHANNEL_ID = "ring_channel";
         final NotificationManager manager =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         final NotificationChannel channel =
-                new NotificationChannel(CHANNEL_ID, "Ethernom", IMPORTANCE_HIGH);
+                new NotificationChannel(Utils.CHANNEL_LOCATION_OFF, "Ethernom", IMPORTANCE_HIGH);
         assert manager != null;
         manager.createNotificationChannel(channel);
-        Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
+        Notification.Builder builder = new Notification.Builder(context, Utils.CHANNEL_LOCATION_OFF);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
         builder.setContentTitle("Location is off");
         builder.setContentText("Turn on Location services for the Ethernom Tracker app to keep track of your items.");
         builder.setAutoCancel(true);
         builder.setDeleteIntent(createOnDismissedIntent(context));
-        Intent intent = new Intent(context, SplashScreenActivity.class);
-        intent.putExtra("NOTIFICATION", true);
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         builder.setContentIntent(pendingIntent);
         manager.notify(0, builder.build());
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static void showSilentNotificationBLE(Context context) {
+    public static void showBluetoothNotification(Context context) {
 
-        Log.d("MyApplication", "showSilentNotification");
-        final String CHANNEL_ID = "ring_channel";
+        Log.d("MyApplication", "showBluetoothNotification");
         final NotificationManager manager =
                 (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         final NotificationChannel channel =
-                new NotificationChannel(CHANNEL_ID, "Ethernom", IMPORTANCE_HIGH);
+                new NotificationChannel(Utils.CHANNEL_BLE_OFF, "Ethernom", IMPORTANCE_HIGH);
         assert manager != null;
         manager.createNotificationChannel(channel);
-        Notification.Builder builder = new Notification.Builder(context, CHANNEL_ID);
+        Notification.Builder builder = new Notification.Builder(context, Utils.CHANNEL_BLE_OFF);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
         builder.setContentTitle("Bluetooth is off");
         builder.setContentText("Turn on Bluetooth services for the Ethernom Tracker app to keep track of your items.");
         builder.setAutoCancel(true);
         builder.setDeleteIntent(createOnDismissedIntent(context));
-        Intent intent = new Intent(context, SplashScreenActivity.class);
-        intent.putExtra("NOTIFICATION", true);
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_BLUETOOTH_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
         builder.setContentIntent(pendingIntent);

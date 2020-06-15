@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.AUDIO_SERVICE;
-import static com.ethernom.helloworld.application.MyApplication.showSilentNotification;
+import static com.ethernom.helloworld.application.MyApplication.showRangNotification;
 
 @SuppressLint("MissingPermission")
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -105,11 +105,11 @@ public class BeaconReceiver extends BroadcastReceiver {
                                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     context.startActivity(i);
                                 }else{
-                                    showSilentNotification(context);
+                                    showRangNotification(context);
                                     Log.d("BleReceiver", "showNotification");
                                 }
                             } catch (ExecutionException | InterruptedException e) {
-                                showSilentNotification(context);
+                                showRangNotification(context);
                                 Log.d("BleReceiver Catch", "showNotification");
                                 e.printStackTrace();
                             }

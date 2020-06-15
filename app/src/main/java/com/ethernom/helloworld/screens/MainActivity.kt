@@ -23,6 +23,7 @@ import com.ethernom.helloworld.receiver.BeaconReceiver
 import com.ethernom.helloworld.statemachine.WaitingForBeaconState
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_base.*
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, ItemDeleteCallback {
@@ -47,6 +48,10 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         if (!getConstant(this).isAlreadyCreateWorkerThread) {
             getConstant(this).isRanging = false
             BeaconReceiver.stopSound()
+        }
+        button_setting.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
+            Utils.preventDoubleClick(it)
         }
     }
 

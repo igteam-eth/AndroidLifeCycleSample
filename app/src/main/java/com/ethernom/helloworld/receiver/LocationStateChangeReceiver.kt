@@ -26,11 +26,11 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
         val currentState = TrackerSharePreference.getConstant(context).currentState
         if (Utils.isLocationEnabled(context)) {//true
             TrackerSharePreference.getConstant(context).isLocationStatus = true
+            Utils.removeNotificationByID(context, Utils.CHANNEL_LOCATION_OFF)
 
             Log.e(TAG, "Location State on")
             MyApplication.appendLog(MyApplication.getCurrentDate() + " : Location State on \n")
-           // check if before activate
-            if (!SettingSharePreference.getConstant(context).isBeforeActivate) {
+            if (!SettingSharePreference.getConstant(context).isBeforeActivate){
                 return
             }
 
@@ -52,7 +52,8 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
                 StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value -> {
                     if (TrackerSharePreference.getConstant(context).isBLEStatus) {
                         //Launch BLE Scan Intent
-                        TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON.value
+                        TrackerSharePreference.getConstant(context).currentState =
+                            StateMachine.WAITING_FOR_BEACON.value
                         WaitingForBeaconState().launchBLEScan(context)
                     }
                 }
@@ -62,7 +63,7 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
                         TrackerSharePreference.getConstant(context).currentState =
                             StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
                         //Notify User to turn on Bluetooth
-                        MyApplication.showSilentNotificationBLE(context)
+                        MyApplication.showBluetoothNotification(context)
 
                     }
                 }
@@ -72,10 +73,11 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
             TrackerSharePreference.getConstant(context).isLocationStatus = false
             Log.e(TAG, "Location State off")
             // Notify user
-            MyApplication.showSilentNotificationLocation(context)
+            MyApplication.showLocationNotification(context)
 
             MyApplication.appendLog(MyApplication.getCurrentDate() + " : Location State off \n")
 
+            Log.e(TAG, "Current state : $currentState")
             when (currentState) {
                 StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value -> {
                     goToInitState(context)

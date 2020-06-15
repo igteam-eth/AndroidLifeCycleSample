@@ -247,7 +247,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         }
     }
 
-
     override fun hideProgressBarState() {
         hideProgressBar()
     }
@@ -257,6 +256,9 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         showDialog(message)
     }
 
+    override fun unknownEvent() {
+        showDialog("Unknown event was called.")
+    }
 
     private fun showProgressBar() {
         loadingDialog.show()
@@ -271,10 +273,14 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         super.onResume()
         if (!isVerifyPinType) {
             if (TrackerSharePreference.getConstant(this).isBLEStatus) {
-                mBleScan = BLEScan(this, this)
-                mBleScan!!.startScanning()
-                TrackerSharePreference.getConstant(this).currentState =
-                    StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
+                try {
+                    mBleScan = BLEScan(this, this)
+                    mBleScan!!.startScanning()
+                    TrackerSharePreference.getConstant(this).currentState =
+                        StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
+                }catch (e: java.lang.Exception){
+                    e.printStackTrace()
+                }
 
             }
         }

@@ -1,12 +1,16 @@
 package com.ethernom.helloworld.util;
 
+import android.app.NotificationManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.provider.Settings;
 import android.view.View;
+
+import androidx.annotation.RequiresApi;
 
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.screens.SplashScreenActivity;
@@ -15,8 +19,10 @@ public class Utils {
 
 
     public static int REQUEST_BLUETOOTH_STATE = 200;
-    public static int REQUEST_LOCATION_STATE = 201;
     public static Byte BEACON_DELAY_PERIOD = 12;
+    public static String CHANNEL_RANG = "CHANNEL_RANG_ID";
+    public static String CHANNEL_BLE_OFF = "CHANNEL_BLE_OFF_ID";
+    public static String CHANNEL_LOCATION_OFF = "CHANNEL_LOCATION_OFF_ID";
 
 
     public static void preventDoubleClick(final View view){
@@ -66,6 +72,14 @@ public class Utils {
         }
         packet[7] = (byte) xorValue;
         return packet;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void removeNotificationByID(Context context, String chanelID){
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.deleteNotificationChannel(chanelID);
+        }
     }
 
     public static boolean isLocationEnabled(Context context) {

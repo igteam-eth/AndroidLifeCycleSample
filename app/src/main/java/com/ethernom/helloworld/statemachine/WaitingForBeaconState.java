@@ -12,7 +12,6 @@ import androidx.work.WorkManager;
 
 import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
-import com.ethernom.helloworld.receiver.AlarmReceiver;
 import com.ethernom.helloworld.util.Utils;
 import com.ethernom.helloworld.workmanager.MyWorkManager;
 

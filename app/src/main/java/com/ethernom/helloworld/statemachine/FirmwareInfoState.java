@@ -126,6 +126,7 @@ public class FirmwareInfoState {
                 }
                 break;
             }
+
             case GET_SERIAL_NUMBER: {
                 if (result) {
                     saveToLog("GET_SERIAL_NUMBER", true);
@@ -165,6 +166,11 @@ public class FirmwareInfoState {
                     tryAgainDialog();
                 }
                 break;
+            }
+            default:{
+                ((DiscoverDeviceActivity) context).runOnUiThread(() ->
+                        stateMachineCallback.unknownEvent()
+                );
             }
         }
     }

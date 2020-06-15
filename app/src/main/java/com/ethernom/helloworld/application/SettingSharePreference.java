@@ -48,4 +48,5 @@ public class SettingSharePreference {
         return sharedPrefs.getBoolean(SharedPreKeyType.BEFORE_ACTIVATE.toString(), false);
     }
 
+
 }

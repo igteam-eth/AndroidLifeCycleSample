@@ -9,4 +9,5 @@ interface StateMachineCallback {
     fun onGetMajorMinorSucceeded(data: String)
     fun appRequiredToUpdate()
     fun appMustBeUpdate()
+    fun unknownEvent()
 }

@@ -103,6 +103,16 @@ abstract class BaseActivity : CoreActivity() {
         }
     }
 
+    open fun showDefaultToolbar(){
+        toolbar_after_registered.visibility = View.GONE
+        toolbar_before_registered.visibility = View.VISIBLE
+    }
+
+    open fun hideAllToolbar(){
+        toolbar_after_registered.visibility = View.GONE
+        toolbar_before_registered.visibility = View.GONE
+    }
+
     override fun onPause() {
         super.onPause()
         isScreenPresent = false

@@ -7,8 +7,8 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.ethernom.helloworld.application.MyApplication
-import com.ethernom.helloworld.application.MyApplication.showSilentNotificationBLE
-import com.ethernom.helloworld.application.MyApplication.showSilentNotificationLocation
+import com.ethernom.helloworld.application.MyApplication.showBluetoothNotification
+import com.ethernom.helloworld.application.MyApplication.showLocationNotification
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
 import com.ethernom.helloworld.screens.MainActivity
@@ -33,7 +33,7 @@ class InitializeState {
                  */
                 trackerSharePreference.currentState = StateMachine.INITIAL.value
                 // Push system notification for notify user
-                showSilentNotificationBLE(context)
+                showBluetoothNotification(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for Display Read label to notify user
                     val intent = Intent(context, DiscoverDeviceActivity::class.java)
@@ -55,7 +55,7 @@ class InitializeState {
                  */
                 trackerSharePreference.currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value
                 // Push system notification for notify user
-                showSilentNotificationBLE(context)
+                showBluetoothNotification(context)
 
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for Display Read label to notify user
@@ -77,7 +77,7 @@ class InitializeState {
                  */
                 trackerSharePreference.currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value
                 // Push system notification for notify user
-                showSilentNotificationLocation(context)
+                showLocationNotification(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for Display Read label to notify user
                     val intent = Intent(context, DiscoverDeviceActivity::class.java)
@@ -120,7 +120,7 @@ class InitializeState {
                 - change to 2003
                 */
                 trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value
-                showSilentNotificationBLE(context)
+                showBluetoothNotification(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for display card registered
                     val intent = Intent(context, MainActivity::class.java)
@@ -129,6 +129,7 @@ class InitializeState {
                 }else{
                     // App in background
                 }
+
                 return
             }
             // if Bluetooth is turn off
@@ -140,7 +141,7 @@ class InitializeState {
                   - change to 2001
                   */
                 trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
-                showSilentNotificationBLE(context)
+                showBluetoothNotification(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for display card registered
                     val intent = Intent(context, MainActivity::class.java)
@@ -158,7 +159,7 @@ class InitializeState {
                    - Display Registered Device
                    - change to 2002 */
                 trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
-                showSilentNotificationLocation(context)
+                showLocationNotification(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for display card registered
                     val intent = Intent(context, MainActivity::class.java)

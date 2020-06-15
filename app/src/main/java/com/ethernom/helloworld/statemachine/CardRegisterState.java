@@ -32,7 +32,7 @@ public class CardRegisterState {
     private String major_minor;
     private String new_PIN;
 
-    public enum InputEvent{
+    public enum InputEvent {
         GET_CHALLENGE,
         AUTHENTICATION_WITH_CARD,
         GET_SESSION_PIN,
@@ -47,27 +47,27 @@ public class CardRegisterState {
     }
 
     // every Input event & Action function inside
-    public void cardRegisterDispatcher(InputEvent event, Boolean result){
-        switch (event){
-            case GET_CHALLENGE:{
-                if (result){
+    public void cardRegisterDispatcher(InputEvent event, Boolean result) {
+        switch (event) {
+            case GET_CHALLENGE: {
+                if (result) {
                     saveToLog("GET_CHALLENGE", true);
                     // Get Challenge Success
                     generate_auth_rsp(challenge, privateKey);
-                }else{
+                } else {
                     saveToLog("GET_CHALLENGE", false);
                     // Get Challenge Failed
                     tryAgainDialog();
                 }
                 break;
             }
-            case AUTHENTICATION_WITH_CARD:{
-                if (result){
+            case AUTHENTICATION_WITH_CARD: {
+                if (result) {
                     saveToLog("AUTHENTICATION_WITH_CARD", true);
                     // Authenticate Success
                     H2CAppLaunch(android.os.Build.MODEL, (byte) 0x01);
                     //setDescriptionOnLoading("Loading: Launching...");
-                }else{
+                } else {
                     saveToLog("AUTHENTICATION_WITH_CARD", false);
                     // Authenticate Failed
                     RequestAppSuspend((byte) 0x01);
@@ -77,43 +77,48 @@ public class CardRegisterState {
                 }
                 break;
             }
-            case APP_LAUNCH:{
-                if (result){
+            case APP_LAUNCH: {
+                if (result) {
                     saveToLog("APP_LAUNCH", true);
                     // Launch Success
                     H2CRequestSessionPIN();
-                }else{
+                } else {
                     saveToLog("APP_LAUNCH", false);
                     // Launch Success
                     tryAgainDialog();
                 }
                 break;
             }
-            case GET_SESSION_PIN:{
-                if (result){
+            case GET_SESSION_PIN: {
+                if (result) {
                     saveToLog("GET_SESSION_PIN", true);
                     // SESSION Success
                     stateMachineCallback.getPinSucceeded(new_PIN);
-                }else{
+                } else {
                     saveToLog("GET_SESSION_PIN", false);
                     // SESSION Failed
                     tryAgainDialog();
                 }
                 break;
             }
-            case GET_MAJOR_MINOR:{
-                if (result){
+            case GET_MAJOR_MINOR: {
+                if (result) {
                     saveToLog("GET_MAJOR_MINOR", true);
                     // MAJOR_MINOR Success
                     stateMachineCallback.onGetMajorMinorSucceeded(major_minor);
                     DisconnectCard();
-                }else{
+                } else {
                     saveToLog("GET_MAJOR_MINOR", false);
                     // MAJOR_MINOR Failed
                     tryAgainDialog();
 
                 }
                 break;
+            }
+            default: {
+                ((DiscoverDeviceActivity) context).runOnUiThread(() ->
+                        stateMachineCallback.unknownEvent()
+                );
             }
 
         }
@@ -141,10 +146,12 @@ public class CardRegisterState {
             }
         });
     }
+
     private void InitWriteToCard(byte[] data, FirmwareInfoState.BufferCallback bufferCallback) {
         mBufferCallBack = bufferCallback;
         WriteToCard(data);
     }
+
     // call suspend app
     public void RequestAppSuspend(byte appID) {
         byte[] payload = new byte[5];
@@ -159,6 +166,7 @@ public class CardRegisterState {
             Log.i(TAG, "SUCCESS SUSPEND" + Conversion.bytesToHex(buffer));
         });
     }
+
     // call initial ble tracker to get major and minor
     public void H2CRequestBLETrackerInit() {
         _host_name = android.os.Build.MODEL;
@@ -201,6 +209,7 @@ public class CardRegisterState {
             }
         });
     }
+
     // call launch ble tracker
     public void H2CAppLaunch(String host_name, byte appID) {
         _host_name = host_name;
@@ -268,26 +277,29 @@ public class CardRegisterState {
             }
         });
     }
-    private void saveToLog(String value, Boolean result){
-        if (result){
-            MyApplication.saveLogWithCurrentDate(value+" succeeded");
-        }else{
-            MyApplication.saveLogWithCurrentDate(value+" failed");
+
+    private void saveToLog(String value, Boolean result) {
+        if (result) {
+            MyApplication.saveLogWithCurrentDate(value + " succeeded");
+        } else {
+            MyApplication.saveLogWithCurrentDate(value + " failed");
         }
     }
 
     private void tryAgainDialog() {
         // call suspend when app in ble tracker screen
-        RequestAppSuspend((byte) 0x01);
+        if (Utils.isBluetoothEnable())
+            RequestAppSuspend((byte) 0x01);
         // call disconnect from host & card
         DisconnectCard();
         // Back to discover screen and intent to initial state
-        ((DiscoverDeviceActivity) context ).runOnUiThread(() ->
+        ((DiscoverDeviceActivity) context).runOnUiThread(() ->
                 stateMachineCallback.showMessageErrorState("Make sure your device is powered on and authenticated. Please try again.")
         );
         // Next state
 
     }
+
     /* FOor disconnect card */
     public void DisconnectCard() {
         if (gatt != null) {
@@ -348,6 +360,7 @@ public class CardRegisterState {
 
         }
     }
+
     private boolean doWrite(byte[] data) {
         ethCharacteristic.setValue(data);
         if (!gatt.writeCharacteristic(ethCharacteristic)) {
@@ -358,6 +371,7 @@ public class CardRegisterState {
 
         return true;
     }
+
     private void setDescriptionOnLoading(String message) {
         ((DiscoverDeviceActivity) context).runOnUiThread(() ->
                 mLoadingDialog.setLoadingDescription(message)

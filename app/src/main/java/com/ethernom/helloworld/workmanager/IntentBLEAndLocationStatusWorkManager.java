@@ -30,8 +30,10 @@ public class IntentBLEAndLocationStatusWorkManager extends Worker {
     public Result doWork() {
 
         Log.d("BLEAndLCWorkManager", "doWork");
+
         MyApplication.appendLog(MyApplication.getCurrentDate()+" : IntentBLEAndLocationStatusWorkManager (Worker thread) in doWork  "  +"\n\n");
         // Every initialize state we need to Launch BLE & Location Status Intent for tracker state of Bluetooth & Location state
+
         // Register for broadcasts on Bluetooth state change
         IntentFilter btIntentFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         this.mContext.registerReceiver(new BluetoothStateChangeReceiver(), btIntentFilter);

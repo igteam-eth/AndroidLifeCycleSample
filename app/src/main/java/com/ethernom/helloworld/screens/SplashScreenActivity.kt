@@ -40,17 +40,15 @@ class SplashScreenActivity : BaseActivity() {
         if (TrackerSharePreference.getConstant(this).isRanging) {
             BeaconReceiver.stopSound()
         }
-
-        val versionCode = BuildConfig.VERSION_CODE
         val versionName = BuildConfig.VERSION_NAME
-        txt_version.text = "Version: $versionName.$versionCode"
+        txt_version.text = "Version: $versionName"
 
         //initialize bluetooth and location
         Utils.initBLE_Location(this)
 
         MyApplication.saveCurrentStateToLog(this)
+        Utils.removeNotificationByID(this, Utils.CHANNEL_RANG)
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {

@@ -1,11 +1,8 @@
 package com.ethernom.helloworld.receiver
 
-import android.bluetooth.BluetoothAdapter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import android.location.LocationManager
 import android.os.Build
 import android.util.Log
 
@@ -13,8 +10,8 @@ import androidx.annotation.RequiresApi
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.ethernom.helloworld.application.MyApplication
-import com.ethernom.helloworld.application.MyApplication.showSilentNotificationBLE
-import com.ethernom.helloworld.application.MyApplication.showSilentNotificationLocation
+import com.ethernom.helloworld.application.MyApplication.showBluetoothNotification
+import com.ethernom.helloworld.application.MyApplication.showLocationNotification
 
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.statemachine.WaitingForBeaconState
@@ -44,17 +41,17 @@ class StartupReceiver : BroadcastReceiver() {
                     if (!trackerSharePreference.isBLEStatus && !trackerSharePreference.isLocationStatus) {
                         //Notify user to turn on both BLE and Location
                         trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value
-                        showSilentNotificationBLE(context)
+                        showBluetoothNotification(context)
                         return
                     }else if (!trackerSharePreference.isBLEStatus) {
                         //Notify user to enable BLE
                         trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
-                        showSilentNotificationBLE(context)
+                        showBluetoothNotification(context)
                         return
                     }else if (!trackerSharePreference.isLocationStatus) {
                         //Notify user to enable location
                         trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
-                        showSilentNotificationLocation(context)
+                        showLocationNotification(context)
                         return
                     }else{
 
