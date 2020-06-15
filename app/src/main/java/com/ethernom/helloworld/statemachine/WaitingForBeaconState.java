@@ -60,21 +60,6 @@ public class WaitingForBeaconState {
                     .build();
             WorkManager.getInstance(context).enqueue(oneTimeRequest);
         }
-
-        MyApplication.saveLogWithCurrentDate("Host brand " + Build.BRAND);
-
-        // Host model is SAMSUNG  start alarm manager
-        if (Build.BRAND.equalsIgnoreCase("samsung")) {
-
-            MyApplication.saveLogWithCurrentDate("Alarm Enabled");
-
-            // check if not Already Create Alarm
-            if (!TrackerSharePreference.getConstant(context).isAlreadyCreateAlarm()) {
-                TrackerSharePreference.getConstant(context).setAlreadyCreateAlarm(true);
-                Intent startIntent = new Intent(context, AlarmReceiver.class);
-                context.sendBroadcast(startIntent);
-            }
-        }
     }
 
 

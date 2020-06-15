@@ -14,14 +14,15 @@ import com.ethernom.helloworld.R
 import com.ethernom.helloworld.adapter.RegisteredDeviceAdapter
 import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.TrackerSharePreference
+import com.ethernom.helloworld.application.TrackerSharePreference.getConstant
 import com.ethernom.helloworld.dialog.DeleteDeviceBottomDialog
 import com.ethernom.helloworld.dialog.ItemDeleteCallback
 import com.ethernom.helloworld.model.BleClient
-import com.ethernom.helloworld.util.Utils
-import kotlinx.android.synthetic.main.activity_main.*
-import com.ethernom.helloworld.application.TrackerSharePreference.getConstant
+import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BeaconReceiver
 import com.ethernom.helloworld.statemachine.WaitingForBeaconState
+import com.ethernom.helloworld.util.Utils
+import kotlinx.android.synthetic.main.activity_main.*
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, ItemDeleteCallback {
@@ -75,6 +76,19 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
                    For WaitingForBeaconState we study with input event , state variable and action function for intent to next state
                    */
                     WaitingForBeaconState().launchBLEScan(this)
+                    MyApplication.saveLogWithCurrentDate("Host brand " + Build.BRAND)
+                    // Host model is SAMSUNG  start alarm manager
+                    if (Build.BRAND.equals("samsung", ignoreCase = true)) {
+                        MyApplication.saveLogWithCurrentDate("Alarm Enabled")
+                        // check if not Already Create Alarm
+                        if (!getConstant(this).isAlreadyCreateAlarm) {
+                            MyApplication.saveLogWithCurrentDate("Alarm Is Already Create")
+                            getConstant(this).isAlreadyCreateAlarm = true
+                            val startIntent = Intent(this
+                                , AlarmReceiver::class.java)
+                            this.sendBroadcast(startIntent)
+                        }
+                    }
                 }
 
             }
