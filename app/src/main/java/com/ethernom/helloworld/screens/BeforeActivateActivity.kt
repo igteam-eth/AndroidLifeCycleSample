@@ -6,27 +6,28 @@ import android.bluetooth.BluetoothAdapter
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
+import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.statemachine.InitializeState
 import com.ethernom.helloworld.util.Utils
-import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.activity_before_activate.*
 
 @Suppress("DEPRECATION")
-class BeforeActivateActivity : BaseActivity() {
+class BeforeActivateActivity : ComponentActivity() {
     @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     var btStatus = false
     var lcStatus = false
+    var TAG = BeforeActivateActivity::javaClass.name
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -47,7 +48,6 @@ class BeforeActivateActivity : BaseActivity() {
             btStatus = true
             checkToChangeLayout()
         }
-        toolbar_before_registered.visibility = View.GONE
 
         // Enable location click event
 
@@ -78,7 +78,7 @@ class BeforeActivateActivity : BaseActivity() {
     }
 
     // check Location & Bluetooth to update ui
-    fun checkToChangeLayout() {
+    private fun checkToChangeLayout() {
         Log.d(TAG, "Utils.isBluetoothEnable() ${Utils.isBluetoothEnable()}")
         Log.d(TAG, "Utils.isLocationEnabled(this) ${Utils.isLocationEnabled(this)}")
 
@@ -121,13 +121,13 @@ class BeforeActivateActivity : BaseActivity() {
 
     }
     // Force Bluetooth turn on
-    fun turnOnBluetooth(): Boolean {
+    private fun turnOnBluetooth(): Boolean {
         val bluetoothAdapter = BluetoothAdapter
             .getDefaultAdapter()
         return bluetoothAdapter?.enable() ?: false
     }
     // Request location permission
-    fun requestLocationPermission(): Boolean {
+    private fun requestLocationPermission(): Boolean {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check
@@ -168,9 +168,9 @@ class BeforeActivateActivity : BaseActivity() {
     }
 
     // Check App location permission
-    fun checkLocationPermission(): Boolean {
+    private fun checkLocationPermission(): Boolean {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check
             Log.d(MainActivity.TAG, "Checking Bluetooth permissions")
             if (ContextCompat.checkSelfPermission(
@@ -178,11 +178,11 @@ class BeforeActivateActivity : BaseActivity() {
                     Manifest.permission.ACCESS_COARSE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                return false
+                false
             } else {
                 Log.d(MainActivity.TAG, "  Permission is granted")
-                return true
+                true
             }
-        } else return false
+        } else false
     }
 }

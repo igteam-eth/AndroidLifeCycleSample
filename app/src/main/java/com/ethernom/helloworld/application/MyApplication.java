@@ -14,9 +14,10 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
+import androidx.work.Configuration;
 
 import com.ethernom.helloworld.R;
 import com.ethernom.helloworld.receiver.BluetoothStateChangeReceiver;
@@ -24,6 +25,7 @@ import com.ethernom.helloworld.receiver.LocationStateChangeReceiver;
 import com.ethernom.helloworld.receiver.NotificationDismissedReceiver;
 import com.ethernom.helloworld.screens.BaseActivity;
 import com.ethernom.helloworld.screens.MainActivity;
+import com.ethernom.helloworld.screens.SplashScreenActivity;
 import com.ethernom.helloworld.util.ForegroundCheckTask;
 import com.ethernom.helloworld.util.StateMachine;
 import com.ethernom.helloworld.util.Utils;
@@ -38,7 +40,7 @@ import java.util.concurrent.ExecutionException;
 
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 
-public class MyApplication extends Application {
+public class MyApplication extends Application implements  Configuration.Provider {
 
 
     @Override
@@ -133,7 +135,7 @@ public class MyApplication extends Application {
         builder.setContentText("You rang your phone from your device");
         builder.setAutoCancel(true);
         builder.setDeleteIntent(createOnDismissedIntent(context));
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.putExtra("NOTIFICATION", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -160,7 +162,7 @@ public class MyApplication extends Application {
         builder.setContentText("Turn on Location services for the Ethernom Tracker app to keep track of your items.");
         builder.setAutoCancel(true);
         builder.setDeleteIntent(createOnDismissedIntent(context));
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.putExtra("NOTIFICATION", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -186,7 +188,7 @@ public class MyApplication extends Application {
         builder.setContentText("Turn on Bluetooth services for the Ethernom Tracker app to keep track of your items.");
         builder.setAutoCancel(true);
         builder.setDeleteIntent(createOnDismissedIntent(context));
-        Intent intent = new Intent(context, MainActivity.class);
+        Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.putExtra("NOTIFICATION", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -203,4 +205,11 @@ public class MyApplication extends Application {
                 0, intent, 0);
     }
 
+    @NonNull
+    @Override
+    public Configuration getWorkManagerConfiguration() {
+        return new Configuration.Builder()
+                .setMinimumLoggingLevel(android.util.Log.INFO)
+                .build();
+    }
 }

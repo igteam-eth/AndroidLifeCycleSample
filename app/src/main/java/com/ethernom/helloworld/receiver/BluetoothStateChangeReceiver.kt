@@ -95,7 +95,7 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
                             if (TrackerSharePreference.getConstant(context).isLocationStatus){
                                 //Launch BLE Scan Intent
                                 TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON.value
-                                WaitingForBeaconState(context).launchBLEScan()
+                                WaitingForBeaconState().launchBLEScan(context)
                             }
                         }
 

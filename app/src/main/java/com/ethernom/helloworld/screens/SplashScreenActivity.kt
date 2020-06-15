@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat
 import com.ethernom.helloworld.BuildConfig
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.application.MyApplication
+import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.receiver.BeaconReceiver
 import com.ethernom.helloworld.services.StateService
@@ -34,7 +35,7 @@ class SplashScreenActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
         setContentView(R.layout.activity_splash_screen)
-        startService( Intent(this, StateService::class.java))
+        startService(Intent(this, StateService::class.java))
 
         if (TrackerSharePreference.getConstant(this).isRanging) {
             BeaconReceiver.stopSound()
@@ -55,7 +56,7 @@ class SplashScreenActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         // Check for display before Activation screen easy user to allow app permission required
-        if(TrackerSharePreference.getConstant(this).isBeforeActivate) {
+        if(SettingSharePreference.getConstant(this).isBeforeActivate) {
             if (
             // Request App Storage Permission for allow app to write logcat to external storage file.
                 requestWriteExternalStoragePermission()
@@ -69,11 +70,13 @@ class SplashScreenActivity : BaseActivity() {
                     // In Initial State class we study with input event , state variable and action function for intent to next state
                     InitializeState().goToInitialState(this)
 
-                }, 2000)
+            }, 2000)
+
+
             }
         } else {
-            if(requestWriteExternalStoragePermission()) {
-                TrackerSharePreference.getConstant(this).isBeforeActivate = true
+            if (requestWriteExternalStoragePermission()) {
+                SettingSharePreference.getConstant(this).isBeforeActivate = true
                 startActivity(Intent(this, BeforeActivateActivity::class.java))
                 finish()
             }
@@ -94,6 +97,7 @@ class SplashScreenActivity : BaseActivity() {
             ) {
 
                 if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+
                     requestPermissions(
                         arrayOf(
                             Manifest.permission.ACCESS_COARSE_LOCATION,

@@ -54,7 +54,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         setContentView(R.layout.activity_discover_device)
 
         checkLocationPermission()
-        mBleScan = BLEScan(this, this)
         loadingDialog = LoadingDialog(this)
         updateCardDialog = UpdateCardDialog(this, this)
         alertDialogBuilder = AlertDialog.Builder(this)
@@ -272,13 +271,13 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         super.onResume()
         if (!isVerifyPinType) {
             if (TrackerSharePreference.getConstant(this).isBLEStatus) {
+                mBleScan = BLEScan(this, this)
                 mBleScan!!.startScanning()
                 TrackerSharePreference.getConstant(this).currentState =
                     StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
 
             }
         }
-
     }
 
     override fun readyToDiscoverDevice() {
@@ -351,7 +350,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
 
     }
 
-
     override fun onDisconnectButtonClicked() {
         firmwareInfoState!!.DisconnectCard()
         // Next state
@@ -407,7 +405,12 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     override fun onPause() {
         super.onPause()
         if (TrackerSharePreference.getConstant(this).isBLEStatus) {
-            mBleScan!!.stopScanning()
+            try {
+                mBleScan!!.stopScanning()
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+
         }
 
         hideProgressBar()

@@ -24,15 +24,10 @@ import java.util.concurrent.TimeUnit;
 import static android.content.ContentValues.TAG;
 
 public class WaitingForBeaconState {
-    private Context context;
-
-    public WaitingForBeaconState(Context context) {
-        this.context = context;
-    }
 
     // Waiting for beacon
     @SuppressLint("SimpleDateFormat")
-    public void launchBLEScan() throws ParseException {
+    public void launchBLEScan(Context context) throws ParseException {
         // Check if not yet  Already Create Worker Thread to start scan
         if (!TrackerSharePreference.getConstant(context).isAlreadyCreateWorkerThread()) {
             byte numDelay = 0;
@@ -54,6 +49,8 @@ public class WaitingForBeaconState {
             }
 
             Log.d(TAG, "Delay Seconds:"+ numDelay);
+            MyApplication.saveLogWithCurrentDate("Delay For Enqueue WorkManager : "+ numDelay);
+            MyApplication.saveLogWithCurrentDate("Enqueue WorkManager");
 
             // Create work manager to call start scan for detect beacon inside
             // OneTimeWorkRequest
@@ -64,11 +61,12 @@ public class WaitingForBeaconState {
             WorkManager.getInstance(context).enqueue(oneTimeRequest);
         }
 
-        MyApplication.appendLog(MyApplication.getCurrentDate() +" : Host brand " + Build.BRAND + "\n");
+        MyApplication.saveLogWithCurrentDate("Host brand " + Build.BRAND);
 
         // Host model is SAMSUNG  start alarm manager
         if (Build.BRAND.equalsIgnoreCase("samsung")) {
-            MyApplication.appendLog(MyApplication.getCurrentDate() +" : Alarm Enabled \n");
+
+            MyApplication.saveLogWithCurrentDate("Alarm Enabled");
 
             // check if not Already Create Alarm
             if (!TrackerSharePreference.getConstant(context).isAlreadyCreateAlarm()) {

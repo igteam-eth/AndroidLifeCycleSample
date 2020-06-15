@@ -55,6 +55,7 @@
                 <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
+
         <receiver
             android:name=".receiver.BeaconReceiver"
             android:enabled="true"
@@ -75,9 +76,13 @@
             android:enabled="true"
             android:exported="true" />
 
+
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
-            android:authorities="${applicationId}.workmanager-init" />
+            android:authorities="${applicationId}.workmanager-init"
+            android:exported="false"
+            android:enabled="false"/>
+
     </application>
 
 </manifest>

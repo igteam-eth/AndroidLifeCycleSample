@@ -92,6 +92,7 @@ abstract class BaseActivity : CoreActivity() {
             view_turn_on_bluetooth.visibility = View.GONE
         } else {
             view_turn_on_bluetooth.visibility = View.VISIBLE
+            view_turn_on_location.visibility = View.GONE
             return
         }
         if (Utils.isLocationEnabled(this)) {

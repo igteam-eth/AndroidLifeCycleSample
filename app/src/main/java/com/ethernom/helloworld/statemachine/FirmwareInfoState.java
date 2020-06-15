@@ -590,9 +590,12 @@ public class FirmwareInfoState {
     }
 
     private void tryAgainDialog() {
+
+        Log.d("tryAgainDialog", TrackerSharePreference.getConstant(context).getCurrentState());
         // call disconnect from host & card
         DisconnectCard();
         // Back to discover screen and intent to initial state
+        if (!TrackerSharePreference.getConstant(context).getCurrentState().equals(StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.getValue()))
         ((DiscoverDeviceActivity) context).runOnUiThread(() ->
                 stateMachineCallback.showMessageErrorState("Make sure your device is powered on and authenticated. Please try again.")
         );

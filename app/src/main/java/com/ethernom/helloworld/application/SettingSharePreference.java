@@ -12,6 +12,7 @@ public class SettingSharePreference {
 
     public enum SharedPreKeyType {
         PIN_LENGTH,
+        BEFORE_ACTIVATE,
     }
 
     private SettingSharePreference(Context context) {
@@ -38,6 +39,13 @@ public class SettingSharePreference {
 
     public int getPinLength() {
         return sharedPrefs.getInt(SharedPreKeyType.PIN_LENGTH.toString(), 2);
+    }
+    public void setBeforeActivate(boolean isBefore) {
+        sharedPrefs.edit().putBoolean(SharedPreKeyType.BEFORE_ACTIVATE.toString(), isBefore).apply();
+    }
+
+    public boolean isBeforeActivate() {
+        return sharedPrefs.getBoolean(SharedPreKeyType.BEFORE_ACTIVATE.toString(), false);
     }
 
 }

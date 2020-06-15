@@ -24,7 +24,6 @@ public class TrackerSharePreference {
         BEACON_FOUND_TIMESTAMP,
         IS_ALREADY_CREATE_WORKER,
         ALARM_ONE_SHOT,
-        BEFORE_ACTIVATE,
     }
 
     private TrackerSharePreference(Context context) {
@@ -116,13 +115,7 @@ public class TrackerSharePreference {
     public boolean isAlreadyCreateAlarm() {
         return sharedPrefs.getBoolean(SharedPreKeyType.ALARM_ONE_SHOT.toString(), false);
     }
-    public void setBeforeActivate(boolean isBefore) {
-        sharedPrefs.edit().putBoolean(SharedPreKeyType.BEFORE_ACTIVATE.toString(), isBefore).apply();
-    }
 
-    public boolean isBeforeActivate() {
-        return sharedPrefs.getBoolean(SharedPreKeyType.BEFORE_ACTIVATE.toString(), false);
-    }
 
 
 }

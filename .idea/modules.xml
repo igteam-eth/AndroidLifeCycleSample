@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/EthernomHelloWorld.iml" filepath="$PROJECT_DIR$/EthernomHelloWorld.iml" group="EthernomHelloWorld" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="EthernomHelloWorld/app" />
+      <module fileurl="file://$PROJECT_DIR$/EthernomHelloWorld.iml" filepath="$PROJECT_DIR$/EthernomHelloWorld.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>

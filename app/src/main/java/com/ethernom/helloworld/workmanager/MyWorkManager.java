@@ -32,8 +32,7 @@ public class MyWorkManager extends Worker {
     public Result doWork() {
 
         Log.d("APP_MyWorkManager", "doWork");
-        MyApplication.appendLog(MyApplication.getCurrentDate()+" : MyWorkManager(Worker thread) in doWork  "  +"\n\n");
-
+        MyApplication.saveLogWithCurrentDate("MyWorkManager(Worker thread) in doWork");
         BeaconReceiver.startScan(mContext);
 
         return Result.success();
