@@ -75,7 +75,6 @@
 
         <receiver
             android:name=".receiver.BLEAndLocationRegisterManager" />
-
         <service android:name=".services.BLEAndLocationRegistrationService"/>
 
 

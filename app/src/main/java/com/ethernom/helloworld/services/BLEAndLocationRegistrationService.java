@@ -7,18 +7,15 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.ethernom.helloworld.application.SettingSharePreference;
 import com.ethernom.helloworld.receiver.BLEAndLocationRegisterManager;
+
+import static com.ethernom.helloworld.application.MyApplication.mBluetoothStateChangeReceiver;
+import static com.ethernom.helloworld.application.MyApplication.mLocationStateChangeReceiver;
 
 public class BLEAndLocationRegistrationService extends Service {
 
     private String TAG = BLEAndLocationRegistrationService.class.getSimpleName();
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand");
-
-        return super.onStartCommand(intent, flags, startId);
-    }
 
     @Nullable
     @Override
@@ -27,12 +24,21 @@ public class BLEAndLocationRegistrationService extends Service {
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onTaskRemoved(Intent rootIntent) {
+        super.onTaskRemoved(rootIntent);
 
-        Log.d(TAG, "onDestroy");
+        Log.d(TAG, "onTaskRemoved");
 
-        //getApplicationContext().sendBroadcast(new Intent(getApplicationContext(), BLEAndLocationRegisterManager.class));
-
+        if (!SettingSharePreference.getConstant(getApplicationContext()).IsAlreadyRemove()) {
+            getApplicationContext().unregisterReceiver(mBluetoothStateChangeReceiver);
+            getApplicationContext().unregisterReceiver(mLocationStateChangeReceiver);
+            getApplicationContext().sendBroadcast(
+                    new Intent(
+                            getApplicationContext(),
+                            BLEAndLocationRegisterManager.class
+                    ));
+            SettingSharePreference.getConstant(getApplicationContext())
+                    .setIsAlreadyRemove(true);
+        }
     }
 }

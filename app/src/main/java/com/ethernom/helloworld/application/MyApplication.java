@@ -9,6 +9,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Environment;
@@ -18,6 +19,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.work.Configuration;
 
 import com.ethernom.helloworld.R;
@@ -40,27 +45,35 @@ import java.util.concurrent.ExecutionException;
 
 import static android.app.NotificationManager.IMPORTANCE_HIGH;
 
-public class MyApplication extends Application implements Configuration.Provider {
+public class MyApplication extends Application implements Configuration.Provider, LifecycleObserver {
+
+    public static BluetoothStateChangeReceiver mBluetoothStateChangeReceiver;
+    public static LocationStateChangeReceiver mLocationStateChangeReceiver;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         Log.d("MyApplication", "onCreate() called");
 
         // Every startup app change current state to Initialize state it also handle app terminate state too
         TrackerSharePreference.getConstant(this).setCurrentState(StateMachine.INITIAL.getValue());
 
+
         // Register for broadcasts on Bluetooth state change
+        mBluetoothStateChangeReceiver = new BluetoothStateChangeReceiver();
         IntentFilter btIntentFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-        registerReceiver(new BluetoothStateChangeReceiver(), btIntentFilter);
+        registerReceiver(mBluetoothStateChangeReceiver , btIntentFilter);
 
         // Register for broadcasts on Location state change
+        mLocationStateChangeReceiver = new LocationStateChangeReceiver();
         IntentFilter filterLocation = new IntentFilter(LocationManager.MODE_CHANGED_ACTION);
-        registerReceiver(new LocationStateChangeReceiver(), filterLocation);
+        registerReceiver( mLocationStateChangeReceiver, filterLocation);
 
         Log.d("MyApplication", Utils.isLocationEnabled(this)+"");
-
     }
+
+
 
     @Override
     public void onTerminate() {

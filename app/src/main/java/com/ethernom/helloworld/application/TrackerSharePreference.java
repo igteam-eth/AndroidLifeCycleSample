@@ -116,6 +116,4 @@ public class TrackerSharePreference {
         return sharedPrefs.getBoolean(SharedPreKeyType.ALARM_ONE_SHOT.toString(), false);
     }
 
-
-
 }
