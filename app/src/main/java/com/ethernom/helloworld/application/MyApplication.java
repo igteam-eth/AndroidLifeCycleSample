@@ -19,8 +19,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.work.Configuration;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 
 import com.ethernom.helloworld.R;
 import com.ethernom.helloworld.receiver.BluetoothStateChangeReceiver;
@@ -31,7 +29,6 @@ import com.ethernom.helloworld.screens.SplashScreenActivity;
 import com.ethernom.helloworld.util.ForegroundCheckTask;
 import com.ethernom.helloworld.util.StateMachine;
 import com.ethernom.helloworld.util.Utils;
-import com.ethernom.helloworld.workmanager.IntentBLEAndLocationStatusWorkManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -53,7 +50,6 @@ public class MyApplication extends Application implements Configuration.Provider
         // Every startup app change current state to Initialize state it also handle app terminate state too
         TrackerSharePreference.getConstant(this).setCurrentState(StateMachine.INITIAL.getValue());
 
-
         // Register for broadcasts on Bluetooth state change
         IntentFilter btIntentFilter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
         registerReceiver(new BluetoothStateChangeReceiver(), btIntentFilter);
@@ -71,7 +67,6 @@ public class MyApplication extends Application implements Configuration.Provider
         super.onTerminate();
         Log.d("MyApplication", "onTerminate");
     }
-
 
     static public void appendLog(String logs) {
 

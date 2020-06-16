@@ -76,6 +76,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
                     // check location is turn on
                     Utils.isLocationEnabled(this)
                 ) {
+
                     /*
                    if both location & bluetooth are turn on : Launch BLE Scan Intent for detect Beacon signal
                    For WaitingForBeaconState we study with input event , state variable and action function for intent to next state

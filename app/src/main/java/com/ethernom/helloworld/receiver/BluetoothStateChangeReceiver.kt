@@ -33,7 +33,6 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
 
             val currentState = TrackerSharePreference.getConstant(context).currentState
 
-
             when (intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR)) {
 
                 BluetoothAdapter.STATE_OFF -> {

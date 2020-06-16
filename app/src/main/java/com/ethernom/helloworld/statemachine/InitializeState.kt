@@ -16,9 +16,14 @@ import com.ethernom.helloworld.util.StateMachine
 
 class InitializeState {
 
+    val TAG = "InitializeState"
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun goToInitialState(context: Context) {
         val trackerSharePreference = TrackerSharePreference.getConstant(context)
+        Log.d(TAG, "isCardRegister  ${trackerSharePreference.isCardRegistered}")
+        Log.d(TAG, "isBLE Status  ${trackerSharePreference.isBLEStatus}")
+        Log.d(TAG, "isLocationStatus  ${trackerSharePreference.isLocationStatus}")
         // if card not yet register
         if (!trackerSharePreference.isCardRegistered){
             // card registered & ble and location are off

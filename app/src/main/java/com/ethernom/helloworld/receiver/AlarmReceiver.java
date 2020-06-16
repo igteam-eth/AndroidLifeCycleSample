@@ -20,7 +20,6 @@ public class AlarmReceiver extends BroadcastReceiver  {
     private static long interval = 1;
     private static long count = 0;
 
-
     // here you need to receive some action from intent and depending on this action start service or set repeating alarm
 
     public void onReceive(Context context, Intent intent) {
