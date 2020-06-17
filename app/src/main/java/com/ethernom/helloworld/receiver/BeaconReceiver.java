@@ -244,6 +244,7 @@ public class BeaconReceiver extends BroadcastReceiver {
         }
     }
 
+
     public static void stopScan() {
 
         Log.d(TAG, "Stop scan");
@@ -293,6 +294,7 @@ public class BeaconReceiver extends BroadcastReceiver {
         originalVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         Log.d(TAG, "originalVolume: "+ originalVolume);
         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+        mAudioManager.setMode(AudioManager.STREAM_MUSIC);
         mAudioManager.setSpeakerphoneOn(true);
 
         if (mp != null) {

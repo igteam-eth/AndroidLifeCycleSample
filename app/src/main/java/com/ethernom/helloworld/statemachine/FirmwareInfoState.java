@@ -66,7 +66,7 @@ public class FirmwareInfoState {
     private void firmwareDispatcher(InputEvent event, Boolean result) {
         switch (event) {
             case ESTABLISH_CONNECTION: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("ESTABLISH_CONNECTION", true);
                     // Establish Connection Success
                     H2CGetFirmwareVn();
@@ -75,11 +75,10 @@ public class FirmwareInfoState {
                     // Establish Connection Failed
                     tryAgainDialog();
                 }
-
                 break;
             }
             case GET_FIRMWARE_VERSION: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("GET_FIRMWARE_VERSION", true);
                     // Get Firmware Version Success
                     H2CGetBLEVn();
@@ -92,7 +91,7 @@ public class FirmwareInfoState {
                 break;
             }
             case GET_BLE_VERSION: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("GET_BLE_VERSION", true);
                     // Get BLE Version Success
                     H2CGetBOOTVn();
@@ -104,7 +103,7 @@ public class FirmwareInfoState {
                 break;
             }
             case GET_BOOT_VERSION: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("GET_BOOT_VERSION", true);
                     // Get BOOT Version Success
                     H2CGetMENU();
@@ -116,7 +115,7 @@ public class FirmwareInfoState {
                 break;
             }
             case GET_MENU_FAC_NUMBER: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("GET_MENU_FAC_NUMBER", true);
                     // Get Manufacture Number Success
                     H2CGetSerialNum();
@@ -129,7 +128,7 @@ public class FirmwareInfoState {
             }
 
             case GET_SERIAL_NUMBER: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("GET_SERIAL_NUMBER", true);
                     // Get Serial Number Success
                     ArrayList<FwInfo> fwInfoList = new ArrayList<>();
@@ -275,7 +274,9 @@ public class FirmwareInfoState {
     /* FOor disconnect card */
     public void DisconnectCard(boolean isTryAgainDialog) {
         this.isTryAgainDialog = isTryAgainDialog;
+        Log.d(TAG, "DisconnectCard");
         if (gatt != null) {
+            gatt.disconnect();
             gatt.close();
         }
     }

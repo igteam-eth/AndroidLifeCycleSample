@@ -50,7 +50,7 @@ public class CardRegisterState {
     public void cardRegisterDispatcher(InputEvent event, Boolean result) {
         switch (event) {
             case GET_CHALLENGE: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("GET_CHALLENGE", true);
                     // Get Challenge Success
                     generate_auth_rsp(challenge, privateKey);
@@ -62,7 +62,7 @@ public class CardRegisterState {
                 break;
             }
             case AUTHENTICATION_WITH_CARD: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("AUTHENTICATION_WITH_CARD", true);
                     // Authenticate Success
                     H2CAppLaunch(android.os.Build.MODEL, (byte) 0x01);
@@ -78,7 +78,7 @@ public class CardRegisterState {
                 break;
             }
             case APP_LAUNCH: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("APP_LAUNCH", true);
                     // Launch Success
                     H2CRequestSessionPIN();
@@ -90,7 +90,7 @@ public class CardRegisterState {
                 break;
             }
             case GET_SESSION_PIN: {
-                if (result) {
+                if (result && !DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
                     saveToLog("GET_SESSION_PIN", true);
                     // SESSION Success
                     stateMachineCallback.getPinSucceeded(new_PIN);

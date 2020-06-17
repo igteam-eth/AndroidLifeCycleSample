@@ -7,8 +7,10 @@ import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.callback.StateMachineCallback;
 import com.ethernom.helloworld.presenter.privatekey.GetAppKeyCallback;
 import com.ethernom.helloworld.presenter.privatekey.GetPrivateKeyPresenter;
+import com.ethernom.helloworld.screens.DiscoverDeviceActivity;
 import com.ethernom.helloworld.util.StateMachine;
 
+import static com.ethernom.helloworld.util.CardConnection.stateMachineCallback;
 
 
 public class GetPrivateKeyState implements GetAppKeyCallback {
@@ -32,9 +34,16 @@ public class GetPrivateKeyState implements GetAppKeyCallback {
     public void getSucceeded(String appKey) {
         // Get Private Key Success
         // change to 1005
-        TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.CARD_REGISTER.getValue());
-        CardRegisterState cardRegisterState = new CardRegisterState(context);
-        cardRegisterState.H2CAuthentication((byte) 0x01, appKey);
+        if(!DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
+            TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.CARD_REGISTER.getValue());
+            CardRegisterState cardRegisterState = new CardRegisterState(context);
+            cardRegisterState.H2CAuthentication((byte) 0x01, appKey);
+        } else {
+            ((DiscoverDeviceActivity) context).runOnUiThread(() ->
+                    stateMachineCallback.showMessageErrorState("Make sure your device is powered on and authenticated. Please try again.")
+            );
+        }
+
     }
 
     @Override

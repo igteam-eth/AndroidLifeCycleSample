@@ -10,6 +10,7 @@ import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
 import com.ethernom.helloworld.screens.MainActivity
+import com.ethernom.helloworld.screens.SplashScreenActivity
 import com.ethernom.helloworld.util.StateMachine
 
 class InitializeState {
@@ -42,6 +43,7 @@ class InitializeState {
                     val intent = Intent(context, DiscoverDeviceActivity::class.java)
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
+                    SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
                 }else{
                     // App in background
                 }
@@ -65,6 +67,8 @@ class InitializeState {
                     val intent = Intent(context, DiscoverDeviceActivity::class.java)
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
+                    SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
+
                 }else{
                     // App in background
                 }
@@ -106,6 +110,7 @@ class InitializeState {
                     val intent = Intent(context, DiscoverDeviceActivity::class.java)
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
+                    SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
                 }else{
                     // App in background
                 }
@@ -129,6 +134,7 @@ class InitializeState {
                     val intent = Intent(context, MainActivity::class.java)
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
+                    SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
                 }else{
                     // App in background
                 }
@@ -150,6 +156,7 @@ class InitializeState {
                     val intent = Intent(context, MainActivity::class.java)
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
+                    SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
                 }else{
                     // App in background
                 }
@@ -168,6 +175,7 @@ class InitializeState {
                     val intent = Intent(context, MainActivity::class.java)
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
+                    SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
                 }else{
                     // App in background
                 }
@@ -187,6 +195,7 @@ class InitializeState {
                     val intent = Intent(context, MainActivity::class.java)
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
+                    SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
                 }else{
                     // App in background
                 }

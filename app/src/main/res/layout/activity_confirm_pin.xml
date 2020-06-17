@@ -59,38 +59,85 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pin_view_confirm"
+            app:layout_constraintTop_toBottomOf="@+id/parent_pin_view_confirm"
             app:layout_constraintVertical_bias="0.502" />
 
-        <com.chaos.view.PinView
-            android:id="@+id/pin_view_confirm"
-            style="@style/PinWidget.PinView"
+
+
+        <LinearLayout
+            android:id="@+id/parent_pin_view_confirm"
+            android:saveEnabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:cursorVisible="true"
-            android:focusable="true"
-            android:digits="0123456789"
-            android:inputType="phone"
-            android:itemBackground="@color/colorBlack"
-            android:padding="10dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:cursorColor="@color/colorAccent"
-            app:cursorWidth="2dp"
-            app:hideLineWhenFilled="true"
-            app:itemCount="4"
-            app:itemHeight="60dp"
-            app:itemRadius="4dp"
-            app:itemSpacing="0dp"
-            app:itemWidth="60dp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/bg_input_pin"
+            android:padding="15dp"
+            tools:ignore="MissingConstraints"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_authentication_message"
-            app:lineColor="@color/colorPrimary"
-            app:lineWidth="2dp"
-            app:viewType="rectangle" />
+            >
+
+
+            <com.chaos.view.PinView
+                android:id="@+id/pin_view_confirm"
+                style="@style/PinWidget.PinView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="25dp"
+                android:textColor="@android:color/white"
+                android:itemBackground="@drawable/bg_line"
+                app:cursorColor="@color/white_blur"
+                app:itemCount="6"
+                app:itemSpacing="3dp"
+                app:viewType="none" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/parent_pin_view_confirm"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/view_invisible"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/parent_pin_view_confirm"/>
+
+
+        <!--        <com.chaos.view.PinView-->
+        <!--            android:id="@+id/pin_view_confirm"-->
+        <!--            style="@style/PinWidget.PinView"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="32dp"-->
+        <!--            android:cursorVisible="true"-->
+        <!--            android:focusable="true"-->
+        <!--            android:digits="0123456789"-->
+        <!--            android:inputType="phone"-->
+        <!--            android:itemBackground="@color/colorBlack"-->
+        <!--            android:padding="10dp"-->
+        <!--            android:textColor="@color/colorWhite"-->
+        <!--            android:textSize="18sp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            app:cursorColor="@color/colorAccent"-->
+        <!--            app:cursorWidth="2dp"-->
+        <!--            app:hideLineWhenFilled="true"-->
+        <!--            app:itemCount="4"-->
+        <!--            app:itemHeight="60dp"-->
+        <!--            app:itemRadius="4dp"-->
+        <!--            app:itemSpacing="0dp"-->
+        <!--            app:itemWidth="60dp"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/text_authentication_message"-->
+        <!--            app:lineColor="@color/colorPrimary"-->
+        <!--            app:lineWidth="2dp"-->
+        <!--            app:viewType="rectangle" />-->
         <com.ethernom.helloworld.screens.KeyboardView
             android:id="@+id/keyboard"
             android:layout_width="match_parent"

@@ -2,6 +2,7 @@ package com.ethernom.helloworld.screens
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -9,13 +10,18 @@ import android.text.Html
 import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import com.chaos.view.PinView
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.util.StateMachine
 import kotlinx.android.synthetic.main.activity_confirm_pin.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_before_registered.*
 
 
@@ -35,6 +41,9 @@ class ConfirmPinActivity : BaseActivity() {
         val mKeyboardView = findViewById<KeyboardView>(R.id.keyboard)
 
         TrackerSharePreference.getConstant(this).currentState = StateMachine.VERIFY_PIN.value
+        view_invisible.setOnClickListener {
+            Log.d(TAG, " view_invisible on Click")
+        }
 
         val returnIntent = Intent()
         val pinToConfirm = intent.getStringExtra("pin")
@@ -43,10 +52,13 @@ class ConfirmPinActivity : BaseActivity() {
         pin_view_confirm.itemCount = digitCount
         pin_view_confirm.setAnimationEnable(true)
         pin_view_confirm.clearFocus()
-        pin_view_confirm.setRawInputType(InputType.TYPE_CLASS_TEXT)
+        pin_view_confirm.setRawInputType(InputType.TYPE_CLASS_NUMBER)
         pin_view_confirm.setTextIsSelectable(true)
         val ic = pin_view_confirm.onCreateInputConnection(EditorInfo())
         mKeyboardView.setInputConnection(ic)
+        parent_pin_view_confirm.setOnClickListener{
+            pin_view_confirm.onEditorAction(EditorInfo.IME_ACTION_DONE)
+        }
 
         pin_view_confirm.addTextChangedListener(object : TextWatcher{
             override fun afterTextChanged(s: Editable?) {
@@ -91,4 +103,5 @@ class ConfirmPinActivity : BaseActivity() {
 
     }
 }
+
 

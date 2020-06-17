@@ -16,4 +16,6 @@
     <color name="colorRed">#F44336</color>
     <color name="colorBlue">#317AF3</color>
     <color name="colorPermission">#5cb85c</color>
+    <color name="white_blur">#39FFFFFF</color>
+
 </resources>

@@ -204,8 +204,15 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        ActivityState = "onStart"
+
+    }
+
     override fun onStop() {
         super.onStop()
+        ActivityState = "onStop"
         if (TrackerSharePreference.getConstant(this).isBLEStatus) {
             if (!isVerifyPinType && gatt != null) {
                 firmwareInfoState!!.RequestAppSuspend(0x01.toByte())
@@ -289,8 +296,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         }catch (e: java.lang.Exception){
             e.printStackTrace()
         }
-
-
     }
 
     // Server Response Update Needed
@@ -413,6 +418,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
 
     companion object {
         const val MY_PERMISSIONS_REQUEST_LOCATION = 99
+        var ActivityState = ""
         const val TAG: String = "DiscoverDeviceActivity"
     }
 }

@@ -35,6 +35,7 @@ class SplashScreenActivity : BaseActivity() {
         )
 
         setContentView(R.layout.activity_splash_screen)
+        ONE_SHOT_FLAG++
 
         // Every startup app change current state to Initialize state it also handle app terminate state too
         TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
@@ -51,15 +52,18 @@ class SplashScreenActivity : BaseActivity() {
 
         MyApplication.saveCurrentStateToLog(this)
         Utils.removeNotificationByID(this, Utils.CHANNEL_RANG)
+        Log.d("SplashScreenActivity", "onCreate $ONE_SHOT_FLAG called")
 
-        checkWriteExternalStoragePermission{
+        checkWriteExternalStoragePermission {
             if (SettingSharePreference.getConstant(this).isBeforeActivate) {
                 checkLocationPermission {
                     // For User experience at SplashScreen Just alive 2 or 3 Seconds after that intent to screen follow by Initialize state of state table
                     Handler().postDelayed({
                         // go to initial state
                         // In Initial State class we study with input event , state variable and action function for intent to next state
-                        InitializeState().goToInitialState(this)
+                        if(ONE_SHOT_FLAG != TEMP_ONE_SHOT_FLAG) {
+                            InitializeState().goToInitialState(this)
+                        }
 
                     }, 2000)
                     // Check for display before Activation screen easy user to allow app permission required
@@ -71,13 +75,23 @@ class SplashScreenActivity : BaseActivity() {
                 finish()
             }
         }
-
     }
 
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        Log.d("SplashScreenActivity", "onBackPressed called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+    }
 
 
     companion object {
         var TAG = SplashScreenActivity::class.java.simpleName;
+        var ONE_SHOT_FLAG = 0
+        var TEMP_ONE_SHOT_FLAG = 0
     }
 
 }

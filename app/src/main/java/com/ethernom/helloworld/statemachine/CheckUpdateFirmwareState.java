@@ -12,6 +12,7 @@ import com.ethernom.helloworld.callback.StateMachineCallback;
 import com.ethernom.helloworld.model.FwInfo;
 import com.ethernom.helloworld.presenter.checkupdate.CheckUpdateCallback;
 import com.ethernom.helloworld.presenter.checkupdate.CheckUpdatePresenter;
+import com.ethernom.helloworld.screens.DiscoverDeviceActivity;
 import com.ethernom.helloworld.util.CardConnection;
 import com.ethernom.helloworld.util.StateMachine;
 import com.ethernom.helloworld.util.Utils;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import static androidx.core.content.ContextCompat.getMainExecutor;
 import static com.ethernom.helloworld.util.CardConnection.menuFac;
 import static com.ethernom.helloworld.util.CardConnection.serialNumber;
+import static com.ethernom.helloworld.util.CardConnection.stateMachineCallback;
 
 
 public class CheckUpdateFirmwareState implements CheckUpdateCallback {
@@ -56,9 +58,16 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
             // Server Response Update Not Needed
             // go to state 1004
             if (Utils.haveNetworkConnection(context)) {
-                TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.GET_PRIVATE_KEY.getValue());
-                new GetPrivateKeyState(context, stateMachineCallback).get(serialNumber, menuFac);
-                Log.d(TAG, "check update not require to update");
+                if(!DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
+                    TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.GET_PRIVATE_KEY.getValue());
+                    new GetPrivateKeyState(context, stateMachineCallback).get(serialNumber, menuFac);
+                    Log.d(TAG, "check update not require to update");
+                } else {
+                    ((DiscoverDeviceActivity) context).runOnUiThread(() ->
+                            stateMachineCallback.showMessageErrorState("Make sure your device is powered on and authenticated. Please try again.")
+                    );
+                }
+
             } else {
                 getMainExecutor(context).execute(() ->
                         new AlertDialog.Builder(context)
