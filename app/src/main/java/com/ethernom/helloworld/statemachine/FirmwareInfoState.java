@@ -33,7 +33,6 @@ public class FirmwareInfoState {
 
     private static String TAG = FirmwareInfoState.class.getSimpleName();
 
-    private boolean alreadyCallDisconnect;
     private Context context;
     private List<Byte> _temp_buffer = new ArrayList<>();
 
@@ -44,6 +43,7 @@ public class FirmwareInfoState {
     private String _card_ble_version;
     private String _card_boot_version;
     public CardInfo cardInfo;
+    private boolean isTryAgainDialog = true;
 
     enum InputEvent {
         ESTABLISH_CONNECTION,
@@ -75,6 +75,7 @@ public class FirmwareInfoState {
                     // Establish Connection Failed
                     tryAgainDialog();
                 }
+
                 break;
             }
             case GET_FIRMWARE_VERSION: {
@@ -183,7 +184,6 @@ public class FirmwareInfoState {
         }
     }
 
-
     /* connect to card */
     public void establishBLEConnection() {
         Log.i(TAG, "found specific ethernom card");
@@ -205,11 +205,9 @@ public class FirmwareInfoState {
                         Log.i(TAG, "gat disconnected");
 
                         gatt.close();
-                        if (alreadyCallDisconnect) {
+                        if (isTryAgainDialog) {
                             tryAgainDialog();
-                            setAlreadyCallDisconnect(false);
                             firmwareDispatcher(InputEvent.ESTABLISH_CONNECTION, false);
-
                         }
                     }
                 }
@@ -275,16 +273,13 @@ public class FirmwareInfoState {
             };
 
     /* FOor disconnect card */
-    public void DisconnectCard() {
+    public void DisconnectCard(boolean isTryAgainDialog) {
+        this.isTryAgainDialog = isTryAgainDialog;
         if (gatt != null) {
             gatt.close();
-            setAlreadyCallDisconnect(true);
         }
     }
 
-    public void setAlreadyCallDisconnect(boolean alreadyCallDisconnect) {
-        this.alreadyCallDisconnect = alreadyCallDisconnect;
-    }
 
     // Get Card Firmware version
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -564,6 +559,7 @@ public class FirmwareInfoState {
         ethCharacteristic.setValue(data);
         if (!gatt.writeCharacteristic(ethCharacteristic)) {
             Log.i(TAG, "Error on doWrite");
+            isTryAgainDialog = true;
             tryAgainDialog();
             return false;
         }
@@ -599,12 +595,13 @@ public class FirmwareInfoState {
 
         Log.d("tryAgainDialog", TrackerSharePreference.getConstant(context).getCurrentState());
         // call disconnect from host & card
-        DisconnectCard();
+        DisconnectCard(false);
         // Back to discover screen and intent to initial state
         if (!TrackerSharePreference.getConstant(context).getCurrentState().equals(StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.getValue()))
         ((DiscoverDeviceActivity) context).runOnUiThread(() ->
                 stateMachineCallback.showMessageErrorState("Make sure your device is powered on and authenticated. Please try again.")
         );
+        isTryAgainDialog = true;
 
     }
 

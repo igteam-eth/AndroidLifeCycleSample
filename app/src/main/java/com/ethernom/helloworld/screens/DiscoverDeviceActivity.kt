@@ -53,7 +53,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_discover_device)
 
-        checkLocationPermission()
         loadingDialog = LoadingDialog(this)
         updateCardDialog = UpdateCardDialog(this, this)
         alertDialogBuilder = AlertDialog.Builder(this)
@@ -142,37 +141,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         recyclerView!!.adapter = adapter
     }
 
-    private fun checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION
-                )
-            ) {
-                AlertDialog.Builder(this).setTitle(R.string.title_location_permission)
-                    .setMessage(R.string.text_location_permission).setPositiveButton(
-                        R.string.ok
-                    ) { _, _ ->
-                        ActivityCompat.requestPermissions(
-                            this,
-                            arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                            MY_PERMISSIONS_REQUEST_LOCATION
-                        )
-                    }
-                    .create().show()
-            } else {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                    MY_PERMISSIONS_REQUEST_LOCATION
-                )
-            }
-        }
-    }
+
 
     // Get Major and Minor Success
     override fun onGetMajorMinorSucceeded(data: String) {
@@ -225,7 +194,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
                 }
             } else {
                 firmwareInfoState!!.RequestAppSuspend(0x01.toByte())
-                firmwareInfoState!!.DisconnectCard()
+                firmwareInfoState!!.DisconnectCard(false)
                 //loadingDialog.setLoadingDescription("Loading: Canceling PIN authentication...")
                 hideProgressBar()
                 // Next state
@@ -240,7 +209,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         if (TrackerSharePreference.getConstant(this).isBLEStatus) {
             if (!isVerifyPinType && gatt != null) {
                 firmwareInfoState!!.RequestAppSuspend(0x01.toByte())
-                firmwareInfoState!!.DisconnectCard()
+                firmwareInfoState!!.DisconnectCard(false)
                 updateCardDialog.dismiss()
                 hideDialog()
                 mBleScan!!.stopScanning()
@@ -272,19 +241,25 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     //  StartScan General Advertising
     override fun onResume() {
         super.onResume()
-        if (!isVerifyPinType) {
-            if (TrackerSharePreference.getConstant(this).isBLEStatus) {
-                try {
-                    mBleScan = BLEScan(this, this)
-                    mBleScan!!.startScanning()
-                    TrackerSharePreference.getConstant(this).currentState =
-                        StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
-                }catch (e: java.lang.Exception){
-                    e.printStackTrace()
+        checkLocationPermission {
+                if (it){
+                    if ( !isVerifyPinType) {
+                        if (TrackerSharePreference.getConstant(this).isBLEStatus) {
+                            try {
+                                mBleScan = BLEScan(this, this)
+                                mBleScan!!.startScanning()
+                                TrackerSharePreference.getConstant(this).currentState =
+                                    StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
+                            }catch (e: java.lang.Exception){
+                                e.printStackTrace()
+                            }
+
+                        }
+                    }
                 }
 
-            }
         }
+
     }
 
     override fun readyToDiscoverDevice() {
@@ -298,19 +273,24 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     }
 
     private fun showDialog(message: String?) {
-
-        alertDialogBuilder.apply {
-            setTitle("Error")
-            setMessage(message)
-            setPositiveButton(
-                android.R.string.yes
-            ) { dialog, _ ->
-                // Next state
-                initState()
-                dialog.dismiss()
+        try {
+            alertDialogBuilder.apply {
+                setTitle("Error")
+                setMessage(message)
+                setPositiveButton(
+                    android.R.string.yes
+                ) { dialog, _ ->
+                    // Next state
+                    initState()
+                    dialog.dismiss()
+                }
+                show()
             }
-            show()
+        }catch (e: java.lang.Exception){
+            e.printStackTrace()
         }
+
+
     }
 
     // Server Response Update Needed
@@ -349,8 +329,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     }
 
     override fun onUpdateButtonClicked() {
-        firmwareInfoState!!.DisconnectCard()
-        firmwareInfoState!!.setAlreadyCallDisconnect(false)
+        firmwareInfoState!!.DisconnectCard(false)
         // Next state
         initState()
         goToDeviceManager()
@@ -358,7 +337,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     }
 
     override fun onDisconnectButtonClicked() {
-        firmwareInfoState!!.DisconnectCard()
+        firmwareInfoState!!.DisconnectCard(false)
         // Next state
         initState()
 

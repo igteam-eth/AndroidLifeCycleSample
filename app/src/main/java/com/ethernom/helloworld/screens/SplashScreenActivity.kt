@@ -51,89 +51,33 @@ class SplashScreenActivity : BaseActivity() {
 
         MyApplication.saveCurrentStateToLog(this)
         Utils.removeNotificationByID(this, Utils.CHANNEL_RANG)
-    }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onResume() {
-        super.onResume()
-        // Check for display before Activation screen easy user to allow app permission required
-        if(SettingSharePreference.getConstant(this).isBeforeActivate) {
-            if (
-            // Request App Storage Permission for allow app to write logcat to external storage file.
-                requestWriteExternalStoragePermission()
-                &&
-                // Request App Location Permission for allow app detect device nearby with both general advertising & beacon advertising
-                requestLocationPermission()
-            ) {
-                // For User experience at SplashScreen Just alive 2 or 3 Seconds after that intent to screen follow by Initialize state of state table
-                Handler().postDelayed({
-                    // go to initial state
-                    // In Initial State class we study with input event , state variable and action function for intent to next state
-                    InitializeState().goToInitialState(this)
+        checkWriteExternalStoragePermission{
+            if (SettingSharePreference.getConstant(this).isBeforeActivate) {
+                checkLocationPermission {
+                    // For User experience at SplashScreen Just alive 2 or 3 Seconds after that intent to screen follow by Initialize state of state table
+                    Handler().postDelayed({
+                        // go to initial state
+                        // In Initial State class we study with input event , state variable and action function for intent to next state
+                        InitializeState().goToInitialState(this)
 
-            }, 2000)
-            }
-        } else {
-            if (requestWriteExternalStoragePermission()) {
+                    }, 2000)
+                    // Check for display before Activation screen easy user to allow app permission required
+
+                }
+
+            } else {
                 startActivity(Intent(this, BeforeActivateActivity::class.java))
                 finish()
             }
         }
+
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun requestLocationPermission(): Boolean {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Android M Permission check
-            Log.d(MainActivity.TAG, "Checking Bluetooth permissions")
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
 
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-
-                    requestPermissions(
-                        arrayOf(
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                        ),
-                        MainActivity.PERMISSION_REQUEST_COARSE_LOCATION
-                    )
-                } else {
-                    requestPermissions(
-                        arrayOf(
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ),
-                        MainActivity.PERMISSION_REQUEST_COARSE_LOCATION
-                    )
-                }
-                return false
-            } else {
-                Log.d(MainActivity.TAG, "  Permission is granted")
-                return true
-            }
-        } else return false
-    }
-
-    private fun requestWriteExternalStoragePermission(): Boolean {
-        return if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0
-            )
-            false
-        } else {
-            true
-        }
+    companion object {
+        var TAG = SplashScreenActivity::class.java.simpleName;
     }
 
 }

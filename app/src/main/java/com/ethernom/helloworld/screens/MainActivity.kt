@@ -59,45 +59,46 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
     override fun onResume() {
         super.onResume()
 
+        if (getConstant(this).isCardRegistered) {
+            // Call display registered device to the list
+            displayRegisteredCard()
+        }
         if (
         // check if storage permission turn on
-        requestWriteExternalStoragePermission()
-            &&
-            // check if location permission turn on
-            requestLocationPermission()) {
-            // check if card registered
-            if (getConstant(this).isCardRegistered) {
-                // Call display registered device to the list
-                displayRegisteredCard()
-                if (
-                    // check bluetooth is turn on
-                    Utils.isBluetoothEnable()
-                    &&
-                    // check location is turn on
-                    Utils.isLocationEnabled(this)
-                ) {
+            requestWriteExternalStoragePermission()
 
-                    /*
-                   if both location & bluetooth are turn on : Launch BLE Scan Intent for detect Beacon signal
-                   For WaitingForBeaconState we study with input event , state variable and action function for intent to next state
-                   */
-                    WaitingForBeaconState().launchBLEScan(this)
-                    MyApplication.saveLogWithCurrentDate("Host brand " + Build.BRAND)
-                    // Host model is SAMSUNG  start alarm manager
-                    if (Build.BRAND.equals("samsung", ignoreCase = true)) {
-                        MyApplication.saveLogWithCurrentDate("Alarm Enabled")
-                        // check if not Already Create Alarm
-                        if (!getConstant(this).isAlreadyCreateAlarm) {
-                            MyApplication.saveLogWithCurrentDate("Alarm Is Already Create")
-                            getConstant(this).isAlreadyCreateAlarm = true
-                            val startIntent = Intent(this
-                                , AlarmReceiver::class.java)
-                            this.sendBroadcast(startIntent)
-                        }
+        ) {
+            if (
+            // check bluetooth is turn on
+                Utils.isBluetoothEnable()
+                &&
+                // check location is turn on
+                Utils.isLocationEnabled(this)
+            ) {
+
+                /*
+               if both location & bluetooth are turn on : Launch BLE Scan Intent for detect Beacon signal
+               For WaitingForBeaconState we study with input event , state variable and action function for intent to next state
+               */
+                WaitingForBeaconState().launchBLEScan(this)
+                MyApplication.saveLogWithCurrentDate("Host brand " + Build.BRAND)
+                // Host model is SAMSUNG  start alarm manager
+                if (Build.BRAND.equals("samsung", ignoreCase = true)) {
+                    MyApplication.saveLogWithCurrentDate("Alarm Enabled")
+                    // check if not Already Create Alarm
+                    if (!getConstant(this).isAlreadyCreateAlarm) {
+                        MyApplication.saveLogWithCurrentDate("Alarm Is Already Create")
+                        getConstant(this).isAlreadyCreateAlarm = true
+                        val startIntent = Intent(
+                            this
+                            , AlarmReceiver::class.java
+                        )
+                        this.sendBroadcast(startIntent)
                     }
                 }
-
             }
+
+
         }
     }
 
@@ -126,47 +127,6 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun requestLocationPermission(): Boolean {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // Android M Permission check
-            Log.d(TAG, "Checking Bluetooth permissions")
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-
-                    requestPermissions(
-                        arrayOf(
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                        ),
-                        PERMISSION_REQUEST_COARSE_LOCATION
-                    )
-
-                } else {
-
-                    requestPermissions(
-                        arrayOf(
-                            Manifest.permission.ACCESS_COARSE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION
-                        ),
-                        PERMISSION_REQUEST_COARSE_LOCATION
-                    )
-                }
-                return false
-            } else {
-                Log.d(TAG, "  Permission is granted")
-                return true
-            }
-        } else return false
-    }
-
     // Display Registered Device to Recycler View List
     private fun displayRegisteredCard() {
         registeredDeviceList.clear()
@@ -192,7 +152,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
     }
 
     companion object {
-        const val PERMISSION_REQUEST_COARSE_LOCATION = 1
+        const val PERMISSION_REQUEST_COARSE_LOCATION = 112
         const val TAG = "APP_MainActivity"
     }
 
