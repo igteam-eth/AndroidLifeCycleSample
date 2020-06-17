@@ -72,6 +72,7 @@ public class TrackerSharePreference {
     public Boolean isLocationStatus() {
         return sharedPrefs.getBoolean(SharedPreKeyType.LOCATION_STATUS.toString(), false);
     }
+
     public void setEthernomCard(BleClient bleClient) {
         Gson gson = new Gson();
         String json = gson.toJson(bleClient);

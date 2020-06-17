@@ -9,7 +9,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Environment;
@@ -19,9 +18,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.OnLifecycleEvent;
 import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.work.Configuration;
 
@@ -32,7 +29,6 @@ import com.ethernom.helloworld.receiver.NotificationDismissedReceiver;
 import com.ethernom.helloworld.screens.BaseActivity;
 import com.ethernom.helloworld.screens.SplashScreenActivity;
 import com.ethernom.helloworld.util.ForegroundCheckTask;
-import com.ethernom.helloworld.util.StateMachine;
 import com.ethernom.helloworld.util.Utils;
 
 import java.io.File;
@@ -55,10 +51,7 @@ public class MyApplication extends Application implements Configuration.Provider
         super.onCreate();
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         Log.d("MyApplication", "onCreate() called");
-
-        // Every startup app change current state to Initialize state it also handle app terminate state too
-        TrackerSharePreference.getConstant(this).setCurrentState(StateMachine.INITIAL.getValue());
-
+        MyApplication.saveLogWithCurrentDate("MyApplication onCreate");
 
         // Register for broadcasts on Bluetooth state change
         mBluetoothStateChangeReceiver = new BluetoothStateChangeReceiver();

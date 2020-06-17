@@ -19,6 +19,7 @@ import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.receiver.BeaconReceiver
 import com.ethernom.helloworld.statemachine.InitializeState
+import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_splash_screen.*
 
@@ -32,11 +33,16 @@ class SplashScreenActivity : BaseActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
+
         setContentView(R.layout.activity_splash_screen)
+
+        // Every startup app change current state to Initialize state it also handle app terminate state too
+        TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
 
         if (TrackerSharePreference.getConstant(this).isRanging) {
             BeaconReceiver.stopSound()
         }
+
         val versionName = BuildConfig.VERSION_NAME
         txt_version.text = "Version: $versionName"
 
@@ -66,8 +72,6 @@ class SplashScreenActivity : BaseActivity() {
                     InitializeState().goToInitialState(this)
 
             }, 2000)
-
-
             }
         } else {
             if (requestWriteExternalStoragePermission()) {
@@ -76,7 +80,6 @@ class SplashScreenActivity : BaseActivity() {
             }
         }
     }
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun requestLocationPermission(): Boolean {
@@ -100,9 +103,7 @@ class SplashScreenActivity : BaseActivity() {
                         ),
                         MainActivity.PERMISSION_REQUEST_COARSE_LOCATION
                     )
-
                 } else {
-
                     requestPermissions(
                         arrayOf(
                             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -134,6 +135,5 @@ class SplashScreenActivity : BaseActivity() {
             true
         }
     }
-
 
 }

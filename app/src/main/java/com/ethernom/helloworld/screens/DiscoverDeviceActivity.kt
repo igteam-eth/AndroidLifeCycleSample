@@ -23,7 +23,6 @@ import com.ethernom.helloworld.dialog.LoadingDialog
 import com.ethernom.helloworld.dialog.UpdateCardDialog
 import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.model.CardInfo
-import com.ethernom.helloworld.services.BLEAndLocationRegistrationService
 import com.ethernom.helloworld.statemachine.CardRegisterState
 import com.ethernom.helloworld.statemachine.FirmwareInfoState
 import com.ethernom.helloworld.statemachine.GetPrivateKeyState
@@ -67,7 +66,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         setUpList()
         MyApplication.saveCurrentStateToLog(this)
 
-        startService(Intent(this, BLEAndLocationRegistrationService::class.java))
 
     }
 
