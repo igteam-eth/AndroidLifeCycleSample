@@ -56,6 +56,7 @@ class ConfirmPinActivity : BaseActivity() {
         pin_view_confirm.setTextIsSelectable(true)
         val ic = pin_view_confirm.onCreateInputConnection(EditorInfo())
         mKeyboardView.setInputConnection(ic)
+        showBackButtonToolbar()
         parent_pin_view_confirm.setOnClickListener{
             pin_view_confirm.onEditorAction(EditorInfo.IME_ACTION_DONE)
         }

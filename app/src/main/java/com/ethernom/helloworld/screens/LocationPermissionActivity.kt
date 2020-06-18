@@ -37,6 +37,7 @@ class LocationPermissionActivity : BaseActivity() {
             Utils.preventDoubleClick(it)
             showInstalledAppDetails()
         }
+        showBackButtonToolbar()
     }
 
     private fun showInstalledAppDetails() {

@@ -62,19 +62,54 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <RelativeLayout
-            android:visibility="gone"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/toolbar_before_registered"
-            style="@style/DefaultToolbarBackground">
+            style="@style/DefaultToolbarBackground"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tvToolbarDefaultBackPressTitle"
                 style="@style/DefaultToolbarTitleStyle"
                 android:layout_centerInParent="true"
                 android:gravity="center"
-                android:text="@string/no_device_register" />
+                android:text="@string/no_device_register"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/text_back_press"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/back"
+                android:textColor="@color/colorBlack"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/button_setting_from_discover"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_setting"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
     <FrameLayout

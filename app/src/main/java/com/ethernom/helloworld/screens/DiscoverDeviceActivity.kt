@@ -64,6 +64,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         mBTDevicesArrayList = ArrayList()
         setUpList()
         MyApplication.saveCurrentStateToLog(this)
+        showSettingButtonToolbar()
 
 
     }

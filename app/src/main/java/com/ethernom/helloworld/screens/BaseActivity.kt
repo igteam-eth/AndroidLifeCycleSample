@@ -338,6 +338,18 @@ abstract class BaseActivity : CoreActivity() {
             mWriteStoragePermission(true)
         }
     }
+    fun showBackButtonToolbar(){
+        text_back_press.visibility = View.VISIBLE
+        text_back_press.setOnClickListener {
+            onBackPressed()
+        }
+    }
+    fun showSettingButtonToolbar(){
+        button_setting_from_discover.visibility = View.VISIBLE
+        button_setting_from_discover.setOnClickListener {
+            startActivity(Intent(this, SettingActivity::class.java))
+        }
+    }
 
 
     companion object {

@@ -16,6 +16,7 @@ class AboutActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
         init()
+        showBackButtonToolbar()
     }
 
     @SuppressLint("SetTextI18n")
