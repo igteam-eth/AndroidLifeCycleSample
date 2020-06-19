@@ -7,6 +7,7 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.callback.StateMachineCallback;
 import com.ethernom.helloworld.model.FwInfo;
@@ -24,7 +25,6 @@ import java.util.ArrayList;
 import static androidx.core.content.ContextCompat.getMainExecutor;
 import static com.ethernom.helloworld.util.CardConnection.menuFac;
 import static com.ethernom.helloworld.util.CardConnection.serialNumber;
-import static com.ethernom.helloworld.util.CardConnection.stateMachineCallback;
 
 
 public class CheckUpdateFirmwareState implements CheckUpdateCallback {
@@ -50,25 +50,29 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
     public void checkUpdateSuccess(boolean require) {
         Log.d(TAG, "check update response success");
         if (require) {
+            MyApplication.saveLogWithCurrentDate("Check Update succeeded");
             // Server Response Update Needed
             stateMachineCallback.appRequiredToUpdate();
             Log.d(TAG, "check update require to update");
+
 
         } else {
             // Server Response Update Not Needed
             // go to state 1004
             if (Utils.haveNetworkConnection(context)) {
                 if(!DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
+                    MyApplication.saveLogWithCurrentDate("Check Update succeeded");
                     TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.GET_PRIVATE_KEY.getValue());
                     new GetPrivateKeyState(context, stateMachineCallback).get(serialNumber, menuFac);
                     Log.d(TAG, "check update not require to update");
                 } else {
+                    MyApplication.saveLogWithCurrentDate("Check Update Error");
                     ((DiscoverDeviceActivity) context).runOnUiThread(() ->
                             stateMachineCallback.showMessageErrorState("Make sure your device is powered on and authenticated. Please try again.")
                     );
                 }
-
             } else {
+                MyApplication.saveLogWithCurrentDate("Check Update Error");
                 getMainExecutor(context).execute(() ->
                         new AlertDialog.Builder(context)
                                 .setTitle("Error")
@@ -80,7 +84,6 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
 
                                 }).show());
             }
-
         }
     }
 
@@ -88,5 +91,6 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
     public void checkUpdatedFailed(@NotNull String message) {
         Log.d(TAG, "check update response failed");
         stateMachineCallback.checkUpdateFailed(message);
+        MyApplication.saveLogWithCurrentDate("Check Update Error");
     }
 }

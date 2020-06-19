@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.adapter.DeviceAdapter
+import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.callback.StateMachineCallback
@@ -79,6 +80,8 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
                     ""
                 )
 
+                MyApplication.saveLogWithCurrentDate("User selected card \"${mBTDevicesArrayList!![position].devName}\" to register")
+
                 //loadingDialog.setLoadingDescription("Loading: Connecting " + mBTDevicesArrayList!![position].devName + "...")
                 loadingDialog.setLoadingDescription("Loading: Get Card ID...")
 
@@ -137,8 +140,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         recyclerView!!.adapter = adapter
     }
 
-
-
     // Get Major and Minor Success
     override fun onGetMajorMinorSucceeded(data: String) {
         val mid = getMinLength(data)
@@ -185,7 +186,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
 
                     //loadingDialog.setLoadingDescription("Loading: Starting tracker...")
                     loadingDialog.show()
-
+                    MyApplication.saveLogWithCurrentDate("Pin was verified successfully")
                 }
             } else {
                 firmwareInfoState!!.RequestAppSuspend(0x01.toByte())
@@ -194,6 +195,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
                 hideProgressBar()
                 // Next state
                 initState()
+                MyApplication.saveLogWithCurrentDate("Pin was verified failed")
 
             }
         }

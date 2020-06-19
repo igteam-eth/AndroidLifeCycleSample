@@ -10,10 +10,9 @@ import android.util.Log
 import android.view.Window
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.ethernom.helloworld.BuildConfig
 import com.ethernom.helloworld.R
+import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.receiver.BeaconReceiver
@@ -36,12 +35,13 @@ class SplashScreenActivity : BaseActivity() {
         setContentView(R.layout.activity_splash_screen)
         ONE_SHOT_FLAG++
 
-        // Every startup app change current state to Initialize state it also handle app terminate state too
-        TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
-
         if (TrackerSharePreference.getConstant(this).isRanging) {
+            MyApplication.saveLogWithCurrentDate("User click rang notification")
             BeaconReceiver.stopSound()
         }
+
+        // Every startup app change current state to Initialize state it also handle app terminate state too
+        TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
 
         val versionName = BuildConfig.VERSION_NAME
         txt_version.text = "Version: $versionName"
@@ -81,9 +81,6 @@ class SplashScreenActivity : BaseActivity() {
         Log.d("SplashScreenActivity", "onBackPressed called")
     }
 
-    override fun onStop() {
-        super.onStop()
-    }
 
 
     companion object {

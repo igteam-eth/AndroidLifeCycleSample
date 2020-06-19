@@ -1,6 +1,5 @@
 package com.ethernom.helloworld.workmanager;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -26,7 +25,7 @@ public class MyWorkManager extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-
+        
         Log.d("APP_MyWorkManager", "doWork");
         MyApplication.saveLogWithCurrentDate("MyWorkManager(Worker thread) in doWork");
         BeaconReceiver.startScan(mContext);

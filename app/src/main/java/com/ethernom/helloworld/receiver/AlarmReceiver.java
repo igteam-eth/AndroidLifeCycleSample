@@ -17,7 +17,7 @@ import com.ethernom.helloworld.workmanager.AlarmWorkManager;
 public class AlarmReceiver extends BroadcastReceiver  {
 
     private static final String TAG = "AlarmReceiver";
-    private static long interval = 1;
+    private static long interval = 0;
     private static long count = 0;
 
     // here you need to receive some action from intent and depending on this action start service or set repeating alarm

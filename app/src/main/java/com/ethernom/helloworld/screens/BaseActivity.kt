@@ -183,9 +183,6 @@ abstract class BaseActivity : CoreActivity() {
     }
 
 
-
-
-
     /**
      * Case 1: User doesn't have permission
      * Case 2: User has permission

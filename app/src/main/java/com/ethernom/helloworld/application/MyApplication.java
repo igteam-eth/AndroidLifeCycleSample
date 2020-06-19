@@ -51,7 +51,6 @@ public class MyApplication extends Application implements Configuration.Provider
         super.onCreate();
         ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
         Log.d("MyApplication", "onCreate() called");
-        MyApplication.saveLogWithCurrentDate("MyApplication onCreate");
 
         // Register for broadcasts on Bluetooth state change
         mBluetoothStateChangeReceiver = new BluetoothStateChangeReceiver();
@@ -121,7 +120,6 @@ public class MyApplication extends Application implements Configuration.Provider
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static void showRangNotification(Context context) {
-
 
         Log.d("MyApplication", "showRangNotification");
         final NotificationManager manager =

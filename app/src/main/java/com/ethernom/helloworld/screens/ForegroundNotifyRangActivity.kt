@@ -22,7 +22,7 @@ class ForegroundNotifyRangActivity : Activity(), NotifyRangCallback {
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onButtonClicked() {
         BeaconReceiver.stopSound()
-        MyApplication.appendLog("${MyApplication.getCurrentDate()} : User was click notification to open the app: isAlreadyCreateWorkerThread = false\n")
+        MyApplication.saveLogWithCurrentDate("User clicked ringing notification")
         finish()
     }
 }

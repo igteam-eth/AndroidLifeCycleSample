@@ -35,7 +35,6 @@ public class BeaconRegistration {
         // Check if not yet  Already Create Worker Thread to start scan
         if (!trackerSharePreference.isAlreadyCreateWorkerThread()) {
             byte numDelay = 0;
-            trackerSharePreference.setAlreadyCreateWorkerThread(true);
 
             if (!TrackerSharePreference.getConstant(context).isBeaconTimeStamp().equals("")) {
                 long diffInMs = Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(MyApplication.getCurrentDate())).getTime() - Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(TrackerSharePreference.getConstant(context).isBeaconTimeStamp())).getTime();
@@ -73,8 +72,6 @@ public class BeaconRegistration {
                 trackerSharePreference.setAlreadyCreateAlarm(true);
                 Intent startIntent = new Intent(context, AlarmReceiver.class);
                 context.sendBroadcast(startIntent);
-            }else{
-                MyApplication.saveLogWithCurrentDate("Periodic Alarm for Samsung already created.");
             }
         }
     }

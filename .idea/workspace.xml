@@ -17,15 +17,17 @@
     <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/AlarmReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/AlarmReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/LocationStateChangeReceiver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/ForegroundNotifyRangActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/ForegroundNotifyRangActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/WaitingForBeaconState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CheckUpdateFirmwareState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CheckUpdateFirmwareState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/GetPrivateKeyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/GetPrivateKeyState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -276,7 +278,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592538408396</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="- Change Class name from WaitingForBeaconState.java -&gt; BeaconRegistration.java">
+      <created>1592555565885</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1592555565885</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TodoView">
@@ -302,7 +311,8 @@
     <MESSAGE value="-Fix Bugs 1,2 and 8 number." />
     <MESSAGE value="- Add Back button in toolbar for Screen as below: &#10; 1. SettingActivity.kt&#10; 2. LocationPermissionActivity.kt&#10; 3. AboutActivity.kt&#10; 4. ConfirmPinActivity.kt&#10;- Add Setting Icon in Toolbar for screen DiscoverDeviceActivity.kt" />
     <MESSAGE value="- update set state when we already start scan" />
-    <option name="LAST_COMMIT_MESSAGE" value="- update set state when we already start scan" />
+    <MESSAGE value="- Change Class name from WaitingForBeaconState.java -&gt; BeaconRegistration.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Change Class name from WaitingForBeaconState.java -&gt; BeaconRegistration.java" />
   </component>
   <component name="WindowStateProjectService">
     <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1592305358719">
@@ -317,26 +327,26 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="696" y="309" key="AndroidProcessChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592385919065" />
-    <state x="49" y="139" key="CommitChangelistDialog2" timestamp="1592538407271">
+    <state x="49" y="139" key="CommitChangelistDialog2" timestamp="1592555565166">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1592538407271" />
-    <state width="1638" height="376" key="GridCell.Tab.0.bottom" timestamp="1592545723877">
+    <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1592555565166" />
+    <state width="1638" height="376" key="GridCell.Tab.0.bottom" timestamp="1592560501928">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1592545723877" />
-    <state width="1638" height="376" key="GridCell.Tab.0.center" timestamp="1592545723876">
+    <state width="1638" height="376" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1592560501928" />
+    <state width="1638" height="376" key="GridCell.Tab.0.center" timestamp="1592560501926">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1592545723876" />
-    <state width="1638" height="376" key="GridCell.Tab.0.left" timestamp="1592545723872">
+    <state width="1638" height="376" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1592560501926" />
+    <state width="1638" height="376" key="GridCell.Tab.0.left" timestamp="1592560501926">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1592545723872" />
-    <state width="1638" height="376" key="GridCell.Tab.0.right" timestamp="1592545723876">
+    <state width="1638" height="376" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1592560501926" />
+    <state width="1638" height="376" key="GridCell.Tab.0.right" timestamp="1592560501927">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1592545723876" />
+    <state width="1638" height="376" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1592560501927" />
     <state width="1638" height="336" key="GridCell.Tab.1.bottom" timestamp="1592386171790">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -361,18 +371,18 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="550" y="259" key="MultipleFileMergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592489964647" />
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1592538432467">
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1592555570338">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592538432467" />
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592555570338" />
     <state x="510" y="369" key="com.intellij.ide.util.TipDialog" timestamp="1592487500554">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="510" y="369" key="com.intellij.ide.util.TipDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592487500554" />
-    <state x="620" y="460" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592555503062">
+    <state x="620" y="460" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592561395645">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="620" y="460" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592555503062" />
+    <state x="620" y="460" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592561395645" />
     <state x="100" y="123" width="1480" height="827" key="dock-window-1" timestamp="1592360863465">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -381,10 +391,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="492" y="293" width="695" height="486" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1592541366782" />
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1592554211480">
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1592560743795">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1592554211480" />
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1592560743795" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

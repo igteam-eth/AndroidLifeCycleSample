@@ -205,6 +205,7 @@ public class BeaconReceiver extends BroadcastReceiver {
             bluetoothAdapter.getBluetoothLeScanner().startScan(filters, settings, mPendingIntent);
             MyApplication.appendLog(MyApplication.getCurrentDate() + " : Start scanning \n");
             TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.WAITING_FOR_BEACON.getValue());
+            TrackerSharePreference.getConstant(context).setAlreadyCreateWorkerThread(true);
 
         } catch (Exception e) {
             Log.e(TAG, "ERROR in startScan() " + e.getMessage());
