@@ -61,8 +61,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         mBTDevicesArrayList = ArrayList()
         setUpList()
         showSettingButtonToolbar()
-
-
     }
 
     // User Select Card
@@ -180,22 +178,23 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
             if (resultCode == Activity.RESULT_OK) {
                 val result = data!!.getBooleanExtra("pinVerified", false)
                 if (result) {
+                    MyApplication.saveLogWithCurrentDate("Pin was verified successfully")
                     TrackerSharePreference.getConstant(this).currentState =
                         StateMachine.CARD_REGISTER.value
                     CardRegisterState(this).H2CRequestBLETrackerInit()
 
                     //loadingDialog.setLoadingDescription("Loading: Starting tracker...")
                     loadingDialog.show()
-                    MyApplication.saveLogWithCurrentDate("Pin was verified successfully")
+
                 }
             } else {
                 firmwareInfoState!!.RequestAppSuspend(0x01.toByte())
                 firmwareInfoState!!.DisconnectCard(false)
                 //loadingDialog.setLoadingDescription("Loading: Canceling PIN authentication...")
                 hideProgressBar()
+                MyApplication.saveLogWithCurrentDate("Pin was verified failed")
                 // Next state
                 initState()
-                MyApplication.saveLogWithCurrentDate("Pin was verified failed")
 
             }
         }
@@ -405,8 +404,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     }
 
     private fun initState() {
-        //Default value state machine = initial(0000)
-        TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
+
         val intent = Intent(this, SplashScreenActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

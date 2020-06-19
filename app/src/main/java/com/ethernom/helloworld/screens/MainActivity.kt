@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.adapter.RegisteredDeviceAdapter
+import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference.getConstant
 import com.ethernom.helloworld.dialog.DeleteDeviceBottomDialog
@@ -122,12 +123,15 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
 
     // Callback event when user click delete item & auto intent to discover devices screen
     override fun onItemDeleteClicked() {
+        MyApplication.saveLogWithCurrentDate("Card have been deleted.")
         registeredDeviceList.clear()
         registeredDeviceAdapter!!.notifyDataSetChanged()
         trackerSharePreference.clearAll()
         Utils.initBLE_Location(this)
-        finish()
-        startActivity(Intent(this, DiscoverDeviceActivity::class.java))
+        val intent = Intent(this, SplashScreenActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finishAffinity()
     }
 
     companion object {

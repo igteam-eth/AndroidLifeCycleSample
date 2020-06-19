@@ -2,6 +2,7 @@ package com.ethernom.helloworld.screens
 
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 
@@ -21,8 +22,12 @@ class ForegroundNotifyRangActivity : Activity(), NotifyRangCallback {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onButtonClicked() {
-        BeaconReceiver.stopSound()
+        /*BeaconReceiver.stopSound()
         MyApplication.saveLogWithCurrentDate("User clicked ringing notification")
-        finish()
+        finish()*/
+        val intent = Intent(this, SplashScreenActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finishAffinity()
     }
 }

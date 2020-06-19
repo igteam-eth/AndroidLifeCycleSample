@@ -33,10 +33,10 @@ public class GetPrivateKeyState implements GetAppKeyCallback {
         // Get Private Key Success
         // change to 1005
         if(!DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
+            MyApplication.saveLogWithCurrentDate("Get Private Key succeeded");
             TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.CARD_REGISTER.getValue());
             CardRegisterState cardRegisterState = new CardRegisterState(context);
             cardRegisterState.H2CAuthentication((byte) 0x01, appKey);
-            MyApplication.saveLogWithCurrentDate("Get Private Key succeeded");
         } else {
             MyApplication.saveLogWithCurrentDate("Get Private Key Error");
             ((DiscoverDeviceActivity) context).runOnUiThread(() ->

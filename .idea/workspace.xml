@@ -2,32 +2,31 @@
 <project version="4">
   <component name="AndroidLayouts">
     <shared>
-      <config>
-        <device id="pixel_3" />
-        <device id="3.2in HVGA slider (ADP1)" />
-        <device id="pixel_2" />
-      </config>
+      <config />
     </shared>
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="error" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/AlarmReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/AlarmReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BluetoothStateChangeReceiver.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/BaseActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/ForegroundNotifyRangActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/ForegroundNotifyRangActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CheckUpdateFirmwareState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CheckUpdateFirmwareState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/GetPrivateKeyState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/GetPrivateKeyState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/InitializeState.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/util/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +36,7 @@
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="R58M24FFT2R" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="YDVNW19B23003582" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -78,12 +77,17 @@
     <property name="DEBUGGABLE_PROCESS" value="com.ethernom.alarmhelloworld.v9" />
     <property name="DEBUGGER_ID" value="Auto" />
     <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="YDVNW19B23003582" />
-    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-06-19T03:31:02.224Z" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2020-06-17T10:58:07.311Z" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHOW_ALL_PROCESSES" value="false" />
     <property name="device.picker.selection" value="379fdc3a" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/layout" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+    <property name="memory.settings.postsync.last.time.stamp" value="1592527203443" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
+    <property name="project.structure.last.edited" value="Dependencies" />
+    <property name="project.structure.proportion" value="0.17" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -109,11 +113,11 @@
       <recent name="com.ethernom.helloworld.service" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/drawable" />
       <recent name="$PROJECT_DIR$/app/src/main/res/layout" />
       <recent name="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld" />
       <recent name="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/model" />
       <recent name="$PROJECT_DIR$/app/src/main/res" />
-      <recent name="$PROJECT_DIR$/app/src/main/res/values" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.ethernom.helloworld.transactionstatemachine" />
@@ -250,42 +254,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592304502900</updated>
     </task>
-    <task id="LOCAL-00009" summary="- Disable Bluetooth state change when the appp is in background.">
-      <created>1592367393698</created>
+    <task id="LOCAL-00009" summary="- Fixed Bug #1 App keep loading when user click connect card that power off&#10;- Fixed Bug #2 App keep loading when user click connect card during beacon broadcasting&#10;- Fixed Bug #3 Ring not loudly and plugin head phone&#10;- Fixed Bug #4 Discover screen show multi time&#10;- Fixed Bug #5 Keyboard show duplicate in verify pin screen&#10;- Fixed Bug #6 The host app stuck then it crash in discovery screen when user connect then app pushed to background&#10;- Fixed Bug #7 Host app stuck at the splash screen when user Choose Deny&amp; don't ask again of location permission">
+      <created>1592393326164</created>
       <option name="number" value="00009" />
       <option name="presentableId" value="LOCAL-00009" />
       <option name="project" value="LOCAL" />
-      <updated>1592367393699</updated>
+      <updated>1592393326164</updated>
     </task>
-    <task id="LOCAL-00010" summary="-Fix Bugs 1,2 and 8 number.">
-      <created>1592390005369</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1592390005369</updated>
-    </task>
-    <task id="LOCAL-00011" summary="- Add Back button in toolbar for Screen as below: &#10; 1. SettingActivity.kt&#10; 2. LocationPermissionActivity.kt&#10; 3. AboutActivity.kt&#10; 4. ConfirmPinActivity.kt&#10;- Add Setting Icon in Toolbar for screen DiscoverDeviceActivity.kt">
-      <created>1592490419716</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1592490419716</updated>
-    </task>
-    <task id="LOCAL-00012" summary="- update set state when we already start scan">
-      <created>1592538408396</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1592538408396</updated>
-    </task>
-    <task id="LOCAL-00013" summary="- Change Class name from WaitingForBeaconState.java -&gt; BeaconRegistration.java">
-      <created>1592555565885</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1592555565885</updated>
-    </task>
-    <option name="localTasksCounter" value="14" />
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -307,14 +283,14 @@
     <MESSAGE value="- Add setting screen&#10;- Fix crash when user select card but bluetooth is turn off" />
     <MESSAGE value="- Add Service For handle kill for registration for Location and BLE" />
     <MESSAGE value="- Register BluetoothState change in onCreate of MyApplication &#10;- Create a service when taskRemove we Register BluetoothState Change" />
-    <MESSAGE value="- Disable Bluetooth state change when the appp is in background." />
-    <MESSAGE value="-Fix Bugs 1,2 and 8 number." />
-    <MESSAGE value="- Add Back button in toolbar for Screen as below: &#10; 1. SettingActivity.kt&#10; 2. LocationPermissionActivity.kt&#10; 3. AboutActivity.kt&#10; 4. ConfirmPinActivity.kt&#10;- Add Setting Icon in Toolbar for screen DiscoverDeviceActivity.kt" />
-    <MESSAGE value="- update set state when we already start scan" />
-    <MESSAGE value="- Change Class name from WaitingForBeaconState.java -&gt; BeaconRegistration.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Change Class name from WaitingForBeaconState.java -&gt; BeaconRegistration.java" />
+    <MESSAGE value="- Fixed Bug #1 App keep loading when user click connect card that power off&#10;- Fixed Bug #2 App keep loading when user click connect card during beacon broadcasting&#10;- Fixed Bug #3 Ring not loudly and plugin head phone&#10;- Fixed Bug #4 Discover screen show multi time&#10;- Fixed Bug #5 Keyboard show duplicate in verify pin screen&#10;- Fixed Bug #6 The host app stuck then it crash in discovery screen when user connect then app pushed to background&#10;- Fixed Bug #7 Host app stuck at the splash screen when user Choose Deny&amp; don't ask again of location permission" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Fixed Bug #1 App keep loading when user click connect card that power off&#10;- Fixed Bug #2 App keep loading when user click connect card during beacon broadcasting&#10;- Fixed Bug #3 Ring not loudly and plugin head phone&#10;- Fixed Bug #4 Discover screen show multi time&#10;- Fixed Bug #5 Keyboard show duplicate in verify pin screen&#10;- Fixed Bug #6 The host app stuck then it crash in discovery screen when user connect then app pushed to background&#10;- Fixed Bug #7 Host app stuck at the splash screen when user Choose Deny&amp; don't ask again of location permission" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="365" y="264" key="#PSD" timestamp="1592376466116">
+      <screen x="0" y="0" width="1680" height="1050" />
+    </state>
+    <state x="365" y="264" key="#PSD/0.0.1680.1050@0.0.1680.1050" timestamp="1592376466116" />
     <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1592305358719">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -323,78 +299,86 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592366943219" />
-    <state x="696" y="309" key="AndroidProcessChooserDialog" timestamp="1592385919065">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="696" y="292" key="AndroidProcessChooserDialog" timestamp="1592563000634">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="696" y="309" key="AndroidProcessChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592385919065" />
-    <state x="49" y="139" key="CommitChangelistDialog2" timestamp="1592555565166">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="696" y="292" key="AndroidProcessChooserDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1592563000634" />
+    <state x="696" y="309" key="AndroidProcessChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592299469741" />
+    <state x="49" y="119" key="CommitChangelistDialog2" timestamp="1592393325587">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1592555565166" />
-    <state width="1638" height="376" key="GridCell.Tab.0.bottom" timestamp="1592560501928">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="49" y="119" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1592393325587" />
+    <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1592305561801" />
+    <state width="1638" height="363" key="GridCell.Tab.0.bottom" timestamp="1592565593670">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1592560501928" />
-    <state width="1638" height="376" key="GridCell.Tab.0.center" timestamp="1592560501926">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="1638" height="363" key="GridCell.Tab.0.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1592565593670" />
+    <state width="1638" height="250" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1592367098157" />
+    <state width="1638" height="363" key="GridCell.Tab.0.center" timestamp="1592565593669">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1592560501926" />
-    <state width="1638" height="376" key="GridCell.Tab.0.left" timestamp="1592560501926">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="1638" height="363" key="GridCell.Tab.0.center/0.0.1680.1050@0.0.1680.1050" timestamp="1592565593669" />
+    <state width="1638" height="250" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1592367098156" />
+    <state width="1638" height="363" key="GridCell.Tab.0.left" timestamp="1592565593669">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1592560501926" />
-    <state width="1638" height="376" key="GridCell.Tab.0.right" timestamp="1592560501927">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="1638" height="363" key="GridCell.Tab.0.left/0.0.1680.1050@0.0.1680.1050" timestamp="1592565593669" />
+    <state width="1638" height="250" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1592367098156" />
+    <state width="1638" height="363" key="GridCell.Tab.0.right" timestamp="1592565593670">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1592560501927" />
-    <state width="1638" height="336" key="GridCell.Tab.1.bottom" timestamp="1592386171790">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="1638" height="363" key="GridCell.Tab.0.right/0.0.1680.1050@0.0.1680.1050" timestamp="1592565593670" />
+    <state width="1638" height="250" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1592367098156" />
+    <state width="1638" height="363" key="GridCell.Tab.1.bottom" timestamp="1592565593672">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="336" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1592386171790" />
-    <state width="1638" height="336" key="GridCell.Tab.1.center" timestamp="1592386171790">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="1638" height="363" key="GridCell.Tab.1.bottom/0.0.1680.1050@0.0.1680.1050" timestamp="1592565593672" />
+    <state width="1638" height="336" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1592303593712" />
+    <state width="1638" height="363" key="GridCell.Tab.1.center" timestamp="1592565593671">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="336" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1592386171790" />
-    <state width="1638" height="336" key="GridCell.Tab.1.left" timestamp="1592386171789">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="1638" height="363" key="GridCell.Tab.1.center/0.0.1680.1050@0.0.1680.1050" timestamp="1592565593671" />
+    <state width="1638" height="336" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1592303593711" />
+    <state width="1638" height="363" key="GridCell.Tab.1.left" timestamp="1592565593671">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="336" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1592386171789" />
-    <state width="1638" height="336" key="GridCell.Tab.1.right" timestamp="1592386171790">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="1638" height="363" key="GridCell.Tab.1.left/0.0.1680.1050@0.0.1680.1050" timestamp="1592565593671" />
+    <state width="1638" height="336" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1592303593710" />
+    <state width="1638" height="363" key="GridCell.Tab.1.right" timestamp="1592565593672">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state width="1638" height="336" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1592386171790" />
-    <state x="168" y="115" key="MergeDialog" timestamp="1592489961426">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="1638" height="363" key="GridCell.Tab.1.right/0.0.1680.1050@0.0.1680.1050" timestamp="1592565593672" />
+    <state width="1638" height="336" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1592303593711" />
+    <state x="168" y="94" key="MergeDialog" timestamp="1592561665467">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="168" y="115" key="MergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592489961426" />
-    <state x="550" y="259" key="MultipleFileMergeDialog" timestamp="1592489964647">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="168" y="94" key="MergeDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1592561665467" />
+    <state x="550" y="247" key="MultipleFileMergeDialog" timestamp="1592561665506">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="550" y="259" key="MultipleFileMergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592489964647" />
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1592555570338">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="550" y="247" key="MultipleFileMergeDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1592561665506" />
+    <state width="555" height="467" key="SwitcherDM" timestamp="1592564805253">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592555570338" />
-    <state x="510" y="369" key="com.intellij.ide.util.TipDialog" timestamp="1592487500554">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state width="555" height="467" key="SwitcherDM/0.0.1680.1050@0.0.1680.1050" timestamp="1592564805253" />
+    <state x="440" y="259" key="Vcs.Push.Dialog.v2" timestamp="1592393329341">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="510" y="369" key="com.intellij.ide.util.TipDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592487500554" />
-    <state x="620" y="460" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592561395645">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="440" y="259" key="Vcs.Push.Dialog.v2/0.0.1680.1050@0.0.1680.1050" timestamp="1592393329341" />
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592304506026" />
+    <state x="620" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1592566131779">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="620" y="460" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592561395645" />
+    <state x="620" y="449" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1680.1050@0.0.1680.1050" timestamp="1592566131779" />
     <state x="100" y="123" width="1480" height="827" key="dock-window-1" timestamp="1592360863465">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="100" y="123" width="1480" height="827" key="dock-window-1/0.23.1680.1027@0.23.1680.1027" timestamp="1592360863465" />
-    <state x="492" y="293" width="695" height="486" key="find.popup" timestamp="1592541366782">
-      <screen x="0" y="23" width="1680" height="1027" />
+    <state x="505" y="232" width="670" height="692" key="search.everywhere.popup" timestamp="1592564977442">
+      <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="492" y="293" width="695" height="486" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1592541366782" />
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1592560743795">
-      <screen x="0" y="23" width="1680" height="1027" />
-    </state>
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1592560743795" />
+    <state x="505" y="232" width="670" height="692" key="search.everywhere.popup/0.0.1680.1050@0.0.1680.1050" timestamp="1592564977442" />
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1592367039416" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -403,6 +387,11 @@
           <url>file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/CardRegisterState.java</url>
           <line>272</line>
           <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/SplashScreenActivity.kt</url>
+          <line>56</line>
+          <option name="timeStamp" value="106" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

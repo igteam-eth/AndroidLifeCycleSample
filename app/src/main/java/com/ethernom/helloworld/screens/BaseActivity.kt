@@ -92,6 +92,25 @@ abstract class BaseActivity : CoreActivity() {
 
         if (this !is SplashScreenActivity) {
             displayBLEAndLocationEnable()
+            // next state
+            if(!TrackerSharePreference.getConstant(this).isCardRegistered){
+                if(!Utils.isBluetoothEnable() || !Utils.isLocationEnabled(this)) {
+                    //when start up if our location or ble is off when go to 1000 state "CARD_DISCOVERY_BLE_LOCATION_OFF"
+                    TrackerSharePreference.getConstant(this).currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value
+                }
+            } else {
+                if(!Utils.isBluetoothEnable() && !Utils.isLocationEnabled(this)) {
+                    //when start up if our location or ble is off when go to 2003 state "WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE"
+                    TrackerSharePreference.getConstant(this).currentState = StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value
+                } else if (!Utils.isBluetoothEnable()) {
+                    //when start up if our location or ble is off when go to 2001 state "WAITING_FOR_BEACON_BLE_OFF_STATE"
+                    TrackerSharePreference.getConstant(this).currentState = StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
+                } else if (!Utils.isLocationEnabled(this)){
+                    //when start up if our location or ble is off when go to 2002 state "WAITING_FOR_BEACON_LOCATION_OFF_STATE"
+                    TrackerSharePreference.getConstant(this).currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
+                }
+            }
+
         }
 
         if (isShowDialogDenyPermanently){

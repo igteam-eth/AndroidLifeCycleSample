@@ -35,13 +35,13 @@ class SplashScreenActivity : BaseActivity() {
         setContentView(R.layout.activity_splash_screen)
         ONE_SHOT_FLAG++
 
+
+
         if (TrackerSharePreference.getConstant(this).isRanging) {
+            TrackerSharePreference.getConstant(this).isRanging = false
             MyApplication.saveLogWithCurrentDate("User click rang notification")
             BeaconReceiver.stopSound()
         }
-
-        // Every startup app change current state to Initialize state it also handle app terminate state too
-        TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
 
         val versionName = BuildConfig.VERSION_NAME
         txt_version.text = "Version: $versionName"
@@ -53,6 +53,8 @@ class SplashScreenActivity : BaseActivity() {
         Log.d("SplashScreenActivity", "onCreate $ONE_SHOT_FLAG called")
 
         checkWriteExternalStoragePermission {
+            // Every startup app change current state to Initialize state it also handle app terminate state too
+            TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
             if (SettingSharePreference.getConstant(this).isBeforeActivate) {
                 checkLocationPermission {
                     // For User experience at SplashScreen Just alive 2 or 3 Seconds after that intent to screen follow by Initialize state of state table

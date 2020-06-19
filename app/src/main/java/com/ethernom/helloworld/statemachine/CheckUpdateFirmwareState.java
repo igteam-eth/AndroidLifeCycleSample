@@ -50,7 +50,7 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
     public void checkUpdateSuccess(boolean require) {
         Log.d(TAG, "check update response success");
         if (require) {
-            MyApplication.saveLogWithCurrentDate("Check Update succeeded");
+            MyApplication.saveLogWithCurrentDate("Server Response Update Needed");
             // Server Response Update Needed
             stateMachineCallback.appRequiredToUpdate();
             Log.d(TAG, "check update require to update");
@@ -61,7 +61,7 @@ public class CheckUpdateFirmwareState implements CheckUpdateCallback {
             // go to state 1004
             if (Utils.haveNetworkConnection(context)) {
                 if(!DiscoverDeviceActivity.Companion.getActivityState().equals("onStop")) {
-                    MyApplication.saveLogWithCurrentDate("Check Update succeeded");
+                    MyApplication.saveLogWithCurrentDate("Server Response Update Not Needed" );
                     TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.GET_PRIVATE_KEY.getValue());
                     new GetPrivateKeyState(context, stateMachineCallback).get(serialNumber, menuFac);
                     Log.d(TAG, "check update not require to update");

@@ -83,8 +83,6 @@ class BluetoothStateChangeReceiver : BroadcastReceiver() {
                     MyApplication.appendLog(MyApplication.getCurrentDate() + " : BT STATE_ON \n")
                     TrackerSharePreference.getConstant(context).isBLEStatus = true
 
-                    MyApplication.saveLogWithCurrentDate(currentState)
-
                     Utils.removeNotificationByID(context, Utils.CHANNEL_BLE_OFF)
                     if (!SettingSharePreference.getConstant(context).isBeforeActivate){
                         return

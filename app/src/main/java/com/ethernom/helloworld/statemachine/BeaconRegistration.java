@@ -13,6 +13,7 @@ import androidx.work.WorkManager;
 import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.receiver.AlarmReceiver;
+import com.ethernom.helloworld.util.StateMachine;
 import com.ethernom.helloworld.util.Utils;
 import com.ethernom.helloworld.workmanager.MyWorkManager;
 
@@ -29,7 +30,7 @@ public class BeaconRegistration {
     @SuppressLint("SimpleDateFormat")
     public void launchBLEScan(Context context) throws ParseException {
 
-        MyApplication.saveLogWithCurrentDate("launchBLEScan");
+        MyApplication.saveLogWithCurrentDate("Launch BLE Scan");
 
         TrackerSharePreference trackerSharePreference = TrackerSharePreference.getConstant(context);
         // Check if not yet  Already Create Worker Thread to start scan
@@ -62,6 +63,7 @@ public class BeaconRegistration {
             WorkManager.getInstance(context).enqueue(oneTimeRequest);
         }else{
             MyApplication.saveLogWithCurrentDate("BLE already start scan");
+            trackerSharePreference.setCurrentState(StateMachine.WAITING_FOR_BEACON.getValue());
         }
 
         // Host model is SAMSUNG  start alarm manager

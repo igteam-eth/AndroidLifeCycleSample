@@ -80,7 +80,6 @@ class InitializeState {
                  - Display (Notify user to turn on Location)
                  - change to 1000
                  */
-                trackerSharePreference.currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_OFF.value
                 // Push system notification for notify user
                 //showLocationNotification(context)
                 if (MyApplication.isAppInForeground(context)){
@@ -96,13 +95,11 @@ class InitializeState {
             // if Both Location & Bluetooth is turn on
             else if (trackerSharePreference.isLocationStatus && trackerSharePreference.isBLEStatus){
                 Log.e("InitializeState", "not card registered location on , ble on")
-
                 /*
                  - ble and location are true
                  - Display Empty List & state scan generate advertising package
                  - change to 1001
                  */
-                trackerSharePreference.currentState = StateMachine.CARD_DISCOVERY_BLE_LOCATION_ON.value
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for Display Empty List & state scan generate advertising package
                     val intent = Intent(context, DiscoverDeviceActivity::class.java)
@@ -125,7 +122,6 @@ class InitializeState {
                 - Display Registered Device"
                 - change to 2003
                 */
-                trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value
                 //showBluetoothNotification(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for display card registered
@@ -147,7 +143,6 @@ class InitializeState {
                   - Display Registered Device"
                   - change to 2001
                   */
-                trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
                 //showBluetoothNotification(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for display card registered
@@ -166,7 +161,6 @@ class InitializeState {
                    - Display (Notify user to turn on Location)
                    - Display Registered Device
                    - change to 2002 */
-                trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
                 //showLocationNotification(context)
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for display card registered
@@ -187,7 +181,6 @@ class InitializeState {
                 - change to 2000
                 */
 
-                trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON.value
                 if (MyApplication.isAppInForeground(context)){
                     // App in foreground Intent to Main Activity for display card registered
                     val intent = Intent(context, MainActivity::class.java)
