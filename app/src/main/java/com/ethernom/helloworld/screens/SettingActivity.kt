@@ -18,6 +18,7 @@ class SettingActivity : BaseActivity() {
         showBackButtonToolbar()
     }
 
+
     private fun init(){
         tvToolbarDefaultBackPressTitle.text = resources.getString(R.string.settings)
         text_toolbar_title.text = resources.getString(R.string.settings)

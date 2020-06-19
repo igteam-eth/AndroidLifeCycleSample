@@ -55,8 +55,8 @@ class StartupReceiver : BroadcastReceiver() {
                         return
                     }else{
 
+                        MyApplication.saveLogWithCurrentDate("Launch BLE Scan Intent")
                         //Launch BLE Scan Intent
-                        TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON.value
                         trackerSharePreference.isAlreadyCreateWorkerThread = false
                         trackerSharePreference.isAlreadyCreateAlarm = false
                         WaitingForBeaconState().launchBLEScan(context)

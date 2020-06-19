@@ -17,13 +17,11 @@ import com.ethernom.helloworld.screens.SplashScreenActivity;
 
 public class Utils {
 
-
     public static int REQUEST_BLUETOOTH_STATE = 200;
     public static Byte BEACON_DELAY_PERIOD = 12;
     public static String CHANNEL_RANG = "CHANNEL_RANG_ID";
     public static String CHANNEL_BLE_OFF = "CHANNEL_BLE_OFF_ID";
     public static String CHANNEL_LOCATION_OFF = "CHANNEL_LOCATION_OFF_ID";
-
 
     public static void preventDoubleClick(final View view){
         view.setEnabled(false);
@@ -96,10 +94,15 @@ public class Utils {
         return locationMode != Settings.Secure.LOCATION_MODE_OFF;
     }
     public static boolean isBluetoothEnable(){
-        BluetoothAdapter bAdapter = BluetoothAdapter.getDefaultAdapter();
-        if (bAdapter != null) {
-            return bAdapter.isEnabled();
-        }else return false;
+        try {
+            BluetoothAdapter bAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (bAdapter != null) {
+                return bAdapter.isEnabled();
+            }else return false;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
     public static void initBLE_Location(Context context){
         BluetoothAdapter bAdapter = BluetoothAdapter.getDefaultAdapter();

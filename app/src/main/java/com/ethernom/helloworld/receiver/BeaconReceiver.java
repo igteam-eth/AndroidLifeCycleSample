@@ -31,6 +31,7 @@ import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.model.BleClient;
 import com.ethernom.helloworld.screens.ForegroundNotifyRangActivity;
+import com.ethernom.helloworld.util.StateMachine;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -238,6 +239,7 @@ public class BeaconReceiver extends BroadcastReceiver {
             BluetoothAdapter bluetoothAdapter = bluetoothManager.getAdapter();
             bluetoothAdapter.getBluetoothLeScanner().startScan(filters, settings, mPendingIntent);
             MyApplication.appendLog(MyApplication.getCurrentDate() + " : Start scanning \n");
+            TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.WAITING_FOR_BEACON.getValue());
 
         } catch (Exception e) {
             Log.e(TAG, "ERROR in startScan() " + e.getMessage());

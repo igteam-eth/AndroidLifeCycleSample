@@ -24,9 +24,6 @@ import kotlinx.android.synthetic.main.activity_confirm_pin.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_before_registered.*
 
-
-
-
 class ConfirmPinActivity : BaseActivity() {
 
     private var digitCount = 2
@@ -81,8 +78,6 @@ class ConfirmPinActivity : BaseActivity() {
                             s.clear()
                             enterFailedCount++
                         }
-
-
                     }
                 }
             }
