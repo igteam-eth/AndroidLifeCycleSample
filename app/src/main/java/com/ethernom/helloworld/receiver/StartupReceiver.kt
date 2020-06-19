@@ -56,6 +56,20 @@ class StartupReceiver : BroadcastReceiver() {
                         trackerSharePreference.isAlreadyCreateWorkerThread = false
                         trackerSharePreference.isAlreadyCreateAlarm = false
                         BeaconRegistration().launchBLEScan(context)
+
+                        // Host model is
+                        MyApplication.saveLogWithCurrentDate("BRAND: ${Build.BRAND}")
+
+                        // Host model is SAMSUNG  start alarm manager
+                        if (Build.BRAND.equals("samsung", ignoreCase = true)) {
+                            // check if not Already Create Alarm
+                            if (!trackerSharePreference.isAlreadyCreateAlarm) {
+                                MyApplication.saveLogWithCurrentDate("Periodic Alarm for Samsung created")
+                                trackerSharePreference.isAlreadyCreateAlarm = true
+                                val startIntent = Intent(context, AlarmReceiver::class.java)
+                                context.sendBroadcast(startIntent)
+                            }
+                        }
                     }
                 }
 

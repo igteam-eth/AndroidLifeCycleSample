@@ -65,16 +65,5 @@ public class BeaconRegistration {
             MyApplication.saveLogWithCurrentDate("BLE already start scan");
             trackerSharePreference.setCurrentState(StateMachine.WAITING_FOR_BEACON.getValue());
         }
-
-        // Host model is SAMSUNG  start alarm manager
-        if (Build.BRAND.equalsIgnoreCase("samsung")) {
-            // check if not Already Create Alarm
-            if (!trackerSharePreference.isAlreadyCreateAlarm()) {
-                MyApplication.saveLogWithCurrentDate("Periodic Alarm for Samsung created");
-                trackerSharePreference.setAlreadyCreateAlarm(true);
-                Intent startIntent = new Intent(context, AlarmReceiver.class);
-                context.sendBroadcast(startIntent);
-            }
-        }
     }
 }

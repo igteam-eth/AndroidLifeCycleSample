@@ -8,11 +8,11 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.ethernom.alarmhelloworld.v9"
+        applicationId "com.ethernom.alarmhelloworld.v10"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 3
-        versionName "1.0.3"
+        versionCode 5
+        versionName "1.0.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

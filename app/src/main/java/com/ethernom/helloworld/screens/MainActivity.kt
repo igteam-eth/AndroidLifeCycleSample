@@ -18,11 +18,12 @@ import com.ethernom.helloworld.application.TrackerSharePreference.getConstant
 import com.ethernom.helloworld.dialog.DeleteDeviceBottomDialog
 import com.ethernom.helloworld.dialog.ItemDeleteCallback
 import com.ethernom.helloworld.model.BleClient
+import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BeaconReceiver
 import com.ethernom.helloworld.statemachine.BeaconRegistration
 import com.ethernom.helloworld.util.Utils
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_base.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, ItemDeleteCallback {
@@ -78,6 +79,20 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
                For WaitingForBeaconState we study with input event , state variable and action function for intent to next state
                */
                 BeaconRegistration().launchBLEScan(this)
+
+                // Host model is
+                MyApplication.saveLogWithCurrentDate("BRAND: ${Build.BRAND}")
+
+                // Host model is SAMSUNG  start alarm manager
+                if (Build.BRAND.equals("samsung", ignoreCase = true)) {
+                    // check if not Already Create Alarm
+                    if (!trackerSharePreference.isAlreadyCreateAlarm) {
+                        MyApplication.saveLogWithCurrentDate("Periodic Alarm for Samsung created")
+                        trackerSharePreference.isAlreadyCreateAlarm = true
+                        val startIntent = Intent(this.applicationContext, AlarmReceiver::class.java)
+                        this.applicationContext.sendBroadcast(startIntent)
+                    }
+                }
             }
         }
     }
