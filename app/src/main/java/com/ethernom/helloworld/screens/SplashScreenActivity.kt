@@ -14,7 +14,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.ethernom.helloworld.BuildConfig
 import com.ethernom.helloworld.R
-import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.receiver.BeaconReceiver
@@ -50,7 +49,6 @@ class SplashScreenActivity : BaseActivity() {
         //initialize bluetooth and location
         Utils.initBLE_Location(this)
 
-        MyApplication.saveCurrentStateToLog(this)
         Utils.removeNotificationByID(this, Utils.CHANNEL_RANG)
         Log.d("SplashScreenActivity", "onCreate $ONE_SHOT_FLAG called")
 

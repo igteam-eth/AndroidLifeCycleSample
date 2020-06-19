@@ -12,7 +12,7 @@ import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.screens.DiscoverDeviceActivity
 import com.ethernom.helloworld.statemachine.InitializeState
-import com.ethernom.helloworld.statemachine.WaitingForBeaconState
+import com.ethernom.helloworld.statemachine.BeaconRegistration
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 
@@ -53,7 +53,8 @@ class LocationStateChangeReceiver : BroadcastReceiver() {
                     if (TrackerSharePreference.getConstant(context).isBLEStatus) {
                         //Launch BLE Scan Intent
                         //TrackerSharePreference.getConstant(context).currentState = StateMachine.WAITING_FOR_BEACON.value
-                        WaitingForBeaconState().launchBLEScan(context)
+                        BeaconRegistration()
+                            .launchBLEScan(context)
                     }
                 }
                 StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value -> {

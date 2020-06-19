@@ -14,7 +14,7 @@ import com.ethernom.helloworld.application.MyApplication.showBluetoothNotificati
 import com.ethernom.helloworld.application.MyApplication.showLocationNotification
 
 import com.ethernom.helloworld.application.TrackerSharePreference
-import com.ethernom.helloworld.statemachine.WaitingForBeaconState
+import com.ethernom.helloworld.statemachine.BeaconRegistration
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.workmanager.IntentBLEAndLocationStatusWorkManager
 
@@ -30,9 +30,7 @@ class StartupReceiver : BroadcastReceiver() {
             "com.htc.intent.action.QUICKBOOT_POWERON",
             Intent.ACTION_BOOT_COMPLETED -> {
 
-                Log.i(TAG, "Boot completed (" + intent.action + ")")
                 MyApplication.saveLogWithCurrentDate("Boot Completed")
-                MyApplication.saveCurrentStateToLog(context)
 
                 val trackerSharePreference = TrackerSharePreference.getConstant(context)
 
@@ -40,27 +38,24 @@ class StartupReceiver : BroadcastReceiver() {
 
                     if (!trackerSharePreference.isBLEStatus && !trackerSharePreference.isLocationStatus) {
                         //Notify user to turn on both BLE and Location
-                        trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value
                         showBluetoothNotification(context)
+                        trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_AND_LOCATION_OFF_STATE.value
                         return
                     }else if (!trackerSharePreference.isBLEStatus) {
                         //Notify user to enable BLE
-                        trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
                         showBluetoothNotification(context)
+                        trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_BLE_OFF_STATE.value
                         return
                     }else if (!trackerSharePreference.isLocationStatus) {
                         //Notify user to enable location
-                        trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
                         showLocationNotification(context)
+                        trackerSharePreference.currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
                         return
                     }else{
-
-                        MyApplication.saveLogWithCurrentDate("Launch BLE Scan Intent")
                         //Launch BLE Scan Intent
                         trackerSharePreference.isAlreadyCreateWorkerThread = false
                         trackerSharePreference.isAlreadyCreateAlarm = false
-                        WaitingForBeaconState().launchBLEScan(context)
-
+                        BeaconRegistration().launchBLEScan(context)
                     }
                 }
 
@@ -76,7 +71,6 @@ class StartupReceiver : BroadcastReceiver() {
     }
 
     companion object {
-
         private const val TAG = "StartupReceiver"
     }
 }

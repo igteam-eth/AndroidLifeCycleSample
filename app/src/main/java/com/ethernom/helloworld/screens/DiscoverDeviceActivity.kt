@@ -3,19 +3,15 @@ package com.ethernom.helloworld.screens
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.adapter.DeviceAdapter
-import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.application.SettingSharePreference
 import com.ethernom.helloworld.application.TrackerSharePreference
 import com.ethernom.helloworld.callback.StateMachineCallback
@@ -63,7 +59,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         firmwareInfoState = FirmwareInfoState(this)
         mBTDevicesArrayList = ArrayList()
         setUpList()
-        MyApplication.saveCurrentStateToLog(this)
         showSettingButtonToolbar()
 
 

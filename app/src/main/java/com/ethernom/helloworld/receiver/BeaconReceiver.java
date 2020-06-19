@@ -47,7 +47,7 @@ public class BeaconReceiver extends BroadcastReceiver {
 
     public static MediaPlayer mp = null;
 
-    private static final String TAG = "APP_BleReceiver";
+    private static final String TAG = "BeaconReceiver";
     public static final String ACTION_SCANNER_FOUND_DEVICE = "com.ethernom.helloworld.ACTION_SCANNER_FOUND_DEVICE";
 
     public static PendingIntent mPendingIntent;
@@ -70,7 +70,7 @@ public class BeaconReceiver extends BroadcastReceiver {
         //if user delete the card
         if (!TrackerSharePreference.getConstant(context).isCardRegistered()) return;
 
-        MyApplication.appendLog(MyApplication.getCurrentDate() + " : BleReceiver OnReceive callback\n");
+        MyApplication.appendLog(MyApplication.getCurrentDate() + " : BeaconReceiver OnReceive callback\n");
         mContext = context;
 
         Log.v(TAG, "onReceive() ");
@@ -169,41 +169,6 @@ public class BeaconReceiver extends BroadcastReceiver {
 
         return builder.build();
     }
-        /* Doeurn
-        manData.put(18, (byte) 0x16); //major
-        manData.put(19, (byte) 0x9C); //major
-        manData.put(20, (byte) 0x95); //minor
-        manData.put(21, (byte) 0x2C); //minor */
-
-        /* Sopheak
-        manData.put(18, (byte) 0x23); //major
-        manData.put(19, (byte) 0xD5); //major
-        manData.put(20, (byte) 0x10); //minor
-        manData.put(21, (byte) 0x14); //minor */
-
-        /* Bunheng1
-        manData.put(18, (byte) 0x61); //major
-        manData.put(19, (byte) 0x7F); //major
-        manData.put(20, (byte) 0xA9); //minor
-        manData.put(21, (byte) 0x8D); //minor */
-
-        /*Zophak
-        manData.put(18, (byte) 0x81); //major
-        manData.put(19, (byte) 0xcb); //major
-        manData.put(20, (byte) 0xd8); //minor
-        manData.put(21, (byte) 0x89); //minor */
-
-        /*AABB
-        manData.put(18, (byte) 0xDF); //major
-        manData.put(19, (byte) 0xA0); //major
-        manData.put(20, (byte) 0x00); //minor
-        manData.put(21, (byte) 0x0C); //minor*/
-
-        /*thoun
-        manData.put(18, (byte) 0x3F); //major
-        manData.put(19, (byte) 0x58); //major
-        manData.put(20, (byte) 0x91); //minor
-        manData.put(21, (byte) 0x84); //minor*/
 
     /**
      * Used internally only
