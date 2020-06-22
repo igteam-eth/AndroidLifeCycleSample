@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -110,7 +111,6 @@ abstract class BaseActivity : CoreActivity() {
                     TrackerSharePreference.getConstant(this).currentState = StateMachine.WAITING_FOR_BEACON_LOCATION_OFF_STATE.value
                 }
             }
-
         }
 
         if (isShowDialogDenyPermanently){
@@ -126,10 +126,14 @@ abstract class BaseActivity : CoreActivity() {
             view_turn_on_location.visibility = View.GONE
             return
         }
-        val isAllowAllTheTime = ContextCompat.checkSelfPermission(
-            this,
-            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
+        val isAllowAllTheTime: Boolean = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        }else{
+            true
+        }
         if (Utils.isLocationEnabled(this) && isAllowAllTheTime) {
             view_turn_on_location.visibility = View.GONE
         } else {
@@ -182,7 +186,6 @@ abstract class BaseActivity : CoreActivity() {
                         }
                     }
                 }
-
             }
         }
     }
@@ -321,9 +324,7 @@ abstract class BaseActivity : CoreActivity() {
         startActivity(intent)
     }
 
-    open fun readyToDiscoverDevice() {
-
-    }
+    open fun readyToDiscoverDevice() {}
 
     override fun onStart() {
         super.onStart()

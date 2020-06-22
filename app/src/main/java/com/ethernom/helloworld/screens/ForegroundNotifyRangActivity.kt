@@ -7,10 +7,8 @@ import android.os.Build
 import android.os.Bundle
 
 import androidx.annotation.RequiresApi
-import com.ethernom.helloworld.application.MyApplication
 import com.ethernom.helloworld.dialog.NotifyRangCallback
 import com.ethernom.helloworld.dialog.NotifyRangDialog
-import com.ethernom.helloworld.receiver.BeaconReceiver
 
 
 class ForegroundNotifyRangActivity : Activity(), NotifyRangCallback {

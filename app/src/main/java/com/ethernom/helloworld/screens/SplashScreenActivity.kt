@@ -1,8 +1,7 @@
 package com.ethernom.helloworld.screens
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -23,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_splash_screen.*
 
 class SplashScreenActivity : BaseActivity() {
 
+    @SuppressLint("SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -34,8 +34,6 @@ class SplashScreenActivity : BaseActivity() {
 
         setContentView(R.layout.activity_splash_screen)
         ONE_SHOT_FLAG++
-
-
 
         if (TrackerSharePreference.getConstant(this).isRanging) {
             TrackerSharePreference.getConstant(this).isRanging = false
@@ -77,16 +75,13 @@ class SplashScreenActivity : BaseActivity() {
         }
     }
 
-
     override fun onBackPressed() {
         super.onBackPressed()
         Log.d("SplashScreenActivity", "onBackPressed called")
     }
 
-
-
     companion object {
-        var TAG = SplashScreenActivity::class.java.simpleName;
+        var TAG = SplashScreenActivity::class.java.simpleName
         var ONE_SHOT_FLAG = 0
         var TEMP_ONE_SHOT_FLAG = 0
     }

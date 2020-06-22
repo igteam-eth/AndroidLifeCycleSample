@@ -2,8 +2,6 @@ package com.ethernom.helloworld.statemachine;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 
 
@@ -12,7 +10,6 @@ import androidx.work.WorkManager;
 
 import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
-import com.ethernom.helloworld.receiver.AlarmReceiver;
 import com.ethernom.helloworld.util.StateMachine;
 import com.ethernom.helloworld.util.Utils;
 import com.ethernom.helloworld.workmanager.MyWorkManager;
