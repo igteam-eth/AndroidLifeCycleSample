@@ -10,15 +10,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartupReceiver.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-    </list>
+    <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -266,7 +258,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592569298124</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="+ Change flow in boot complete:&#10;   - Create notification requiredLaunchAppNotification() &#10;   - Clear Share Preference flag in boot complete&#10;   - Call requiredLaunchAppNotification() in boot complete for notify user to click notification to relaunch app">
+      <created>1592805693463</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1592805693464</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TodoView">
@@ -291,7 +290,9 @@
     <MESSAGE value="- Fixed Bug #1 App keep loading when user click connect card that power off&#10;- Fixed Bug #2 App keep loading when user click connect card during beacon broadcasting&#10;- Fixed Bug #3 Ring not loudly and plugin head phone&#10;- Fixed Bug #4 Discover screen show multi time&#10;- Fixed Bug #5 Keyboard show duplicate in verify pin screen&#10;- Fixed Bug #6 The host app stuck then it crash in discovery screen when user connect then app pushed to background&#10;- Fixed Bug #7 Host app stuck at the splash screen when user Choose Deny&amp; don't ask again of location permission" />
     <MESSAGE value="+ Clean up all the state :&#10;  - Rename all classes follow state table.&#10;  - Change message log to the file to be identical follow state table.&#10;  - Set next state correctly follow by state table and log to file." />
     <MESSAGE value="+ Clean up all the state :&#10;  - Rename all classes follow state table.&#10;  - Change message log to the file to be identical follow state table.&#10;  - Set next state correctly follow by state table and log to file.&#10;  - Add alarm in main activity and after boot completed" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ Clean up all the state :&#10;  - Rename all classes follow state table.&#10;  - Change message log to the file to be identical follow state table.&#10;  - Set next state correctly follow by state table and log to file.&#10;  - Add alarm in main activity and after boot completed" />
+    <MESSAGE value="+ Change flow in boot complete" />
+    <MESSAGE value="+ Change flow in boot complete:&#10;   - Create notification requiredLaunchAppNotification() &#10;   - Clear Share Preference flag in boot complete&#10;   - Call requiredLaunchAppNotification() in boot complete for notify user to click notification to relaunch app" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ Change flow in boot complete:&#10;   - Create notification requiredLaunchAppNotification() &#10;   - Clear Share Preference flag in boot complete&#10;   - Call requiredLaunchAppNotification() in boot complete for notify user to click notification to relaunch app" />
   </component>
   <component name="WindowStateProjectService">
     <state x="365" y="264" key="#PSD" timestamp="1592376466116">
@@ -311,10 +312,10 @@
     </state>
     <state x="696" y="292" key="AndroidProcessChooserDialog/0.0.1680.1050@0.0.1680.1050" timestamp="1592563000634" />
     <state x="696" y="309" key="AndroidProcessChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592299469741" />
-    <state x="49" y="119" key="CommitChangelistDialog2" timestamp="1592569297202">
+    <state x="301" y="5" key="CommitChangelistDialog2" timestamp="1592805692816">
       <screen x="0" y="0" width="1680" height="1050" />
     </state>
-    <state x="49" y="119" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1592569297202" />
+    <state x="301" y="5" key="CommitChangelistDialog2/0.0.1680.1050@0.0.1680.1050" timestamp="1592805692816" />
     <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1592305561801" />
     <state x="100" y="100" width="1480" height="850" key="DiffContextDialog" timestamp="1592789991477">
       <screen x="0" y="0" width="1680" height="1050" />
