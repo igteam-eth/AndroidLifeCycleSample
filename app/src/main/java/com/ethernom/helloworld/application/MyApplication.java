@@ -195,6 +195,32 @@ public class MyApplication extends Application implements Configuration.Provider
     }
 
 
+    // create notification to show user start app
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void requiredLaunchAppNotification(Context context) {
+        Log.d("MyApplication", "requiredLaunchAppNotification");
+        final NotificationManager manager =
+                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        final NotificationChannel channel =
+                new NotificationChannel(Utils.CHANNEL_RANG, "Ethernom", IMPORTANCE_HIGH);
+        assert manager != null;
+        manager.createNotificationChannel(channel);
+        Notification.Builder builder = new Notification.Builder(context, Utils.CHANNEL_RANG);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setColor(ContextCompat.getColor(context, R.color.colorAccent));
+        builder.setContentTitle("Ethernom Tracker");
+        builder.setContentText("Start Tracker App");
+        builder.setAutoCancel(true);
+        builder.setDeleteIntent(createOnDismissedIntent(context));
+        Intent intent = new Intent(context, SplashScreenActivity.class);
+        intent.putExtra("NOTIFICATION", true);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        builder.setContentIntent(pendingIntent);
+        manager.notify(0, builder.build());
+    }
+
+
     private static PendingIntent createOnDismissedIntent(Context context) {
         Intent intent = new Intent(context, NotificationDismissedReceiver.class);
         intent.putExtra("NOTIFICATION_DISMISS", true);
