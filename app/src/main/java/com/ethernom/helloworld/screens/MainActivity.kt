@@ -20,7 +20,7 @@ import com.ethernom.helloworld.dialog.ItemDeleteCallback
 import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BeaconReceiver
-import com.ethernom.helloworld.servcie.AppSwipeEvent
+import com.ethernom.helloworld.servcie.AppSwipeEventService
 import com.ethernom.helloworld.statemachine.BeaconRegistration
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_base.*
@@ -44,7 +44,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
 
         // Initialize share preference
         trackerSharePreference = getConstant(this)
-        appSwipeIntentService = Intent(this, AppSwipeEvent::class.java)
+        appSwipeIntentService = Intent(this, AppSwipeEventService::class.java)
 
         // Stop ring when app is ringing by user interact with notification
         if (!getConstant(this).isAlreadyCreateWorkerThread) {

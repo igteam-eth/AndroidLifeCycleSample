@@ -12,7 +12,6 @@ import androidx.work.WorkerParameters;
 import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.receiver.BeaconReceiver;
 
-
 public class MyWorkManager extends Worker {
 
     private Context mContext;

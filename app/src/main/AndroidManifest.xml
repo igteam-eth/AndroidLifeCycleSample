@@ -75,10 +75,11 @@
         <receiver
             android:name=".receiver.BLEAndLocationRegisterManager" />
 
-        <service android:name=".servcie.AppSwipeEvent"/>
+        <service android:name=".servcie.AppSwipeEventService"/>
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
+            tools:node="remove"
             android:exported="false"
             android:enabled="false"/>
 

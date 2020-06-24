@@ -35,7 +35,6 @@ import com.ethernom.helloworld.util.StateMachine;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static android.content.Context.AUDIO_SERVICE;
 import static com.ethernom.helloworld.application.MyApplication.showRangNotification;
@@ -93,11 +92,14 @@ public class BeaconReceiver extends BroadcastReceiver {
                                 continue;
                             }
 
-                            TrackerSharePreference.getConstant(context).setAlreadyCreateWorkerThread(false);
-                            TrackerSharePreference.getConstant(context).setRanging(true);
-                            TrackerSharePreference.getConstant(context).setBeaconTimestamp(MyApplication.getCurrentDate());
+                            TrackerSharePreference trackerSharePreference = TrackerSharePreference.getConstant(context);
+                            trackerSharePreference.setAlreadyCreateWorkerThread(false);
+                            trackerSharePreference.setRanging(true);
+                            trackerSharePreference.setBeaconTimestamp(MyApplication.getCurrentDate());
+                            trackerSharePreference.setCurrentState(StateMachine.RING_NOTIFICATION_STATE.getValue());
                             playSound(context);
                             showRangNotification(context);
+
 
                             Log.d("BleReceiver", "showNotification");
 
@@ -267,6 +269,7 @@ public class BeaconReceiver extends BroadcastReceiver {
         }
         if (mp != null) {
             mp.stop();
+            Log.d(TAG, "Stop Sound");
         }
     }
 

@@ -229,7 +229,7 @@ public class MyApplication extends Application implements Configuration.Provider
     @Override
     public Configuration getWorkManagerConfiguration() {
         return new Configuration.Builder()
-                .setMinimumLoggingLevel(android.util.Log.INFO)
+                .setMinimumLoggingLevel(android.util.Log.DEBUG)
                 .build();
     }
 }

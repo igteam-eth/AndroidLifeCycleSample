@@ -27,8 +27,7 @@ public class RingNotificationState {
     public void appSwipeEvent(){
         Log.d(TAG, "appSwipeEvent");
         Utils.removeNotificationByID(context, Utils.CHANNEL_RANG);
-        MyApplication.saveLogWithCurrentDate("AppSwipe Event");
-        trackerSharePreference.setAlreadyCreateWorkerThread(false);
+        MyApplication.saveLogWithCurrentDate("App Swipe Event");
         new BeaconRegistration().launchBLEScan(context);
         createAlarmForSamsung();
     }
@@ -38,15 +37,13 @@ public class RingNotificationState {
         Log.d(TAG, "notificationSwipeEvent");
         BeaconReceiver.stopSound();
         MyApplication.saveLogWithCurrentDate("Notification Swipe Event");
-        TrackerSharePreference trackerSharePreference = TrackerSharePreference.getConstant(context);
-        trackerSharePreference.setAlreadyCreateWorkerThread(false);
         new BeaconRegistration().launchBLEScan(context);
         createAlarmForSamsung();
     }
 
     private void createAlarmForSamsung() {
         // Host model is
-        MyApplication.saveLogWithCurrentDate("BRAND: ${Build.BRAND}");
+        MyApplication.saveLogWithCurrentDate("BRAND: "+Build.BRAND);
 
         // Host model is SAMSUNG  start alarm manager
         if (Build.BRAND.equalsIgnoreCase("samsung")) {
