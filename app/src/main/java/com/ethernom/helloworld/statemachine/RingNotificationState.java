@@ -3,6 +3,7 @@ package com.ethernom.helloworld.statemachine;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -10,9 +11,11 @@ import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.receiver.AlarmReceiver;
 import com.ethernom.helloworld.receiver.BeaconReceiver;
+import com.ethernom.helloworld.util.Utils;
 
 public class RingNotificationState {
     private Context context;
+    private String TAG = "RingNotificationState";
     TrackerSharePreference trackerSharePreference;
 
     public RingNotificationState(Context context) {
@@ -20,7 +23,10 @@ public class RingNotificationState {
         trackerSharePreference = TrackerSharePreference.getConstant(context);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void appSwipeEvent(){
+        Log.d(TAG, "appSwipeEvent");
+        Utils.removeNotificationByID(context, Utils.CHANNEL_RANG);
         MyApplication.saveLogWithCurrentDate("AppSwipe Event");
         trackerSharePreference.setAlreadyCreateWorkerThread(false);
         new BeaconRegistration().launchBLEScan(context);
@@ -29,6 +35,7 @@ public class RingNotificationState {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void notificationSwipeEvent(){
+        Log.d(TAG, "notificationSwipeEvent");
         BeaconReceiver.stopSound();
         MyApplication.saveLogWithCurrentDate("Notification Swipe Event");
         TrackerSharePreference trackerSharePreference = TrackerSharePreference.getConstant(context);
@@ -36,7 +43,6 @@ public class RingNotificationState {
         new BeaconRegistration().launchBLEScan(context);
         createAlarmForSamsung();
     }
-
 
     private void createAlarmForSamsung() {
         // Host model is
