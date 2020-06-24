@@ -25,7 +25,7 @@ public class BeaconRegistration {
 
     // Waiting for beacon
     @SuppressLint("SimpleDateFormat")
-    public void launchBLEScan(Context context) throws ParseException {
+    public void launchBLEScan(Context context) {
 
         MyApplication.saveLogWithCurrentDate("Launch BLE Scan");
 
@@ -35,7 +35,12 @@ public class BeaconRegistration {
             byte numDelay = 0;
 
             if (!TrackerSharePreference.getConstant(context).isBeaconTimeStamp().equals("")) {
-                long diffInMs = Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(MyApplication.getCurrentDate())).getTime() - Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(TrackerSharePreference.getConstant(context).isBeaconTimeStamp())).getTime();
+                long diffInMs = 0;
+                try {
+                    diffInMs = Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(MyApplication.getCurrentDate())).getTime() - Objects.requireNonNull(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SSS").parse(TrackerSharePreference.getConstant(context).isBeaconTimeStamp())).getTime();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 byte diffInSec = (byte) TimeUnit.MILLISECONDS.toSeconds(diffInMs);
 
                 Log.d(TAG, "Seconds: "+ diffInSec);

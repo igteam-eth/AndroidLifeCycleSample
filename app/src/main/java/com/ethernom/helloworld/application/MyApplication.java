@@ -110,10 +110,8 @@ public class MyApplication extends Application implements Configuration.Provider
         return formatter.format(calendar.getTime());
     }
 
-
     public static void saveCurrentStateToLog(Context context) {
         String currentState = TrackerSharePreference.getConstant(context).getCurrentState();
-
         appendLog(getCurrentDate() + " : Current State " + currentState + " " + BaseActivity.Companion.getEnumNameByValue(currentState) + "\n");
 
     }
@@ -160,7 +158,6 @@ public class MyApplication extends Application implements Configuration.Provider
         builder.setContentTitle("Location is off");
         builder.setContentText("Turn on Location services for the Ethernom Tracker app to keep track of your items.");
         builder.setAutoCancel(true);
-        builder.setDeleteIntent(createOnDismissedIntent(context));
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -185,7 +182,6 @@ public class MyApplication extends Application implements Configuration.Provider
         builder.setContentTitle("Bluetooth is off");
         builder.setContentText("Turn on Bluetooth services for the Ethernom Tracker app to keep track of your items.");
         builder.setAutoCancel(true);
-        builder.setDeleteIntent(createOnDismissedIntent(context));
         Intent intent = new Intent();
         intent.setAction(Settings.ACTION_BLUETOOTH_SETTINGS);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

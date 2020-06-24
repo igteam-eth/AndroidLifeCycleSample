@@ -18,7 +18,6 @@ import com.ethernom.helloworld.statemachine.BeaconRegistration
 import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.workmanager.IntentBLEAndLocationStatusWorkManager
 
-
 class StartupReceiver : BroadcastReceiver() {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -30,14 +29,18 @@ class StartupReceiver : BroadcastReceiver() {
             "com.htc.intent.action.QUICKBOOT_POWERON",
             Intent.ACTION_BOOT_COMPLETED -> {
 
-                MyApplication.saveLogWithCurrentDate("Boot Completed")
-
-                val trackerSharePreference = TrackerSharePreference.getConstant(context)
-                // clear share preference
-                trackerSharePreference.isAlreadyCreateWorkerThread = false
-                trackerSharePreference.isAlreadyCreateAlarm = false
                 // Show notification to user for launch tracker app
                 MyApplication.requiredLaunchAppNotification(context)
+                MyApplication.saveLogWithCurrentDate("Boot Completed")
+
+
+                val trackerSharePreference = TrackerSharePreference.getConstant(context)
+                trackerSharePreference.isAlreadyCreateWorkerThread = false
+                trackerSharePreference.isAlreadyCreateAlarm = false
+                trackerSharePreference.setBeaconTimestamp("")
+
+
+
 
 //                if (trackerSharePreference.isCardRegistered!!) {
 //

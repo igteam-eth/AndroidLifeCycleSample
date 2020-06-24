@@ -10,6 +10,8 @@ import androidx.annotation.RequiresApi;
 
 import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
+import com.ethernom.helloworld.statemachine.BeaconRegistration;
+import com.ethernom.helloworld.statemachine.RingNotificationState;
 
 public class NotificationDismissedReceiver extends BroadcastReceiver {
 
@@ -18,13 +20,11 @@ public class NotificationDismissedReceiver extends BroadcastReceiver {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        Log.d(TAG, "Notification dismiss");
         try {
             boolean isNotificationDismiss = intent.getBooleanExtra("NOTIFICATION_DISMISS", false);
             if (isNotificationDismiss){
-                Log.d(TAG, "Notification dismiss");
-                //TrackerSharePreference.getConstant(context).setAlreadyCreateWorkerThread (false);
-                MyApplication.appendLog(MyApplication.getCurrentDate() +" : User dismiss notification so wee set : isAlreadyCreateWorkerThread = false\n");
+               new RingNotificationState(context).notificationSwipeEvent();
             }
 
         }catch (Exception e){

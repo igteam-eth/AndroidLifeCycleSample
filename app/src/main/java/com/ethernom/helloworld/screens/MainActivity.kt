@@ -20,6 +20,7 @@ import com.ethernom.helloworld.dialog.ItemDeleteCallback
 import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BeaconReceiver
+import com.ethernom.helloworld.servcie.AppSwipeEvent
 import com.ethernom.helloworld.statemachine.BeaconRegistration
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_base.*
@@ -31,6 +32,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
     private var registeredDeviceList: ArrayList<BleClient> = ArrayList()
     private var registeredDeviceAdapter: RegisteredDeviceAdapter? = null
     private lateinit var trackerSharePreference: TrackerSharePreference
+    private lateinit var appSwipeIntentService: Intent
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +44,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
 
         // Initialize share preference
         trackerSharePreference = getConstant(this)
+        appSwipeIntentService = Intent(this, AppSwipeEvent::class.java)
 
         // Stop ring when app is ringing by user interact with notification
         if (!getConstant(this).isAlreadyCreateWorkerThread) {
@@ -149,6 +152,10 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         finishAffinity()
     }
 
+    override fun onStart() {
+        super.onStart()
+        startService(appSwipeIntentService)
+    }
     companion object {
         const val PERMISSION_REQUEST_COARSE_LOCATION = 112
         const val TAG = "APP_MainActivity"

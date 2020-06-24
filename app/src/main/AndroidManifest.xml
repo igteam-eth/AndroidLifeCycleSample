@@ -38,9 +38,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".screens.ForegroundNotifyRangActivity"
-            android:theme="@style/Theme.Transparent" />
         <activity android:name=".screens.DiscoverDeviceActivity" />
         <activity android:name=".screens.ConfirmPinActivity" />
         <activity android:name=".screens.MainActivity" />
@@ -70,13 +67,15 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".receiver.NotificationDismissedReceiver"/>
+
         <receiver
             android:name=".receiver.AlarmReceiver" />
 
         <receiver
             android:name=".receiver.BLEAndLocationRegisterManager" />
 
-
+        <service android:name=".servcie.AppSwipeEvent"/>
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"

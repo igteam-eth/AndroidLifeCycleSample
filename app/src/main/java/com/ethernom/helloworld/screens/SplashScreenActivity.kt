@@ -38,6 +38,8 @@ class SplashScreenActivity : BaseActivity() {
         if (TrackerSharePreference.getConstant(this).isRanging) {
             TrackerSharePreference.getConstant(this).isRanging = false
             MyApplication.saveLogWithCurrentDate("User click rang notification")
+            TrackerSharePreference.getConstant(this).isAlreadyCreateWorkerThread = false
+            TrackerSharePreference.getConstant(this).isAlreadyCreateAlarm = false
             BeaconReceiver.stopSound()
         }
 
