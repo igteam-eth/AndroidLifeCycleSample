@@ -14,7 +14,7 @@ import com.ethernom.helloworld.statemachine.RingNotificationState;
 
 public class AppSwipeEventService extends Service {
 
-    private String TAG = "AppSwipeEvent";
+    //private String TAG = "AppSwipeEvent";
 
     @Nullable
     @Override
@@ -24,16 +24,16 @@ public class AppSwipeEventService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d(TAG, "onStartCommand");
-        MyApplication.saveLogWithCurrentDate("NotificationSwipeEvent onStartCommand");
+        //Log.d(TAG, "onStartCommand");
+        //MyApplication.saveLogWithCurrentDate("NotificationSwipeEvent onStartCommand");
         return START_NOT_STICKY;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
+    /*@RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
         Log.d(TAG, "onTaskRemoved");
         new RingNotificationState(this).appSwipeEvent();
-    }
+    }*/
 }

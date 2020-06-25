@@ -100,7 +100,6 @@ public class BeaconReceiver extends BroadcastReceiver {
                             playSound(context);
                             showRangNotification(context);
 
-
                             Log.d("BleReceiver", "showNotification");
 
                         }

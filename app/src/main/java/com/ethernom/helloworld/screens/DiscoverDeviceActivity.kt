@@ -163,7 +163,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         //TrackerSharePreference.getConstant(this).currentState = StateMachine.WAITING_FOR_BEACON.value
 
         // Display Card Registered
-        startActivity(Intent(this, MainActivity::class.java))
+        initState()
         finishAffinity()
     }
 

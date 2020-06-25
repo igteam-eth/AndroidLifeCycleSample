@@ -10,6 +10,7 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.ethernom.helloworld.application.MyApplication;
+import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.receiver.BeaconReceiver;
 
 public class MyWorkManager extends Worker {
@@ -27,7 +28,11 @@ public class MyWorkManager extends Worker {
         
         Log.d("APP_MyWorkManager", "doWork");
         MyApplication.saveLogWithCurrentDate("MyWorkManager(Worker thread) in doWork");
-        BeaconReceiver.startScan(mContext);
+
+        // Check if not yet  Already Create Worker Thread to start scan
+        if (!TrackerSharePreference.getConstant(mContext).isAlreadyCreateWorkerThread()) {
+            BeaconReceiver.startScan(mContext);
+        }
 
         return Result.success();
     }

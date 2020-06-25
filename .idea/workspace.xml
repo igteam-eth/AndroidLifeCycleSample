@@ -10,19 +10,20 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="androidx.work.impl.background.systemjob.SystemJobService" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="">
+    <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="Fix bugs on RingNotificationState.java">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartScanAlarmReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/application/MyApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/servcie/AppSwipeEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/servcie/AppSwipeEventService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/servcie/AppSwipeEventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/servcie/AppSwipeEventService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/RingNotificationState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/RingNotificationState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" afterDir="false" />
     </list>
@@ -311,7 +312,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592977728671</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Fix bugs on RingNotificationState.java">
+      <created>1592995873290</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1592995873290</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TodoView">
@@ -342,57 +350,58 @@
     <MESSAGE value="- Fix bug Location permission version 9" />
     <MESSAGE value="Add RingNotificationState.java&#10;Add Swipe Notification Event&#10;Add App Swipe Event" />
     <MESSAGE value="Add Log" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Log" />
+    <MESSAGE value="Fix bugs on RingNotificationState.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bugs on RingNotificationState.java" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1592991527101">
+    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1593066032042">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1592991527101" />
+    <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser/0.23.1680.1027@0.23.1680.1027" timestamp="1593066032042" />
     <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1592992119635">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="578" y="290" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592992119635" />
-    <state x="696" y="309" key="AndroidProcessChooserDialog" timestamp="1592977613713">
+    <state x="696" y="309" key="AndroidProcessChooserDialog" timestamp="1593058809569">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="696" y="309" key="AndroidProcessChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592977613713" />
-    <state x="49" y="139" key="CommitChangelistDialog2" timestamp="1592977727900">
+    <state x="696" y="309" key="AndroidProcessChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1593058809569" />
+    <state x="49" y="139" key="CommitChangelistDialog2" timestamp="1593082870542">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1592977727900" />
-    <state width="1638" height="376" key="GridCell.Tab.0.bottom" timestamp="1592992877821">
+    <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1593082870542" />
+    <state width="1638" height="336" key="GridCell.Tab.0.bottom" timestamp="1593081706107">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1592992877821" />
-    <state width="1638" height="376" key="GridCell.Tab.0.center" timestamp="1592992877820">
+    <state width="1638" height="336" key="GridCell.Tab.0.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1593081706107" />
+    <state width="1638" height="336" key="GridCell.Tab.0.center" timestamp="1593081706107">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1592992877820" />
-    <state width="1638" height="376" key="GridCell.Tab.0.left" timestamp="1592992877820">
+    <state width="1638" height="336" key="GridCell.Tab.0.center/0.23.1680.1027@0.23.1680.1027" timestamp="1593081706107" />
+    <state width="1638" height="336" key="GridCell.Tab.0.left" timestamp="1593081706104">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1592992877820" />
-    <state width="1638" height="376" key="GridCell.Tab.0.right" timestamp="1592992877821">
+    <state width="1638" height="336" key="GridCell.Tab.0.left/0.23.1680.1027@0.23.1680.1027" timestamp="1593081706104" />
+    <state width="1638" height="336" key="GridCell.Tab.0.right" timestamp="1593081706107">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="376" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1592992877821" />
-    <state width="1638" height="336" key="GridCell.Tab.1.bottom" timestamp="1592987281668">
+    <state width="1638" height="336" key="GridCell.Tab.0.right/0.23.1680.1027@0.23.1680.1027" timestamp="1593081706107" />
+    <state width="1638" height="336" key="GridCell.Tab.1.bottom" timestamp="1593081706109">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="336" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1592987281668" />
-    <state width="1638" height="336" key="GridCell.Tab.1.center" timestamp="1592987281667">
+    <state width="1638" height="336" key="GridCell.Tab.1.bottom/0.23.1680.1027@0.23.1680.1027" timestamp="1593081706109" />
+    <state width="1638" height="336" key="GridCell.Tab.1.center" timestamp="1593081706108">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="336" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1592987281667" />
-    <state width="1638" height="336" key="GridCell.Tab.1.left" timestamp="1592987281667">
+    <state width="1638" height="336" key="GridCell.Tab.1.center/0.23.1680.1027@0.23.1680.1027" timestamp="1593081706108" />
+    <state width="1638" height="336" key="GridCell.Tab.1.left" timestamp="1593081706108">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="336" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1592987281667" />
-    <state width="1638" height="336" key="GridCell.Tab.1.right" timestamp="1592987281668">
+    <state width="1638" height="336" key="GridCell.Tab.1.left/0.23.1680.1027@0.23.1680.1027" timestamp="1593081706108" />
+    <state width="1638" height="336" key="GridCell.Tab.1.right" timestamp="1593081706108">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state width="1638" height="336" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1592987281668" />
+    <state width="1638" height="336" key="GridCell.Tab.1.right/0.23.1680.1027@0.23.1680.1027" timestamp="1593081706108" />
     <state x="168" y="115" key="MergeDialog" timestamp="1592489961426">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -401,10 +410,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="550" y="259" key="MultipleFileMergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592808558856" />
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1592977731265">
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1592995882960">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592977731265" />
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592995882960" />
     <state x="510" y="369" key="com.intellij.ide.util.TipDialog" timestamp="1592713421766">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -421,14 +430,14 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="578" y="296" key="extract.method.dialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592974603507" />
-    <state x="492" y="293" width="695" height="486" key="find.popup" timestamp="1592620924151">
+    <state x="492" y="293" width="695" height="486" key="find.popup" timestamp="1593061234982">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="492" y="293" width="695" height="486" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1592620924151" />
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1592995786650">
+    <state x="492" y="293" width="695" height="486" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1593061234982" />
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1593069984579">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1592995786650" />
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1593069984579" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

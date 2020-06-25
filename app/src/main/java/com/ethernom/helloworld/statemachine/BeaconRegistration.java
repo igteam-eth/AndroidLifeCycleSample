@@ -53,8 +53,7 @@ public class BeaconRegistration {
             }
 
             Log.d(TAG, "Delay Seconds:"+ numDelay);
-            MyApplication.saveLogWithCurrentDate("Delay For Enqueue WorkManager : "+ numDelay);
-            MyApplication.saveLogWithCurrentDate("Enqueue MyWorkManager");
+
 
             // Create work manager to call start scan for detect beacon inside
             // OneTimeWorkRequest
@@ -63,6 +62,9 @@ public class BeaconRegistration {
                     .setInitialDelay(numDelay, TimeUnit.SECONDS)
                     .build();
             WorkManager.getInstance(context).enqueue(oneTimeRequest);
+
+            MyApplication.saveLogWithCurrentDate("Delay For Enqueue WorkManager : "+ numDelay);
+            MyApplication.saveLogWithCurrentDate("Enqueue MyWorkManager");
         }else{
             MyApplication.saveLogWithCurrentDate("BLE already start scan");
             trackerSharePreference.setCurrentState(StateMachine.WAITING_FOR_BEACON.getValue());

@@ -71,6 +71,8 @@
 
         <receiver
             android:name=".receiver.AlarmReceiver" />
+        <receiver
+            android:name=".receiver.StartScanAlarmReceiver" />
 
         <receiver
             android:name=".receiver.BLEAndLocationRegisterManager" />

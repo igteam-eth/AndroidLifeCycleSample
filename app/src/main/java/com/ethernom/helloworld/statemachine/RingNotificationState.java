@@ -26,6 +26,7 @@ public class RingNotificationState {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void appSwipeEvent(){
         Log.d(TAG, "appSwipeEvent");
+        BeaconReceiver.stopSound();
         Utils.removeNotificationByID(context, Utils.CHANNEL_RANG);
         MyApplication.saveLogWithCurrentDate("App Swipe Event");
         new BeaconRegistration().launchBLEScan(context);

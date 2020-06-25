@@ -20,11 +20,13 @@ import com.ethernom.helloworld.dialog.ItemDeleteCallback
 import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BeaconReceiver
+import com.ethernom.helloworld.receiver.StartScanAlarmReceiver
 import com.ethernom.helloworld.servcie.AppSwipeEventService
 import com.ethernom.helloworld.statemachine.BeaconRegistration
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, ItemDeleteCallback {
@@ -55,13 +57,49 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
             startActivity(Intent(this, SettingActivity::class.java))
             Utils.preventDoubleClick(it)
         }
+
+        displayCardAndLaunchWorkerThread()
+    }
+
+    private fun displayCardAndLaunchWorkerThread() {
+        if (getConstant(this).isCardRegistered) {
+            // Call display registered device to the list
+            displayRegisteredCard()
+        }
+        if (
+        // check bluetooth is turn on
+            Utils.isBluetoothEnable()
+            &&
+            // check location is turn on
+            Utils.isLocationEnabled(this)
+        ) {
+            /*
+           if both location & bluetooth are turn on : Launch BLE Scan Intent for detect Beacon signal
+           For WaitingForBeaconState we study with input event , state variable and action function for intent to next state
+           */
+            BeaconRegistration().launchBLEScan(this)
+
+            // Host model is
+            MyApplication.saveLogWithCurrentDate("BRAND: ${Build.BRAND}")
+
+            // Host model is SAMSUNG  start alarm manager
+            if (Build.BRAND.equals("samsung", ignoreCase = true)) {
+                // check if not Already Create Alarm
+                if (!trackerSharePreference.isAlreadyCreateAlarm) {
+                    MyApplication.saveLogWithCurrentDate("Periodic Alarm for Samsung created")
+                    trackerSharePreference.isAlreadyCreateAlarm = true
+                    val startIntent = Intent(this.applicationContext, AlarmReceiver::class.java)
+                    this.applicationContext.sendBroadcast(startIntent)
+                }
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onResume() {
         super.onResume()
 
-        if (getConstant(this).isCardRegistered) {
+        /*if (getConstant(this).isCardRegistered) {
             // Call display registered device to the list
             displayRegisteredCard()
         }
@@ -77,10 +115,10 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
                 // check location is turn on
                 Utils.isLocationEnabled(this)
             ) {
-                /*
+                *//*
                if both location & bluetooth are turn on : Launch BLE Scan Intent for detect Beacon signal
                For WaitingForBeaconState we study with input event , state variable and action function for intent to next state
-               */
+               *//*
                 BeaconRegistration().launchBLEScan(this)
 
                 // Host model is
@@ -97,7 +135,7 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
                     }
                 }
             }
-        }
+        }*/
     }
 
     // Initialize RecyclerView for display list of card registered
@@ -152,10 +190,32 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         finishAffinity()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onDestroy() {
+        super.onDestroy()
+
+        val mIntent = Intent(this, StartScanAlarmReceiver::class.java)
+//        val pendingIntent = PendingIntent.getBroadcast(
+//            this, 0,
+//            mIntent,
+//            PendingIntent.FLAG_UPDATE_CURRENT
+//        )
+
+        if (getConstant(this).isRanging) {
+            BeaconReceiver.stopSound()
+            getConstant(this).isRanging = false
+            Utils.removeNotificationByID(this, Utils.CHANNEL_RANG)
+        }
+        applicationContext.sendBroadcast(mIntent)
+
+        Log.d(TAG, "RingNotificationState")
+    }
+
     override fun onStart() {
         super.onStart()
         startService(appSwipeIntentService)
     }
+
     companion object {
         const val PERMISSION_REQUEST_COARSE_LOCATION = 112
         const val TAG = "APP_MainActivity"
