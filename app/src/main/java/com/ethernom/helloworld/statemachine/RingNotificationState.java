@@ -9,9 +9,7 @@ import androidx.annotation.RequiresApi;
 
 import com.ethernom.helloworld.application.MyApplication;
 import com.ethernom.helloworld.application.TrackerSharePreference;
-import com.ethernom.helloworld.receiver.AlarmReceiver;
-import com.ethernom.helloworld.receiver.BeaconReceiver;
-import com.ethernom.helloworld.util.Utils;
+import com.ethernom.helloworld.screens.SplashScreenActivity;
 
 public class RingNotificationState {
     private Context context;
@@ -26,35 +24,38 @@ public class RingNotificationState {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void appSwipeEvent(){
         Log.d(TAG, "appSwipeEvent");
-        BeaconReceiver.stopSound();
-        Utils.removeNotificationByID(context, Utils.CHANNEL_RANG);
         MyApplication.saveLogWithCurrentDate("App Swipe Event");
+        initState();
+
+        /*BeaconReceiver.stopSound();
+        Utils.removeNotificationByID(context, Utils.CHANNEL_RANG);
         new BeaconRegistration().launchBLEScan(context);
-        createAlarmForSamsung();
+        createAlarmForSamsung();*/
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void notificationSwipeEvent(){
         Log.d(TAG, "notificationSwipeEvent");
-        BeaconReceiver.stopSound();
         MyApplication.saveLogWithCurrentDate("Notification Swipe Event");
+        initState();
+
+       /* BeaconReceiver.stopSound();
         new BeaconRegistration().launchBLEScan(context);
-        createAlarmForSamsung();
+        createAlarmForSamsung();*/
     }
 
-    private void createAlarmForSamsung() {
-        // Host model is
-        MyApplication.saveLogWithCurrentDate("BRAND: "+Build.BRAND);
 
-        // Host model is SAMSUNG  start alarm manager
-        if (Build.BRAND.equalsIgnoreCase("samsung")) {
-            // check if not Already Create Alarm
-            if (!trackerSharePreference.isAlreadyCreateAlarm()) {
-                MyApplication.saveLogWithCurrentDate("Periodic Alarm for Samsung created");
-                trackerSharePreference.setAlreadyCreateAlarm(true);
-                Intent startIntent = new Intent(context.getApplicationContext(), AlarmReceiver.class);
-                context.getApplicationContext().sendBroadcast(startIntent);
-            }
-        }
+    private void initState() {
+        /*Intent intent = new  Intent(context, SplashScreenActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.getApplicationContext().startActivity(intent);*/
+
+        Intent launchIntent = context.getApplicationContext().getPackageManager().getLaunchIntentForPackage("com.ethernom.alarmhelloworld.v12");
+        launchIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.getApplicationContext().startActivity( launchIntent );
+
+        Log.d(TAG, "initState");
+
     }
 }

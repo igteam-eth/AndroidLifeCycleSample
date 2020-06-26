@@ -20,9 +20,10 @@ import com.ethernom.helloworld.dialog.ItemDeleteCallback
 import com.ethernom.helloworld.model.BleClient
 import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BeaconReceiver
-import com.ethernom.helloworld.receiver.StartScanAlarmReceiver
 import com.ethernom.helloworld.servcie.AppSwipeEventService
 import com.ethernom.helloworld.statemachine.BeaconRegistration
+import com.ethernom.helloworld.statemachine.RingNotificationState
+import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -146,7 +147,6 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         rv_registered_device.adapter = registeredDeviceAdapter
     }
 
-
     private fun requestWriteExternalStoragePermission(): Boolean {
         return if (ContextCompat.checkSelfPermission(
                 this,
@@ -190,11 +190,10 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         finishAffinity()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onDestroy() {
         super.onDestroy()
 
-        val mIntent = Intent(this, StartScanAlarmReceiver::class.java)
+        /*val mIntent = Intent(this, StartScanAlarmReceiver::class.java)
 //        val pendingIntent = PendingIntent.getBroadcast(
 //            this, 0,
 //            mIntent,
@@ -206,9 +205,8 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
             getConstant(this).isRanging = false
             Utils.removeNotificationByID(this, Utils.CHANNEL_RANG)
         }
-        applicationContext.sendBroadcast(mIntent)
+        applicationContext.sendBroadcast(mIntent)*/
 
-        Log.d(TAG, "RingNotificationState")
     }
 
     override fun onStart() {
@@ -220,5 +218,4 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         const val PERMISSION_REQUEST_COARSE_LOCATION = 112
         const val TAG = "APP_MainActivity"
     }
-
 }

@@ -10,7 +10,6 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.ethernom.helloworld.application.MyApplication;
-import com.ethernom.helloworld.statemachine.BeaconRegistration;
 
 public class StartScanAlarmReceiver extends BroadcastReceiver {
     @RequiresApi(api = Build.VERSION_CODES.O)

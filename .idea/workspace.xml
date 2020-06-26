@@ -10,22 +10,20 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="AppSwipeEvent" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="Fix bugs on RingNotificationState.java">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartScanAlarmReceiver.java" afterDir="false" />
+    <list default="true" id="d3d95745-fc75-4793-b949-75a07f386ecb" name="Default Changelist" comment="On Destroy -&gt; Create an Alarm and Alarm start scan immediately">
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/BeaconReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartScanAlarmReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/receiver/StartScanAlarmReceiver.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/DiscoverDeviceActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/screens/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/servcie/AppSwipeEventService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/servcie/AppSwipeEventService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/BeaconRegistration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/RingNotificationState.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/statemachine/RingNotificationState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/ethernom/helloworld/workmanager/MyWorkManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -319,7 +317,14 @@
       <option name="project" value="LOCAL" />
       <updated>1592995873290</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="On Destroy -&gt; Create an Alarm and Alarm start scan immediately">
+      <created>1593083017076</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1593083017077</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TodoView">
@@ -351,7 +356,8 @@
     <MESSAGE value="Add RingNotificationState.java&#10;Add Swipe Notification Event&#10;Add App Swipe Event" />
     <MESSAGE value="Add Log" />
     <MESSAGE value="Fix bugs on RingNotificationState.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix bugs on RingNotificationState.java" />
+    <MESSAGE value="On Destroy -&gt; Create an Alarm and Alarm start scan immediately" />
+    <option name="LAST_COMMIT_MESSAGE" value="On Destroy -&gt; Create an Alarm and Alarm start scan immediately" />
   </component>
   <component name="WindowStateProjectService">
     <state x="653" y="253" key="#com.intellij.ide.util.MemberChooser" timestamp="1593066032042">
@@ -366,10 +372,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="696" y="309" key="AndroidProcessChooserDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1593058809569" />
-    <state x="49" y="139" key="CommitChangelistDialog2" timestamp="1593082870542">
+    <state x="49" y="139" key="CommitChangelistDialog2" timestamp="1593083045540">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1593082870542" />
+    <state x="49" y="139" key="CommitChangelistDialog2/0.23.1680.1027@0.23.1680.1027" timestamp="1593083045540" />
     <state width="1638" height="336" key="GridCell.Tab.0.bottom" timestamp="1593081706107">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -410,10 +416,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="550" y="259" key="MultipleFileMergeDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1592808558856" />
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1592995882960">
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2" timestamp="1593083019787">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1592995882960" />
+    <state x="440" y="276" key="Vcs.Push.Dialog.v2/0.23.1680.1027@0.23.1680.1027" timestamp="1593083019787" />
     <state x="510" y="369" key="com.intellij.ide.util.TipDialog" timestamp="1592713421766">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
@@ -434,10 +440,10 @@
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
     <state x="492" y="293" width="695" height="486" key="find.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1593061234982" />
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1593069984579">
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup" timestamp="1593144246178">
       <screen x="0" y="23" width="1680" height="1027" />
     </state>
-    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1593069984579" />
+    <state x="505" y="250" width="670" height="676" key="search.everywhere.popup/0.23.1680.1027@0.23.1680.1027" timestamp="1593144246178" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

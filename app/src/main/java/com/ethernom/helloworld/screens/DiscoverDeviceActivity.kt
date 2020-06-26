@@ -129,7 +129,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         }
     }
 
-
     private fun setUpList() {
         recyclerView = findViewById(R.id.recyclerView)
         val linearLayoutManager = LinearLayoutManager(applicationContext)

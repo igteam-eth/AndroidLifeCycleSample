@@ -10,11 +10,13 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.ethernom.helloworld.application.MyApplication;
+import com.ethernom.helloworld.application.TrackerSharePreference;
 import com.ethernom.helloworld.statemachine.RingNotificationState;
+import com.ethernom.helloworld.util.StateMachine;
 
 public class AppSwipeEventService extends Service {
 
-    //private String TAG = "AppSwipeEvent";
+    private String TAG = "AppSwipeEvent";
 
     @Nullable
     @Override
@@ -24,16 +26,19 @@ public class AppSwipeEventService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //Log.d(TAG, "onStartCommand");
-        //MyApplication.saveLogWithCurrentDate("NotificationSwipeEvent onStartCommand");
+        Log.d(TAG, "onStartCommand");
+        MyApplication.saveLogWithCurrentDate("NotificationSwipeEvent onStartCommand");
         return START_NOT_STICKY;
     }
 
-    /*@RequiresApi(api = Build.VERSION_CODES.O)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
         Log.d(TAG, "onTaskRemoved");
-        new RingNotificationState(this).appSwipeEvent();
-    }*/
+        if (StateMachine.RING_NOTIFICATION_STATE.getValue().equals(TrackerSharePreference.getConstant(this).getCurrentState())){
+            Log.d(TAG, "RingNotificationState");
+            new RingNotificationState(this).appSwipeEvent();
+        }
+    }
 }
