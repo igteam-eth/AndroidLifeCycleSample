@@ -67,8 +67,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".receiver.NotificationDismissedReceiver"/>
-
         <receiver
             android:name=".receiver.AlarmReceiver" />
         <receiver
@@ -78,13 +76,14 @@
             android:name=".receiver.BLEAndLocationRegisterManager" />
 
         <service android:name=".servcie.AppSwipeEventService"/>
+        <receiver android:name=".receiver.TaskRemoveAlarm"/>
+
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
             tools:node="remove"
             android:exported="false"
             android:enabled="false"/>
-
     </application>
 
 </manifest>

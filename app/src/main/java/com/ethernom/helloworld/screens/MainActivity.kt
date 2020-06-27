@@ -22,8 +22,6 @@ import com.ethernom.helloworld.receiver.AlarmReceiver
 import com.ethernom.helloworld.receiver.BeaconReceiver
 import com.ethernom.helloworld.servcie.AppSwipeEventService
 import com.ethernom.helloworld.statemachine.BeaconRegistration
-import com.ethernom.helloworld.statemachine.RingNotificationState
-import com.ethernom.helloworld.util.StateMachine
 import com.ethernom.helloworld.util.Utils
 import kotlinx.android.synthetic.main.activity_base.*
 import kotlinx.android.synthetic.main.activity_main.*

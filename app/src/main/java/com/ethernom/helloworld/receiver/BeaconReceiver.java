@@ -97,8 +97,8 @@ public class BeaconReceiver extends BroadcastReceiver {
                             trackerSharePreference.setRanging(true);
                             trackerSharePreference.setBeaconTimestamp(MyApplication.getCurrentDate());
                             trackerSharePreference.setCurrentState(StateMachine.RING_NOTIFICATION_STATE.getValue());
-                            playSound(context);
-                            showRangNotification(context);
+                            playSound(context.getApplicationContext());
+                            showRangNotification(context.getApplicationContext());
 
                             Log.d("BleReceiver", "showNotification");
 

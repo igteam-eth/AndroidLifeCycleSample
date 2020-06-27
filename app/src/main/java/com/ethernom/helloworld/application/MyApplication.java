@@ -25,7 +25,6 @@ import androidx.work.Configuration;
 import com.ethernom.helloworld.R;
 import com.ethernom.helloworld.receiver.BluetoothStateChangeReceiver;
 import com.ethernom.helloworld.receiver.LocationStateChangeReceiver;
-import com.ethernom.helloworld.receiver.NotificationDismissedReceiver;
 import com.ethernom.helloworld.screens.BaseActivity;
 import com.ethernom.helloworld.screens.SplashScreenActivity;
 import com.ethernom.helloworld.util.ForegroundCheckTask;
@@ -132,7 +131,7 @@ public class MyApplication extends Application implements Configuration.Provider
         builder.setContentTitle("Ethernom Tracker");
         builder.setContentText("You rang your phone from your device");
         builder.setAutoCancel(true);
-        builder.setDeleteIntent(createOnDismissedIntent(context));
+        builder.setOngoing(true);
         Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.putExtra("NOTIFICATION", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -207,7 +206,7 @@ public class MyApplication extends Application implements Configuration.Provider
         builder.setContentTitle("Ethernom Tracker");
         builder.setContentText("Start Tracker App");
         builder.setAutoCancel(true);
-        builder.setDeleteIntent(createOnDismissedIntent(context));
+        builder.setOngoing(true);
         Intent intent = new Intent(context, SplashScreenActivity.class);
         intent.putExtra("NOTIFICATION", true);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -217,13 +216,13 @@ public class MyApplication extends Application implements Configuration.Provider
     }
 
 
-    private static PendingIntent createOnDismissedIntent(Context context) {
+    /*private static PendingIntent createOnDismissedIntent(Context context) {
         Intent intent = new Intent(context, NotificationDismissedReceiver.class);
         intent.putExtra("NOTIFICATION_DISMISS", true);
 
         return PendingIntent.getBroadcast(context.getApplicationContext(),
                 0, intent, 0);
-    }
+    }*/
 
     @NonNull
     @Override
