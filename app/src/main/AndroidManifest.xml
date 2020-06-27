@@ -84,6 +84,7 @@
             tools:node="remove"
             android:exported="false"
             android:enabled="false"/>
+
     </application>
 
 </manifest>

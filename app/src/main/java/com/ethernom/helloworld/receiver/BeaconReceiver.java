@@ -125,6 +125,8 @@ public class BeaconReceiver extends BroadcastReceiver {
         majors = hexStringToByteArray(major);
         minors = hexStringToByteArray(minor);
 
+        MyApplication.saveLogWithCurrentDate("Major : "+ major);
+        MyApplication.saveLogWithCurrentDate("Minor : "+ minor);
 
         ScanFilter.Builder builder = new ScanFilter.Builder();
         ByteBuffer manData = ByteBuffer.allocate(23);
@@ -195,6 +197,7 @@ public class BeaconReceiver extends BroadcastReceiver {
 
         } catch (Exception e) {
             Log.e(TAG, "ERROR in startScan() " + e.getMessage());
+            MyApplication.saveLogWithCurrentDate("ERROR in startScan() " + e.getMessage());
         }
     }
 
