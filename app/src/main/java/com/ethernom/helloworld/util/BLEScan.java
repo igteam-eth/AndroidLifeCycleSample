@@ -59,12 +59,10 @@ public class BLEScan {
                     int[] manufacturerData = toUnsignedIntArray(mfdata);
 
                     for (int k = 0; k < manufacturerData.length-1; k++) {
-                        //deviceSN += Integer.toHexString(manufacturerData[k]);
                         deviceSN += String.format("%02x", manufacturerData[k]);
                     }
 
                 }
-//                deviceSN = Conversion.conversion_sn(deviceSN);
                 mDeviceDiscoverCallback.DeviceDiscover(result.getDevice().getName(), result.getScanRecord().getServiceUuids().get(0).toString(), result.getDevice().getAddress(), Integer.toString(result.getRssi()), deviceSN);
             }
         }

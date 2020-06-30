@@ -52,29 +52,32 @@ class SplashScreenActivity : BaseActivity() {
         Utils.removeNotificationByID(this, Utils.CHANNEL_RANG)
         Log.d("SplashScreenActivity", "onCreate $ONE_SHOT_FLAG called")
 
-        checkWriteExternalStoragePermission {
-            // Every startup app change current state to Initialize state it also handle app terminate state too
-            TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
-            if (SettingSharePreference.getConstant(this).isBeforeActivate) {
-                checkLocationPermission {
-                    // For User experience at SplashScreen Just alive 2 or 3 Seconds after that intent to screen follow by Initialize state of state table
-                    Handler().postDelayed({
-                        // go to initial state
-                        // In Initial State class we study with input event , state variable and action function for intent to next state
-                        if(ONE_SHOT_FLAG != TEMP_ONE_SHOT_FLAG) {
-                            InitializeState().goToInitialState(this)
-                        }
 
-                    }, 2000)
-                    // Check for display before Activation screen easy user to allow app permission required
+        //check permission: checkWriteExternalStoragePermission {}
 
-                }
 
-            } else {
-                startActivity(Intent(this, BeforeActivateActivity::class.java))
-                finish()
+        // Every startup app change current state to Initialize state it also handle app terminate state too
+        TrackerSharePreference.getConstant(this).currentState = StateMachine.INITIAL.value
+        if (SettingSharePreference.getConstant(this).isBeforeActivate) {
+            checkLocationPermission {
+                // For User experience at SplashScreen Just alive 2 or 3 Seconds after that intent to screen follow by Initialize state of state table
+                Handler().postDelayed({
+                    // go to initial state
+                    // In Initial State class we study with input event , state variable and action function for intent to next state
+                    if (ONE_SHOT_FLAG != TEMP_ONE_SHOT_FLAG) {
+                        InitializeState().goToInitialState(this)
+                    }
+
+                }, 2000)
+                // Check for display before Activation screen easy user to allow app permission required
+
             }
+
+        } else {
+            startActivity(Intent(this, BeforeActivateActivity::class.java))
+            finish()
         }
+
     }
 
     override fun onBackPressed() {

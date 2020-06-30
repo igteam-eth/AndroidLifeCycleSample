@@ -91,9 +91,7 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
                 // Establish Connection
                 firmwareInfoState!!.establishBLEConnection()
             }
-
         }
-
     }
 
     // Card Advertising Packets
@@ -159,7 +157,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
         hideProgressBar()
 
         TrackerSharePreference.getConstant(this).isCardRegistered = true
-        //TrackerSharePreference.getConstant(this).currentState = StateMachine.WAITING_FOR_BEACON.value
 
         // Display Card Registered
         initState()
@@ -411,7 +408,6 @@ class DiscoverDeviceActivity : BaseActivity(), DeviceAdapter.OnItemCallback,
     }
 
     companion object {
-        const val MY_PERMISSIONS_REQUEST_LOCATION = 99
         var ActivityState = ""
         const val TAG: String = "DiscoverDeviceActivity"
     }

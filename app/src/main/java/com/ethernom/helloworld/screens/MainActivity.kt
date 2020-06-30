@@ -1,14 +1,10 @@
 package com.ethernom.helloworld.screens
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ethernom.helloworld.R
 import com.ethernom.helloworld.adapter.RegisteredDeviceAdapter
@@ -94,71 +90,12 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onResume() {
-        super.onResume()
-
-        /*if (getConstant(this).isCardRegistered) {
-            // Call display registered device to the list
-            displayRegisteredCard()
-        }
-        if (
-        // check if storage permission turn on
-            requestWriteExternalStoragePermission()
-
-        ) {
-            if (
-            // check bluetooth is turn on
-                Utils.isBluetoothEnable()
-                &&
-                // check location is turn on
-                Utils.isLocationEnabled(this)
-            ) {
-                *//*
-               if both location & bluetooth are turn on : Launch BLE Scan Intent for detect Beacon signal
-               For WaitingForBeaconState we study with input event , state variable and action function for intent to next state
-               *//*
-                BeaconRegistration().launchBLEScan(this)
-
-                // Host model is
-                MyApplication.saveLogWithCurrentDate("BRAND: ${Build.BRAND}")
-
-                // Host model is SAMSUNG  start alarm manager
-                if (Build.BRAND.equals("samsung", ignoreCase = true)) {
-                    // check if not Already Create Alarm
-                    if (!trackerSharePreference.isAlreadyCreateAlarm) {
-                        MyApplication.saveLogWithCurrentDate("Periodic Alarm for Samsung created")
-                        trackerSharePreference.isAlreadyCreateAlarm = true
-                        val startIntent = Intent(this.applicationContext, AlarmReceiver::class.java)
-                        this.applicationContext.sendBroadcast(startIntent)
-                    }
-                }
-            }
-        }*/
-    }
-
     // Initialize RecyclerView for display list of card registered
     private fun initialRecyclerViewList() {
         registeredDeviceAdapter = RegisteredDeviceAdapter(registeredDeviceList, this)
         rv_registered_device.layoutManager =
             LinearLayoutManager(this)
         rv_registered_device.adapter = registeredDeviceAdapter
-    }
-
-    private fun requestWriteExternalStoragePermission(): Boolean {
-        return if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0
-            )
-            false
-        } else {
-            true
-        }
     }
 
     // Display Registered Device to Recycler View List
@@ -186,25 +123,6 @@ class MainActivity : BaseActivity(), RegisteredDeviceAdapter.OnItemCallback, Ite
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finishAffinity()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        /*val mIntent = Intent(this, StartScanAlarmReceiver::class.java)
-//        val pendingIntent = PendingIntent.getBroadcast(
-//            this, 0,
-//            mIntent,
-//            PendingIntent.FLAG_UPDATE_CURRENT
-//        )
-
-        if (getConstant(this).isRanging) {
-            BeaconReceiver.stopSound()
-            getConstant(this).isRanging = false
-            Utils.removeNotificationByID(this, Utils.CHANNEL_RANG)
-        }
-        applicationContext.sendBroadcast(mIntent)*/
-
     }
 
     override fun onStart() {

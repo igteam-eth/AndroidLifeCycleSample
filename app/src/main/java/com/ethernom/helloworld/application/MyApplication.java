@@ -22,6 +22,7 @@ import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.ProcessLifecycleOwner;
 import androidx.work.Configuration;
 
+import com.ethernom.helloworld.BuildConfig;
 import com.ethernom.helloworld.R;
 import com.ethernom.helloworld.receiver.BluetoothStateChangeReceiver;
 import com.ethernom.helloworld.receiver.LocationStateChangeReceiver;
@@ -62,19 +63,11 @@ public class MyApplication extends Application implements Configuration.Provider
         registerReceiver( mLocationStateChangeReceiver, filterLocation);
 
         Log.d("MyApplication", Utils.isLocationEnabled(this)+"");
-    }
 
-
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        Log.d("MyApplication", "onTerminate");
     }
 
     static public void appendLog(String logs) {
-
-        try {
+        /*try {
             File path = Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOWNLOADS);
             File myFile = new File(path, "ethernom_log.txt");
@@ -85,7 +78,7 @@ public class MyApplication extends Application implements Configuration.Provider
             fOut.close();
         } catch (java.io.IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     static public void saveLogWithCurrentDate(String logs) {
@@ -214,15 +207,6 @@ public class MyApplication extends Application implements Configuration.Provider
         builder.setContentIntent(pendingIntent);
         manager.notify(0, builder.build());
     }
-
-
-    /*private static PendingIntent createOnDismissedIntent(Context context) {
-        Intent intent = new Intent(context, NotificationDismissedReceiver.class);
-        intent.putExtra("NOTIFICATION_DISMISS", true);
-
-        return PendingIntent.getBroadcast(context.getApplicationContext(),
-                0, intent, 0);
-    }*/
 
     @NonNull
     @Override

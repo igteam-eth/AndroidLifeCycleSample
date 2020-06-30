@@ -51,7 +51,6 @@ class BeforeActivateActivity : ComponentActivity() {
         }
 
         // Enable location click event
-
         LcEnlabel.setOnClickListener {
             Log.d(TAG, "LcEnlabel clicked")
 

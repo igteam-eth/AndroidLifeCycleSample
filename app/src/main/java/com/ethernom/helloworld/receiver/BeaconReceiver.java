@@ -1,12 +1,5 @@
 package com.ethernom.helloworld.receiver;
 
-/*
-The code here manages the scanner library. In particular, it enables or disables the scanning.
-It also listens for incoming PendingIntents when a matching BLE device is found.
-
-It also listens for events associated with enabling and disabling the device'ss Bluetooth.
-*/
-
 import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.bluetooth.BluetoothAdapter;
@@ -194,6 +187,7 @@ public class BeaconReceiver extends BroadcastReceiver {
             MyApplication.appendLog(MyApplication.getCurrentDate() + " : Start scanning \n");
             TrackerSharePreference.getConstant(context).setCurrentState(StateMachine.WAITING_FOR_BEACON.getValue());
             TrackerSharePreference.getConstant(context).setAlreadyCreateWorkerThread(true);
+            TrackerSharePreference.getConstant(context).setBeaconTimestamp("");
 
         } catch (Exception e) {
             Log.e(TAG, "ERROR in startScan() " + e.getMessage());

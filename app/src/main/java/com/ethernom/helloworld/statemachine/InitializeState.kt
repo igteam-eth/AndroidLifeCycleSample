@@ -42,8 +42,6 @@ class InitializeState {
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
                     SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
-                }else{
-                    // App in background
                 }
                 return
             }
@@ -67,8 +65,6 @@ class InitializeState {
                     context.startActivity(intent)
                     SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
 
-                }else{
-                    // App in background
                 }
                 return
             }
@@ -87,8 +83,6 @@ class InitializeState {
                     val intent = Intent(context, DiscoverDeviceActivity::class.java)
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
-                }else{
-                    // App in background
                 }
                 return
             }
@@ -106,8 +100,6 @@ class InitializeState {
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
                     SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
-                }else{
-                    // App in background
                 }
             }
         }
@@ -129,8 +121,6 @@ class InitializeState {
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
                     SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
-                }else{
-                    // App in background
                 }
 
                 return
@@ -150,8 +140,6 @@ class InitializeState {
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
                     SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
-                }else{
-                    // App in background
                 }
                 return
             }
@@ -168,8 +156,6 @@ class InitializeState {
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
                     SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
-                }else{
-                    // App in background
                 }
                 return
             }
@@ -187,8 +173,6 @@ class InitializeState {
                     intent.flags = FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     context.startActivity(intent)
                     SplashScreenActivity.TEMP_ONE_SHOT_FLAG = SplashScreenActivity.ONE_SHOT_FLAG
-                }else{
-                    // App in background
                 }
             }
         }
